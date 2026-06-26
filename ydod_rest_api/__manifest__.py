@@ -14,7 +14,6 @@
   "category"             :  "Extra Tools",
   "version"              :  "1.0.1",
   "author"               :  "dodyakj",
-  "license"              :  "Other proprietary",
   "website"              :  "https://profile.dodyakj.online",
   "description"          :  """yDoD REST API
 RESTful API untuk Odoo
