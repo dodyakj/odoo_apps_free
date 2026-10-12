@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_commission_plan_list" model="ir.ui.view">
+        <field name="name">sale.commission.plan.list</field>
+        <field name="model">sale.commission.plan</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="scope"/>
+                <field name="user_id"/>
+                <field name="team_id"/>
+                <field name="rate" widget="percentage"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sale_commission_plan_form" model="ir.ui.view">
+        <field name="name">sale.commission.plan.form</field>
+        <field name="model">sale.commission.plan</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Standard Commission"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="scope" widget="radio"/>
+                            <field name="user_id" invisible="scope != 'user'" required="scope == 'user'"/>
+                            <field name="team_id" invisible="scope != 'team'" required="scope == 'team'"/>
+                        </group>
+                        <group>
+                            <field name="rate" widget="percentage"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sale_commission_plan_search" model="ir.ui.view">
+        <field name="name">sale.commission.plan.search</field>
+        <field name="model">sale.commission.plan</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="team_id"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter string="Scope" name="group_by_scope" context="{'group_by': 'scope'}"/>
+                    <filter string="Sales Team" name="group_by_team" context="{'group_by': 'team_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sale_commission_plan" model="ir.actions.act_window">
+        <field name="name">Commission Plans</field>
+        <field name="res_model">sale.commission.plan</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_sale_commission_plan_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first commission plan
+            </p>
+            <p>
+                Set a percentage rate for a salesperson, a sales team, or as the company-wide default.
+            </p>
+        </field>
+    </record>
+
+</odoo>
