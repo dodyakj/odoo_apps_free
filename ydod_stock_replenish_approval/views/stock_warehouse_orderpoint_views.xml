@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_warehouse_orderpoint_tree_editable_approval" model="ir.ui.view">
+        <field name="name">stock.warehouse.orderpoint.list.editable.inherit.approval</field>
+        <field name="model">stock.warehouse.orderpoint</field>
+        <field name="inherit_id" ref="stock.view_warehouse_orderpoint_tree_editable"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_uom_name']" position="after">
+                <field name="require_approval" optional="show"/>
+                <field name="responsible_buyer_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_warehouse_orderpoint_form_approval" model="ir.ui.view">
+        <field name="name">stock.warehouse.orderpoint.form.inherit.approval</field>
+        <field name="model">stock.warehouse.orderpoint</field>
+        <field name="inherit_id" ref="stock.view_warehouse_orderpoint_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location_id']" position="after">
+                <field name="require_approval"/>
+                <field name="responsible_buyer_id" invisible="not require_approval"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
