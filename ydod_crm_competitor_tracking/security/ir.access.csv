@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_ydod_crm_competitor_user,ydod.crm.competitor.user,ydod.crm.competitor,sales_team.group_sale_salesman,cru,
+access_ydod_crm_competitor_manager,ydod.crm.competitor.manager,ydod.crm.competitor,sales_team.group_sale_manager,crud,
+access_ydod_crm_competitor_result_user,ydod.crm.competitor.result.user,ydod.crm.competitor.result,sales_team.group_sale_salesman,cr,
+access_ydod_crm_competitor_result_manager,ydod.crm.competitor.result.manager,ydod.crm.competitor.result,sales_team.group_sale_manager,crud,
