@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="plan_company_default" model="sale.commission.plan">
+        <field name="name">Company Default</field>
+        <field name="scope">company</field>
+        <field name="rate">3.0</field>
+    </record>
+
+    <record id="plan_user_demo" model="sale.commission.plan">
+        <field name="name">Demo User Premium Plan</field>
+        <field name="scope">user</field>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="rate">6.0</field>
+    </record>
+
+    <record id="plan_team_sales_department" model="sale.commission.plan">
+        <field name="name">Sales Department Team Plan</field>
+        <field name="scope">team</field>
+        <field name="team_id" ref="sales_team.team_sales_department"/>
+        <field name="rate">4.5</field>
+    </record>
+
+    <record id="plan_team_crm_team_1" model="sale.commission.plan">
+        <field name="name">Web Team Plan</field>
+        <field name="scope">team</field>
+        <field name="team_id" ref="sales_team.crm_team_1"/>
+        <field name="rate">5.0</field>
+    </record>
+
+    <record id="commission_demo_order_a" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="team_id" ref="sales_team.team_sales_department"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=45)).strftime('%Y-%m-%d')"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="commission_demo_order_line_a" model="sale.order.line">
+        <field name="order_id" ref="commission_demo_order_a"/>
+        <field name="product_id" ref="product.product_product_4"/>
+        <field name="product_uom_qty">10</field>
+        <field name="price_unit">147.0</field>
+    </record>
+
+    <record id="commission_demo_order_b" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_4"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="team_id" ref="sales_team.team_sales_department"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=40)).strftime('%Y-%m-%d')"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="commission_demo_order_line_b" model="sale.order.line">
+        <field name="order_id" ref="commission_demo_order_b"/>
+        <field name="product_id" ref="product.product_product_6"/>
+        <field name="product_uom_qty">5</field>
+        <field name="price_unit">320.0</field>
+    </record>
+
+    <record id="commission_demo_order_c" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_12"/>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="team_id" ref="sales_team.crm_team_1"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=25)).strftime('%Y-%m-%d')"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="commission_demo_order_line_c" model="sale.order.line">
+        <field name="order_id" ref="commission_demo_order_c"/>
+        <field name="product_id" ref="product.product_product_9"/>
+        <field name="product_uom_qty">20</field>
+        <field name="price_unit">47.0</field>
+    </record>
+
+    <record id="commission_demo_order_d" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_18"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="team_id" ref="sales_team.crm_team_1"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=18)).strftime('%Y-%m-%d')"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="commission_demo_order_line_d" model="sale.order.line">
+        <field name="order_id" ref="commission_demo_order_d"/>
+        <field name="product_id" ref="product.product_product_7"/>
+        <field name="product_uom_qty">100</field>
+        <field name="price_unit">15.8</field>
+    </record>
+
+    <record id="commission_demo_order_e" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_1"/>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="team_id" ref="sales_team.team_sales_department"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="commission_demo_order_line_e" model="sale.order.line">
+        <field name="order_id" ref="commission_demo_order_e"/>
+        <field name="product_id" ref="product.product_product_4"/>
+        <field name="product_uom_qty">6</field>
+        <field name="price_unit">147.0</field>
+    </record>
+
+    <record id="commission_demo_order_f" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="team_id" ref="sales_team.crm_team_1"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=2)).strftime('%Y-%m-%d')"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="commission_demo_order_line_f" model="sale.order.line">
+        <field name="order_id" ref="commission_demo_order_f"/>
+        <field name="product_id" ref="product.product_product_6"/>
+        <field name="product_uom_qty">3</field>
+        <field name="price_unit">320.0</field>
+    </record>
+
+    <record id="commission_line_a" model="sale.commission.line">
+        <field name="sale_order_id" ref="commission_demo_order_a"/>
+        <field name="plan_id" ref="plan_user_demo"/>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="team_id" ref="sales_team.team_sales_department"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=45)).strftime('%Y-%m-%d')"/>
+        <field name="base_amount">1470.0</field>
+        <field name="rate">6.0</field>
+        <field name="state">paid</field>
+    </record>
+
+    <record id="commission_line_b" model="sale.commission.line">
+        <field name="sale_order_id" ref="commission_demo_order_b"/>
+        <field name="plan_id" ref="plan_team_sales_department"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="team_id" ref="sales_team.team_sales_department"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=40)).strftime('%Y-%m-%d')"/>
+        <field name="base_amount">1600.0</field>
+        <field name="rate">4.5</field>
+        <field name="state">paid</field>
+    </record>
+
+    <record id="commission_line_c" model="sale.commission.line">
+        <field name="sale_order_id" ref="commission_demo_order_c"/>
+        <field name="plan_id" ref="plan_user_demo"/>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="team_id" ref="sales_team.crm_team_1"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=25)).strftime('%Y-%m-%d')"/>
+        <field name="base_amount">940.0</field>
+        <field name="rate">6.0</field>
+        <field name="state">locked</field>
+    </record>
+
+    <record id="commission_line_d" model="sale.commission.line">
+        <field name="sale_order_id" ref="commission_demo_order_d"/>
+        <field name="plan_id" ref="plan_team_crm_team_1"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="team_id" ref="sales_team.crm_team_1"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=18)).strftime('%Y-%m-%d')"/>
+        <field name="base_amount">1580.0</field>
+        <field name="rate">5.0</field>
+        <field name="state">locked</field>
+    </record>
+
+    <record id="commission_line_e" model="sale.commission.line">
+        <field name="sale_order_id" ref="commission_demo_order_e"/>
+        <field name="plan_id" ref="plan_user_demo"/>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="team_id" ref="sales_team.team_sales_department"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+        <field name="base_amount">882.0</field>
+        <field name="rate">6.0</field>
+        <field name="state">draft</field>
+    </record>
+
+    <record id="commission_line_f" model="sale.commission.line">
+        <field name="sale_order_id" ref="commission_demo_order_f"/>
+        <field name="plan_id" ref="plan_team_crm_team_1"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="team_id" ref="sales_team.crm_team_1"/>
+        <field name="date_order" eval="(DateTime.today() - relativedelta(days=2)).strftime('%Y-%m-%d')"/>
+        <field name="base_amount">960.0</field>
+        <field name="rate">5.0</field>
+        <field name="state">draft</field>
+    </record>
+
+</odoo>
