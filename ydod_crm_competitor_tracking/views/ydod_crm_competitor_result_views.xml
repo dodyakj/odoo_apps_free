@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ydod_crm_competitor_result_view_search" model="ir.ui.view">
+        <field name="name">ydod.crm.competitor.result.view.search</field>
+        <field name="model">ydod.crm.competitor.result</field>
+        <field name="arch" type="xml">
+            <search string="Search Win/Loss History">
+                <field name="competitor_id"/>
+                <field name="lead_id"/>
+                <field name="team_id"/>
+                <field name="user_id"/>
+                <filter string="Won" name="filter_won" domain="[('result', '=', 'won')]"/>
+                <filter string="Lost" name="filter_lost" domain="[('result', '=', 'lost')]"/>
+                <separator/>
+                <filter string="Closing Date" name="filter_close_date" date="close_date"/>
+                <group>
+                    <filter string="Competitor" name="group_by_competitor" context="{'group_by': 'competitor_id'}"/>
+                    <filter string="Result" name="group_by_result" context="{'group_by': 'result'}"/>
+                    <filter string="Stage Reached" name="group_by_stage" context="{'group_by': 'stage_id'}"/>
+                    <filter string="Sales Team" name="group_by_team" context="{'group_by': 'team_id'}"/>
+                    <filter string="Salesperson" name="group_by_user" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="ydod_crm_competitor_result_view_list" model="ir.ui.view">
+        <field name="name">ydod.crm.competitor.result.view.list</field>
+        <field name="model">ydod.crm.competitor.result</field>
+        <field name="arch" type="xml">
+            <list string="Win/Loss History" create="0" edit="0">
+                <field name="close_date"/>
+                <field name="competitor_id"/>
+                <field name="lead_id"/>
+                <field name="result"/>
+                <field name="stage_id"/>
+                <field name="team_id" optional="hide"/>
+                <field name="user_id" optional="hide"/>
+                <field name="expected_revenue" widget="monetary" options="{'currency_field': 'company_currency'}" sum="Total"/>
+                <field name="company_currency" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ydod_crm_competitor_result_view_pivot" model="ir.ui.view">
+        <field name="name">ydod.crm.competitor.result.view.pivot</field>
+        <field name="model">ydod.crm.competitor.result</field>
+        <field name="arch" type="xml">
+            <pivot string="Competitor Win/Loss Analysis" disable_linking="1">
+                <field name="competitor_id" type="row"/>
+                <field name="result" type="col"/>
+                <field name="expected_revenue" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="ydod_crm_competitor_result_view_graph" model="ir.ui.view">
+        <field name="name">ydod.crm.competitor.result.view.graph</field>
+        <field name="model">ydod.crm.competitor.result</field>
+        <field name="arch" type="xml">
+            <graph string="Competitor Win/Loss Analysis" type="bar" stacked="True">
+                <field name="competitor_id"/>
+                <field name="result"/>
+                <field name="expected_revenue" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="ydod_crm_competitor_result_action" model="ir.actions.act_window">
+        <field name="name">Win/Loss Analysis</field>
+        <field name="res_model">ydod.crm.competitor.result</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="search_view_id" ref="ydod_crm_competitor_result_view_search"/>
+        <field name="context">{'search_default_group_by_competitor': 1}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No win/loss data yet
+          </p><p>
+            This report fills in automatically whenever an opportunity involving a tagged competitor is won or lost.
+          </p>
+        </field>
+    </record>
+
+</odoo>

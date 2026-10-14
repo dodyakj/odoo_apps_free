@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ydod_crm_competitor_user,ydod.crm.competitor.user,model_ydod_crm_competitor,sales_team.group_sale_salesman,1,1,1,0
+access_ydod_crm_competitor_manager,ydod.crm.competitor.manager,model_ydod_crm_competitor,sales_team.group_sale_manager,1,1,1,1
+access_ydod_crm_competitor_result_user,ydod.crm.competitor.result.user,model_ydod_crm_competitor_result,sales_team.group_sale_salesman,1,0,1,0
+access_ydod_crm_competitor_result_manager,ydod.crm.competitor.result.manager,model_ydod_crm_competitor_result,sales_team.group_sale_manager,1,1,1,1
