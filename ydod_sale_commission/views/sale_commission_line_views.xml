@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_sale_commission_line_list" model="ir.ui.view">
+        <field name="name">sale.commission.line.list</field>
+        <field name="model">sale.commission.line</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'paid'" decoration-info="state == 'locked'">
+                <field name="name"/>
+                <field name="date_order"/>
+                <field name="sale_order_id"/>
+                <field name="partner_id"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="team_id"/>
+                <field name="base_amount" sum="Total Base"/>
+                <field name="rate"/>
+                <field name="commission_amount" sum="Total Commission"/>
+                <field name="state" widget="badge" decoration-success="state == 'paid'" decoration-info="state == 'locked'"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sale_commission_line_pivot" model="ir.ui.view">
+        <field name="name">sale.commission.line.pivot</field>
+        <field name="model">sale.commission.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Commissions" sample="1">
+                <field name="user_id" type="row"/>
+                <field name="date_order" interval="month" type="col"/>
+                <field name="commission_amount" type="measure"/>
+                <field name="base_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_sale_commission_line_form" model="ir.ui.view">
+        <field name="name">sale.commission.line.form</field>
+        <field name="model">sale.commission.line</field>
+        <field name="arch" type="xml">
+            <form string="Commission Line">
+                <header>
+                    <button name="action_recompute" type="object" string="Recompute" invisible="state != 'draft'"
+                            groups="sales_team.group_sale_manager"/>
+                    <button name="action_lock" type="object" string="Lock" invisible="state != 'draft'" class="btn-primary"
+                            groups="sales_team.group_sale_manager"/>
+                    <button name="action_mark_paid" type="object" string="Mark as Paid" invisible="state == 'paid'" class="btn-primary"
+                            groups="sales_team.group_sale_manager"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset to Draft" invisible="state == 'draft'"
+                            groups="sales_team.group_sale_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,locked,paid"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Paid" bg_color="text-bg-success" invisible="state != 'paid'"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="sale_order_id"/>
+                            <field name="partner_id"/>
+                            <field name="date_order"/>
+                        </group>
+                        <group>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="team_id"/>
+                            <field name="plan_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="base_amount" readonly="state == 'paid'"/>
+                            <field name="rate" readonly="state == 'paid'"/>
+                        </group>
+                        <group>
+                            <field name="commission_amount" readonly="state == 'paid'"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sale_commission_line_search" model="ir.ui.view">
+        <field name="name">sale.commission.line.search</field>
+        <field name="model">sale.commission.line</field>
+        <field name="arch" type="xml">
+            <search string="Commissions">
+                <field name="name"/>
+                <field name="sale_order_id"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="team_id"/>
+                <field name="plan_id"/>
+                <filter string="My Commissions" name="my_commissions" domain="[('user_id', '=', uid)]"/>
+                <separator/>
+                <filter string="Order Date" name="date_order" date="date_order"/>
+                <separator/>
+                <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Locked" name="filter_locked" domain="[('state', '=', 'locked')]"/>
+                <filter string="Paid" name="filter_paid" domain="[('state', '=', 'paid')]"/>
+                <filter string="Unpaid" name="filter_unpaid" domain="[('state', '!=', 'paid')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Salesperson" name="group_by_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Sales Team" name="group_by_team" context="{'group_by': 'team_id'}"/>
+                    <filter string="Commission Plan" name="group_by_plan" context="{'group_by': 'plan_id'}"/>
+                    <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                    <filter string="Order Date" name="group_by_date" context="{'group_by': 'date_order:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_sale_commission_line" model="ir.actions.act_window">
+        <field name="name">Commissions</field>
+        <field name="res_model">sale.commission.line</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="search_view_id" ref="view_sale_commission_line_search"/>
+        <field name="context">{'search_default_group_by_user': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No commission lines yet
+            </p>
+            <p>
+                Commission lines are generated automatically when a sale order is confirmed.
+            </p>
+        </field>
+    </record>
+
+</odoo>
