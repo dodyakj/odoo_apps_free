@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_replenish_request_list" model="ir.ui.view">
+        <field name="name">ydod.replenish.request.list</field>
+        <field name="model">ydod.replenish.request</field>
+        <field name="arch" type="xml">
+            <list string="Replenishment Requests" decoration-info="state == 'pending'" decoration-success="state == 'approved'" decoration-muted="state == 'rejected'">
+                <field name="name"/>
+                <field name="request_date"/>
+                <field name="product_id"/>
+                <field name="product_qty"/>
+                <field name="product_uom_id"/>
+                <field name="warehouse_id"/>
+                <field name="responsible_buyer_id"/>
+                <field name="state" widget="badge" decoration-info="state == 'pending'" decoration-success="state == 'approved'" decoration-danger="state == 'rejected'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ydod_replenish_request_kanban" model="ir.ui.view">
+        <field name="name">ydod.replenish.request.kanban</field>
+        <field name="model">ydod.replenish.request</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <field name="name" class="fw-bold fs-5"/>
+                            <field name="state" widget="badge" decoration-info="state == 'pending'" decoration-success="state == 'approved'" decoration-danger="state == 'rejected'"/>
+                        </div>
+                        <div>
+                            <field name="product_id"/>
+                            <span> - </span>
+                            <field name="product_qty"/>
+                            <field name="product_uom_id"/>
+                        </div>
+                        <footer class="pt-1">
+                            <field name="warehouse_id"/>
+                            <field name="responsible_buyer_id" widget="many2one_avatar_user"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_ydod_replenish_request_form" model="ir.ui.view">
+        <field name="name">ydod.replenish.request.form</field>
+        <field name="model">ydod.replenish.request</field>
+        <field name="arch" type="xml">
+            <form string="Replenishment Request">
+                <header>
+                    <button name="action_approve" type="object" string="Approve" class="btn-primary" invisible="state != 'pending'"/>
+                    <button name="action_reject" type="object" string="Reject" invisible="state != 'pending'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="pending,approved,rejected"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="orderpoint_id" readonly="1"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="product_qty" readonly="1"/>
+                            <field name="product_uom_id" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="warehouse_id" readonly="1"/>
+                            <field name="location_id" readonly="1"/>
+                            <field name="responsible_buyer_id"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Decision" invisible="state == 'pending'">
+                        <group>
+                            <field name="decided_by" readonly="1"/>
+                            <field name="decision_date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="reject_reason" readonly="1" invisible="state != 'rejected'"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ydod_replenish_request_search" model="ir.ui.view">
+        <field name="name">ydod.replenish.request.search</field>
+        <field name="model">ydod.replenish.request</field>
+        <field name="arch" type="xml">
+            <search string="Replenishment Requests">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="warehouse_id"/>
+                <field name="responsible_buyer_id"/>
+                <filter string="Pending" name="filter_pending" domain="[('state', '=', 'pending')]"/>
+                <filter string="Approved" name="filter_approved" domain="[('state', '=', 'approved')]"/>
+                <filter string="Rejected" name="filter_rejected" domain="[('state', '=', 'rejected')]"/>
+                <separator/>
+                <filter string="My Requests" name="filter_my" domain="[('responsible_buyer_id', '=', uid)]"/>
+                <separator/>
+                <filter string="Requested On" name="filter_request_date" date="request_date"/>
+                <group>
+                    <filter string="Warehouse" name="groupby_warehouse" context="{'group_by': 'warehouse_id'}"/>
+                    <filter string="Responsible Buyer" name="groupby_buyer" context="{'group_by': 'responsible_buyer_id'}"/>
+                    <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ydod_replenish_request" model="ir.actions.act_window">
+        <field name="name">Replenishment Requests</field>
+        <field name="res_model">ydod.replenish.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_ydod_replenish_request_search"/>
+        <field name="context">{'search_default_filter_pending': 1}</field>
+        <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            No replenishment request found
+          </p><p>
+            Requests appear here when a reordering rule flagged "Require Approval" is triggered.
+            Approve to generate the purchase order, or reject with a reason.
+          </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_ydod_replenish_request"
+        name="Replenishment Requests"
+        parent="purchase.menu_procurement_management"
+        action="action_ydod_replenish_request"
+        sequence="7"/>
+</odoo>

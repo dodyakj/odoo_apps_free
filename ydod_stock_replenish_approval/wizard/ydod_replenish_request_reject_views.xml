@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_replenish_request_reject_form" model="ir.ui.view">
+        <field name="name">ydod.replenish.request.reject.form</field>
+        <field name="model">ydod.replenish.request.reject</field>
+        <field name="arch" type="xml">
+            <form string="Reject Replenishment Request">
+                <field name="request_ids" invisible="1"/>
+                <group>
+                    <field name="reason" placeholder="Explain why this replenishment request is rejected..."/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Reject" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

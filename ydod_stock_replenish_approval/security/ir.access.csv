@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_ydod_replenish_request_user,ydod.replenish.request user,ydod.replenish.request,purchase.group_purchase_user,cru,
+access_ydod_replenish_request_manager,ydod.replenish.request manager,ydod.replenish.request,purchase.group_purchase_manager,crud,
+access_ydod_replenish_request_reject_user,ydod.replenish.request.reject user,ydod.replenish.request.reject,purchase.group_purchase_user,crud,
+ydod_replenish_request_comp_rule,Replenishment Request multi-company,ydod.replenish.request,,crud,"[('company_id', 'in', company_ids)]"
