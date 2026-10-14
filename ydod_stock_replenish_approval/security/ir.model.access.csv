@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ydod_replenish_request_user,ydod.replenish.request.user,model_ydod_replenish_request,purchase.group_purchase_user,1,1,1,0
+access_ydod_replenish_request_manager,ydod.replenish.request.manager,model_ydod_replenish_request,purchase.group_purchase_manager,1,1,1,1
+access_ydod_replenish_request_reject_user,ydod.replenish.request.reject.user,model_ydod_replenish_request_reject,purchase.group_purchase_user,1,1,1,1
