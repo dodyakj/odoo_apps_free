@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="ydod_crm_competitor_demo_acme" model="ydod.crm.competitor">
+        <field name="name">Acme Corp</field>
+        <field name="website">https://acme-example.com</field>
+        <field name="notes">Aggressive pricing on volume office furniture deals; slow after-sales support.</field>
+    </record>
+
+    <record id="ydod_crm_competitor_demo_globex" model="ydod.crm.competitor">
+        <field name="name">Globex Industries</field>
+        <field name="website">https://globex-example.com</field>
+        <field name="notes">Strong enterprise brand recognition; frequently loses on delivery lead times.</field>
+    </record>
+
+    <record id="ydod_crm_competitor_demo_initech" model="ydod.crm.competitor">
+        <field name="name">Initech Solutions</field>
+        <field name="website">https://initech-example.com</field>
+        <field name="notes">Undercuts heavily on software licensing and online catalog deals.</field>
+    </record>
+
+    <record id="ydod_crm_competitor_demo_umbrella" model="ydod.crm.competitor">
+        <field name="name">Umbrella Consulting</field>
+        <field name="website">https://umbrella-example.com</field>
+        <field name="notes">Premium design positioning; usually priced out of price-sensitive deals.</field>
+    </record>
+
+    <record id="ydod_crm_competitor_demo_stark" model="ydod.crm.competitor">
+        <field name="name">Stark Dynamics</field>
+        <field name="website">https://stark-example.com</field>
+        <field name="notes">Flashy product demos and long sales cycles; strongest in North America.</field>
+    </record>
+
+    <record id="ydod_crm_competitor_demo_wayne" model="ydod.crm.competitor">
+        <field name="name">Wayne Technologies</field>
+        <field name="website">https://wayne-example.com</field>
+        <field name="notes">Legacy player, rarely seen on European deals anymore.</field>
+        <field name="active" eval="False"/>
+    </record>
+
+    <!-- Tag competitors on a few existing CRM demo opportunities -->
+    <record id="crm.crm_case_13" model="crm.lead">
+        <field name="competitor_ids" eval="[(6, 0, [ref('ydod_crm_competitor_demo_acme'), ref('ydod_crm_competitor_demo_globex')])]"/>
+    </record>
+
+    <record id="crm.crm_case_14" model="crm.lead">
+        <field name="competitor_ids" eval="[(6, 0, [ref('ydod_crm_competitor_demo_umbrella')])]"/>
+    </record>
+
+    <record id="crm.crm_case_21" model="crm.lead">
+        <field name="competitor_ids" eval="[(6, 0, [ref('ydod_crm_competitor_demo_umbrella'), ref('ydod_crm_competitor_demo_stark')])]"/>
+    </record>
+
+    <record id="crm.crm_case_20" model="crm.lead">
+        <field name="competitor_ids" eval="[(6, 0, [ref('ydod_crm_competitor_demo_acme')])]"/>
+    </record>
+
+    <record id="crm.crm_case_23" model="crm.lead">
+        <field name="competitor_ids" eval="[(6, 0, [ref('ydod_crm_competitor_demo_initech')])]"/>
+    </record>
+
+    <record id="crm.crm_case_27" model="crm.lead">
+        <field name="competitor_ids" eval="[(6, 0, [ref('ydod_crm_competitor_demo_globex')])]"/>
+    </record>
+
+    <record id="crm.crm_case_28" model="crm.lead">
+        <field name="competitor_ids" eval="[(6, 0, [ref('ydod_crm_competitor_demo_acme'), ref('ydod_crm_competitor_demo_initech')])]"/>
+    </record>
+
+    <!-- Win/Loss history snapshots matching the won/lost demo opportunities above -->
+    <record id="ydod_crm_competitor_result_demo_1" model="ydod.crm.competitor.result">
+        <field name="competitor_id" ref="ydod_crm_competitor_demo_acme"/>
+        <field name="lead_id" ref="crm.crm_case_20"/>
+        <field name="result">won</field>
+        <field name="stage_id" ref="crm.stage_lead4"/>
+        <field name="close_date" eval="datetime.now() - timedelta(days=2)"/>
+        <field name="expected_revenue">19800</field>
+        <field name="company_currency" ref="base.USD"/>
+        <field name="team_id" ref="sales_team.team_sales_department"/>
+        <field name="partner_id" ref="base.res_partner_3"/>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+
+    <record id="ydod_crm_competitor_result_demo_2" model="ydod.crm.competitor.result">
+        <field name="competitor_id" ref="ydod_crm_competitor_demo_initech"/>
+        <field name="lead_id" ref="crm.crm_case_23"/>
+        <field name="result">won</field>
+        <field name="stage_id" ref="crm.stage_lead4"/>
+        <field name="close_date" eval="datetime.now() - timedelta(days=3)"/>
+        <field name="expected_revenue">2000</field>
+        <field name="company_currency" ref="base.USD"/>
+        <field name="team_id" ref="sales_team.crm_team_1"/>
+        <field name="partner_id" ref="base.res_partner_18"/>
+        <field name="user_id" ref="base.user_demo"/>
+    </record>
+
+    <record id="ydod_crm_competitor_result_demo_3" model="ydod.crm.competitor.result">
+        <field name="competitor_id" ref="ydod_crm_competitor_demo_globex"/>
+        <field name="lead_id" ref="crm.crm_case_27"/>
+        <field name="result">won</field>
+        <field name="stage_id" ref="crm.stage_lead4"/>
+        <field name="close_date" eval="datetime.now() - timedelta(days=1)"/>
+        <field name="expected_revenue">2000</field>
+        <field name="company_currency" ref="base.USD"/>
+        <field name="team_id" ref="sales_team.crm_team_1"/>
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="user_id" ref="base.user_demo"/>
+    </record>
+
+    <record id="ydod_crm_competitor_result_demo_4" model="ydod.crm.competitor.result">
+        <field name="competitor_id" ref="ydod_crm_competitor_demo_acme"/>
+        <field name="lead_id" ref="crm.crm_case_28"/>
+        <field name="result">lost</field>
+        <field name="stage_id" ref="crm.stage_lead1"/>
+        <field name="close_date" eval="datetime.now() - timedelta(days=1)"/>
+        <field name="expected_revenue">7500</field>
+        <field name="company_currency" ref="base.USD"/>
+        <field name="team_id" ref="sales_team.crm_team_1"/>
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="user_id" ref="base.user_demo"/>
+    </record>
+
+    <record id="ydod_crm_competitor_result_demo_5" model="ydod.crm.competitor.result">
+        <field name="competitor_id" ref="ydod_crm_competitor_demo_initech"/>
+        <field name="lead_id" ref="crm.crm_case_28"/>
+        <field name="result">lost</field>
+        <field name="stage_id" ref="crm.stage_lead1"/>
+        <field name="close_date" eval="datetime.now() - timedelta(days=1)"/>
+        <field name="expected_revenue">7500</field>
+        <field name="company_currency" ref="base.USD"/>
+        <field name="team_id" ref="sales_team.crm_team_1"/>
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="user_id" ref="base.user_demo"/>
+    </record>
+
+</odoo>

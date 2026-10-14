@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_ydod_crm_competitor"
+        name="Competitors"
+        parent="crm.crm_menu_config"
+        action="ydod_crm_competitor_action"
+        sequence="20"/>
+
+    <menuitem id="menu_ydod_crm_competitor_result"
+        name="Competitor Win/Loss"
+        parent="crm.crm_menu_report"
+        action="ydod_crm_competitor_result_action"
+        sequence="10"/>
+
+</odoo>
