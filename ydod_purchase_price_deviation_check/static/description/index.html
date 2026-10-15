@@ -1,0 +1,107 @@
+<section class="container" style="padding: 48px 16px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #2d3142;">
+    <div class="row align-items-center">
+        <div class="col-md-7">
+            <span style="display: inline-block; background: #fdecea; color: #b42318; font-weight: 600; font-size: 13px; padding: 4px 12px; border-radius: 20px;">Purchase &middot; Cost Control</span>
+            <h1 style="font-size: 38px; font-weight: 700; margin: 16px 0 12px; color: #1f2a44;">Purchase Price Deviation Guard</h1>
+            <p style="font-size: 18px; line-height: 1.6; color: #4a5068;">
+                Stop overpaying before the money is committed. Every purchase order line is compared with the
+                last confirmed purchase price or the vendor pricelist. Lines above your tolerance are flagged in red
+                and the order goes to <strong>To Approve</strong> until a Purchase Manager signs it off with a justification.
+            </p>
+            <p style="font-size: 15px; color: #6b7088; margin-top: 16px;">Catch typos, silent vendor price increases and inflated quotes, without building a full approval matrix.</p>
+        </div>
+        <div class="col-md-5 text-center">
+            <img src="icon.png" alt="Purchase Price Deviation Guard" style="max-width: 160px; border-radius: 24px; box-shadow: 0 12px 32px rgba(31,42,68,0.18);"/>
+        </div>
+    </div>
+</section>
+<!-- oaa:showcase:start -->
+<section style="padding:40px 16px;text-align:center">
+  <h2 style="font-size:30px;font-weight:700;margin-bottom:24px">See it in action</h2>
+    <div style="margin:28px auto;max-width:1100px">
+      <img src="screenshot_1.png" alt="Price Deviations" style="width:100%;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.15)"/>
+      <p style="margin-top:10px;color:#6c757d;font-size:15px">Price Deviations</p>
+    </div>
+</section>
+<!-- oaa:showcase:end -->
+
+
+<section class="container" style="padding: 40px 16px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #2d3142;">
+    <h2 style="text-align: center; font-weight: 700; color: #1f2a44; margin-bottom: 32px;">Key Features</h2>
+    <div class="row">
+        <div class="col-md-4" style="margin-bottom: 24px;">
+            <div style="height: 100%; padding: 24px; border: 1px solid #e6e8ef; border-radius: 12px; background: #ffffff;">
+                <h4 style="font-weight: 600; color: #b42318;">Smart reference price</h4>
+                <p style="color: #4a5068;">Taken from the last confirmed purchase of the product, converted to the line unit of measure and currency, with the vendor pricelist as fallback.</p>
+            </div>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 24px;">
+            <div style="height: 100%; padding: 24px; border: 1px solid #e6e8ef; border-radius: 12px; background: #ffffff;">
+                <h4 style="font-weight: 600; color: #b42318;">Flexible tolerance</h4>
+                <p style="color: #4a5068;">Company-wide percentage plus an optional minimum amount per unit, with overrides on volatile product categories such as raw materials or fuel.</p>
+            </div>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 24px;">
+            <div style="height: 100%; padding: 24px; border: 1px solid #e6e8ef; border-radius: 12px; background: #ffffff;">
+                <h4 style="font-weight: 600; color: #b42318;">Visible on every line</h4>
+                <p style="color: #4a5068;">Reference price, deviation percentage and an "Above Tolerance" badge, with red highlighting directly in the order lines.</p>
+            </div>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 24px;">
+            <div style="height: 100%; padding: 24px; border: 1px solid #e6e8ef; border-radius: 12px; background: #ffffff;">
+                <h4 style="font-weight: 600; color: #b42318;">Standard approval flow</h4>
+                <p style="color: #4a5068;">Hooks into Odoo's own approval check: deviating orders go to <em>To Approve</em> instead of being confirmed. No new states to learn.</p>
+            </div>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 24px;">
+            <div style="height: 100%; padding: 24px; border: 1px solid #e6e8ef; border-radius: 12px; background: #ffffff;">
+                <h4 style="font-weight: 600; color: #b42318;">Justified approvals</h4>
+                <p style="color: #4a5068;">Managers approve through a dialog that requires a justification, logged in the chatter with the old and new prices.</p>
+            </div>
+        </div>
+        <div class="col-md-4" style="margin-bottom: 24px;">
+            <div style="height: 100%; padding: 24px; border: 1px solid #e6e8ef; border-radius: 12px; background: #ffffff;">
+                <h4 style="font-weight: 600; color: #b42318;">Audit ready</h4>
+                <p style="color: #4a5068;">"Price Deviation" filter and group-by on RFQs and purchase orders, plus a dedicated Price Deviations menu for controllers.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container" style="padding: 40px 16px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #2d3142;">
+    <h2 style="text-align: center; font-weight: 700; color: #1f2a44; margin-bottom: 32px;">How to Use</h2>
+    <div class="row">
+        <div class="col-md-3" style="margin-bottom: 20px;">
+            <div style="font-size: 28px; font-weight: 700; color: #b42318;">1</div>
+            <h5 style="font-weight: 600;">Set your tolerance</h5>
+            <p style="color: #4a5068;">Go to Purchase &rsaquo; Configuration &rsaquo; Settings and enable <em>Price Deviation Check</em> with a percentage and an optional amount.</p>
+        </div>
+        <div class="col-md-3" style="margin-bottom: 20px;">
+            <div style="font-size: 28px; font-weight: 700; color: #b42318;">2</div>
+            <h5 style="font-weight: 600;">Override categories</h5>
+            <p style="color: #4a5068;">Open a product category and switch on <em>Custom Price Tolerance</em> for volatile goods. Sub-categories inherit it.</p>
+        </div>
+        <div class="col-md-3" style="margin-bottom: 20px;">
+            <div style="font-size: 28px; font-weight: 700; color: #b42318;">3</div>
+            <h5 style="font-weight: 600;">Buyers order as usual</h5>
+            <p style="color: #4a5068;">Lines above tolerance turn red. Confirming such an order sends it to <em>To Approve</em> automatically.</p>
+        </div>
+        <div class="col-md-3" style="margin-bottom: 20px;">
+            <div style="font-size: 28px; font-weight: 700; color: #b42318;">4</div>
+            <h5 style="font-weight: 600;">Managers approve</h5>
+            <p style="color: #4a5068;">Click <em>Approve Price Deviation</em>, review the lines, enter a justification and confirm. Everything is logged.</p>
+        </div>
+    </div>
+</section>
+
+<section class="container" style="padding: 40px 16px 56px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #2d3142;">
+    <div style="background: linear-gradient(135deg, #1f2a44 0%, #3a4a72 100%); border-radius: 16px; padding: 40px 32px; color: #ffffff; text-align: center;">
+        <h2 style="font-weight: 700; color: #ffffff; margin-bottom: 12px;">Support</h2>
+        <p style="font-size: 16px; color: #d7dbea; margin-bottom: 20px;">Questions, customization or installation help? We are happy to assist.</p>
+        <p style="font-size: 16px; margin-bottom: 6px;">Email: <a href="mailto:dodyakj@gmail.com" style="color: #ffd8d3; font-weight: 600;">dodyakj@gmail.com</a></p>
+        <p style="font-size: 16px; margin-bottom: 0;">Website: <a href="https://profile.dodyakj.online" style="color: #ffd8d3; font-weight: 600;">https://profile.dodyakj.online</a></p>
+    </div>
+    <p style="text-align: center; color: #8a8fa6; font-size: 13px; margin-top: 24px;">
+        &copy; yDoD &middot; Dody Ahmad Kusuma Jaya &middot; <a href="https://profile.dodyakj.online" style="color: #8a8fa6;">profile.dodyakj.online</a>
+    </p>
+</section>
