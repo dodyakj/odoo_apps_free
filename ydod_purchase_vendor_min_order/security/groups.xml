@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_purchase_min_order_override" model="res.groups">
+        <field name="name">Purchase Minimum Order Override</field>
+        <field name="comment">Allows confirming purchase orders that do not meet vendor minimum order requirements.</field>
+    </record>
+
+    <record id="purchase.group_purchase_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_purchase_min_order_override'))]"/>
+    </record>
+</odoo>
