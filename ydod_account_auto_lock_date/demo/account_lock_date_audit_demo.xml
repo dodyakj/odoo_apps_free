@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Configure demo company settings -->
+        <record id="base.main_company" model="res.company">
+            <field name="auto_lock_enabled" eval="True"/>
+            <field name="auto_lock_day">10</field>
+            <field name="auto_lock_target">sale_purchase</field>
+            <field name="auto_lock_sale" eval="True"/>
+            <field name="auto_lock_purchase" eval="True"/>
+            <field name="auto_lock_tax" eval="False"/>
+            <field name="auto_lock_fiscalyear" eval="False"/>
+            <field name="auto_lock_last_run" eval="(DateTime.now() - timedelta(days=5)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+
+        <!-- Audit Log 1: Scheduled Auto-Lock for Sales -->
+        <record id="demo_audit_sale_auto_lock" model="account.lock.date.audit">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="date" eval="(DateTime.now() - timedelta(days=65)).strftime('%Y-%m-%d 02:00:15')"/>
+            <field name="lock_type">sale</field>
+            <field name="field_name">sale_lock_date</field>
+            <field name="old_date" eval="(DateTime.now() - timedelta(days=95)).strftime('%Y-%m-%d')"/>
+            <field name="new_date" eval="(DateTime.now() - timedelta(days=65)).strftime('%Y-%m-%d')"/>
+            <field name="action_type">auto_cron</field>
+            <field name="reason">Scheduled Monthly Auto-Lock (Day 10 schedule)</field>
+        </record>
+
+        <!-- Audit Log 2: Scheduled Auto-Lock for Purchases -->
+        <record id="demo_audit_purchase_auto_lock" model="account.lock.date.audit">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="date" eval="(DateTime.now() - timedelta(days=65)).strftime('%Y-%m-%d 02:00:16')"/>
+            <field name="lock_type">purchase</field>
+            <field name="field_name">purchase_lock_date</field>
+            <field name="old_date" eval="(DateTime.now() - timedelta(days=95)).strftime('%Y-%m-%d')"/>
+            <field name="new_date" eval="(DateTime.now() - timedelta(days=65)).strftime('%Y-%m-%d')"/>
+            <field name="action_type">auto_cron</field>
+            <field name="reason">Scheduled Monthly Auto-Lock (Day 10 schedule)</field>
+        </record>
+
+        <!-- Audit Log 3: Manual Tax Return Lock -->
+        <record id="demo_audit_tax_manual_lock" model="account.lock.date.audit">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date" eval="(DateTime.now() - timedelta(days=40)).strftime('%Y-%m-%d 15:30:00')"/>
+            <field name="lock_type">tax</field>
+            <field name="field_name">tax_lock_date</field>
+            <field name="old_date" eval="(DateTime.now() - timedelta(days=95)).strftime('%Y-%m-%d')"/>
+            <field name="new_date" eval="(DateTime.now() - timedelta(days=40)).strftime('%Y-%m-%d')"/>
+            <field name="action_type">manual_update</field>
+            <field name="reason">Monthly VAT Return filed and approved by tax authorities</field>
+        </record>
+
+        <!-- Audit Log 4: Scheduled Next Month Sales Auto-Lock -->
+        <record id="demo_audit_sale_auto_lock_recent" model="account.lock.date.audit">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="date" eval="(DateTime.now() - timedelta(days=35)).strftime('%Y-%m-%d 02:00:10')"/>
+            <field name="lock_type">sale</field>
+            <field name="field_name">sale_lock_date</field>
+            <field name="old_date" eval="(DateTime.now() - timedelta(days=65)).strftime('%Y-%m-%d')"/>
+            <field name="new_date" eval="(DateTime.now() - timedelta(days=35)).strftime('%Y-%m-%d')"/>
+            <field name="action_type">auto_cron</field>
+            <field name="reason">Scheduled Monthly Auto-Lock (Day 10 schedule)</field>
+        </record>
+
+        <!-- Audit Log 5: Role-based Lock Bypass Entry -->
+        <record id="demo_audit_bypass_entry" model="account.lock.date.audit">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date" eval="(DateTime.now() - timedelta(days=15)).strftime('%Y-%m-%d 11:20:45')"/>
+            <field name="lock_type">all</field>
+            <field name="field_name">sale_lock_date</field>
+            <field name="old_date" eval="(DateTime.now() - timedelta(days=35)).strftime('%Y-%m-%d')"/>
+            <field name="new_date" eval="(DateTime.now() - timedelta(days=45)).strftime('%Y-%m-%d')"/>
+            <field name="action_type">bypass_entry</field>
+            <field name="reason">Authorized Chief Accountant posted late customer credit note with role bypass</field>
+        </record>
+
+        <!-- Audit Log 6: Manual Trigger of Auto-Lock -->
+        <record id="demo_audit_manual_run" model="account.lock.date.audit">
+            <field name="company_id" ref="base.main_company"/>
+            <field name="user_id" ref="base.user_admin"/>
+            <field name="date" eval="(DateTime.now() - timedelta(days=5)).strftime('%Y-%m-%d 09:45:00')"/>
+            <field name="lock_type">purchase</field>
+            <field name="field_name">purchase_lock_date</field>
+            <field name="old_date" eval="(DateTime.now() - timedelta(days=65)).strftime('%Y-%m-%d')"/>
+            <field name="new_date" eval="(DateTime.now() - timedelta(days=35)).strftime('%Y-%m-%d')"/>
+            <field name="action_type">manual_run</field>
+            <field name="reason">Manual Auto-Lock Trigger during interim financial review</field>
+        </record>
+    </data>
+</odoo>

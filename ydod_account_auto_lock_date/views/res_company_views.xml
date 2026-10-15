@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_form_inherit_auto_lock" model="ir.ui.view">
+        <field name="name">res.company.form.inherit.auto.lock</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" type="object" name="action_view_lock_audit_logs" icon="fa-history">
+                    <field name="auto_lock_audit_count" widget="statinfo" string="Lock Audits"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Period Lock Automation" name="page_auto_lock_period">
+                    <group>
+                        <group string="Automation Schedule">
+                            <field name="auto_lock_enabled"/>
+                            <field name="auto_lock_day" invisible="not auto_lock_enabled"/>
+                            <field name="auto_lock_target" invisible="not auto_lock_enabled"/>
+                            <field name="auto_lock_last_run" invisible="not auto_lock_enabled"/>
+                        </group>
+                        <group string="Custom Lock Targets" invisible="not auto_lock_enabled or auto_lock_target != 'custom'">
+                            <field name="auto_lock_sale"/>
+                            <field name="auto_lock_purchase"/>
+                            <field name="auto_lock_tax"/>
+                            <field name="auto_lock_fiscalyear"/>
+                        </group>
+                    </group>
+                    <div class="mt-2 mb-3" invisible="not auto_lock_enabled">
+                        <button name="action_run_auto_lock" type="object" string="Run Auto-Lock Now" class="btn-primary" icon="fa-bolt"/>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

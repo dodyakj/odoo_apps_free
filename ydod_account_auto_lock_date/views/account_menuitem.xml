@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_account_lock_date_audit"
+              name="Lock Date Audit Trail"
+              parent="account.account_audit_control_menu"
+              action="action_account_lock_date_audit"
+              sequence="30"
+              groups="account.group_account_readonly"/>
+
+    <menuitem id="menu_account_closing_lock_audit"
+              name="Lock Date Audit Trail"
+              parent="account.account_closing_menu"
+              action="action_account_lock_date_audit"
+              sequence="30"
+              groups="account.group_account_readonly"/>
+</odoo>

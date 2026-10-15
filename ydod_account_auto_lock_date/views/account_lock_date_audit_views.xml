@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_lock_date_audit_list" model="ir.ui.view">
+        <field name="name">account.lock.date.audit.list</field>
+        <field name="model">account.lock.date.audit</field>
+        <field name="arch" type="xml">
+            <list string="Lock Date Audit Trail" create="0" delete="0" edit="0">
+                <field name="date"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="lock_type" widget="badge"/>
+                <field name="old_date"/>
+                <field name="new_date"/>
+                <field name="action_type" widget="badge"
+                       decoration-info="action_type == 'auto_cron'"
+                       decoration-warning="action_type == 'manual_run'"
+                       decoration-success="action_type == 'bypass_entry'"
+                       decoration-muted="action_type == 'manual_update'"/>
+                <field name="reason"/>
+                <field name="move_id" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_account_lock_date_audit_form" model="ir.ui.view">
+        <field name="name">account.lock.date.audit.form</field>
+        <field name="model">account.lock.date.audit</field>
+        <field name="arch" type="xml">
+            <form string="Lock Date Audit Log" create="0" delete="0" edit="0">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Audit Log Reference"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Execution Details">
+                            <field name="date" readonly="1"/>
+                            <field name="user_id" readonly="1" widget="many2one_avatar_user"/>
+                            <field name="company_id" readonly="1" groups="base.group_multi_company"/>
+                            <field name="action_type" readonly="1" widget="badge"
+                                   decoration-info="action_type == 'auto_cron'"
+                                   decoration-warning="action_type == 'manual_run'"
+                                   decoration-success="action_type == 'bypass_entry'"
+                                   decoration-muted="action_type == 'manual_update'"/>
+                        </group>
+                        <group string="Lock Period Transition">
+                            <field name="lock_type" readonly="1"/>
+                            <field name="field_name" readonly="1"/>
+                            <field name="old_date" readonly="1"/>
+                            <field name="new_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Audit Information">
+                        <field name="reason" readonly="1"/>
+                        <field name="move_id" readonly="1" invisible="not move_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_lock_date_audit_search" model="ir.ui.view">
+        <field name="name">account.lock.date.audit.search</field>
+        <field name="model">account.lock.date.audit</field>
+        <field name="arch" type="xml">
+            <search string="Search Lock Date Audit">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="reason"/>
+                <field name="move_id"/>
+                <separator/>
+                <filter string="Scheduled (Cron)" name="filter_auto_cron" domain="[('action_type', '=', 'auto_cron')]"/>
+                <filter string="Manual Updates" name="filter_manual" domain="[('action_type', 'in', ('manual_update', 'manual_run'))]"/>
+                <filter string="Role Bypass Postings" name="filter_bypass" domain="[('action_type', '=', 'bypass_entry')]"/>
+                <separator/>
+                <group>
+                    <filter string="Company" name="group_company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                    <filter string="Changed By" name="group_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Lock Type" name="group_lock_type" context="{'group_by': 'lock_type'}"/>
+                    <filter string="Action Source" name="group_action_type" context="{'group_by': 'action_type'}"/>
+                    <filter string="Audit Date" name="group_date" context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_account_lock_date_audit" model="ir.actions.act_window">
+        <field name="name">Lock Date Audit Trail</field>
+        <field name="res_model">account.lock.date.audit</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_account_lock_date_audit_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No lock date changes recorded yet.
+            </p>
+            <p>
+                Every automated lock date advancement, manual configuration change, and role-based bypass is recorded here for complete financial audit compliance.
+            </p>
+        </field>
+    </record>
+</odoo>

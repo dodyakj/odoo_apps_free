@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_account_lock_date_audit_user,account.lock.date.audit.user,account.lock.date.audit,base.group_user,r,
+access_account_lock_date_audit_readonly,account.lock.date.audit.readonly,account.lock.date.audit,account.group_account_readonly,r,
+access_account_lock_date_audit_manager,account.lock.date.audit.manager,account.lock.date.audit,account.group_account_manager,crud,
+account_lock_date_audit_comp_rule,account.lock.date.audit multi-company,account.lock.date.audit,,crud,"[('company_id', 'in', company_ids + [False])]"
