@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_form_price_deviation" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.price.deviation</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@id='draft_confirm']" position="attributes">
+                <attribute name="invisible">state != 'draft' or price_deviation_needs_approval</attribute>
+            </xpath>
+            <xpath expr="//button[@id='bid_confirm']" position="attributes">
+                <attribute name="invisible">state != 'sent' or price_deviation_needs_approval</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_approve']" position="attributes">
+                <attribute name="invisible">state != 'to approve' or price_deviation_needs_approval</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_approve']" position="after">
+                <field name="has_price_deviation" invisible="1"/>
+                <field name="price_deviation_needs_approval" invisible="1"/>
+                <button name="action_open_price_deviation_wizard" type="object" string="Approve Price Deviation"
+                        class="oe_highlight" groups="purchase.group_purchase_manager"
+                        invisible="not price_deviation_needs_approval" data-hotkey="z"/>
+            </xpath>
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-danger mb-0" role="alert"
+                     invisible="price_deviation_status != 'flagged' or state not in ('draft', 'sent', 'to approve')">
+                    <i class="fa fa-balance-scale me-1" title="Price deviation"/>
+                    Some lines are priced above their reference price by more than the allowed tolerance.
+                    A Purchase Administrator must approve this order with a justification.
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list" position="attributes">
+                <attribute name="decoration-danger">price_deviation_level == 'flagged'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="after">
+                <field name="price_reference" optional="show" invisible="not price_reference"/>
+                <field name="price_reference_source" optional="hide"/>
+                <field name="price_deviation_rate" widget="percentage" optional="show"
+                       invisible="not price_reference"
+                       decoration-danger="price_deviation_level == 'flagged'"
+                       decoration-success="price_deviation_rate &lt; 0"/>
+                <field name="price_deviation_level" widget="badge" optional="show"
+                       invisible="price_deviation_level != 'flagged'"
+                       decoration-danger="price_deviation_level == 'flagged'"/>
+            </xpath>
+            <xpath expr="//page[@name='products']" position="after">
+                <page string="Price Deviation" name="price_deviation" invisible="not has_price_deviation">
+                    <group>
+                        <group>
+                            <field name="price_deviation_status" widget="badge"
+                                   decoration-danger="price_deviation_status == 'flagged'"
+                                   decoration-success="price_deviation_status == 'approved'"/>
+                            <field name="price_deviation_count"/>
+                        </group>
+                        <group>
+                            <field name="price_deviation_approver_id" widget="many2one_avatar_user"/>
+                            <field name="price_deviation_date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="price_deviation_justification" placeholder="Not approved yet."/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_kpis_tree_price_deviation" model="ir.ui.view">
+        <field name="name">purchase.order.rfq.list.inherit.price.deviation</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_kpis_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="price_deviation_status" widget="badge" optional="show"
+                       invisible="price_deviation_status == 'ok'"
+                       decoration-danger="price_deviation_status == 'flagged'"
+                       decoration-success="price_deviation_status == 'approved'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_view_tree_price_deviation" model="ir.ui.view">
+        <field name="name">purchase.order.list.inherit.price.deviation</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='amount_total']" position="after">
+                <field name="price_deviation_status" widget="badge" optional="show"
+                       invisible="price_deviation_status == 'ok'"
+                       decoration-danger="price_deviation_status == 'flagged'"
+                       decoration-success="price_deviation_status == 'approved'"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_filter_price_deviation" model="ir.ui.view">
+        <field name="name">request.quotation.select.inherit.price.deviation</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='starred']" position="after">
+                <separator/>
+                <filter name="price_deviation" string="Price Deviation" domain="[('has_price_deviation', '=', True)]"/>
+                <filter name="price_deviation_to_approve" string="Deviation to Approve"
+                        domain="[('price_deviation_status', '=', 'flagged')]"/>
+            </xpath>
+            <xpath expr="//filter[@name='representative']" position="after">
+                <filter name="groupby_price_deviation" string="Price Deviation"
+                        context="{'group_by': 'price_deviation_status'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_view_search_price_deviation" model="ir.ui.view">
+        <field name="name">purchase.order.select.inherit.price.deviation</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='starred']" position="after">
+                <separator/>
+                <filter name="price_deviation" string="Price Deviation" domain="[('has_price_deviation', '=', True)]"/>
+                <filter name="price_deviation_approved" string="Deviation Approved"
+                        domain="[('price_deviation_status', '=', 'approved')]"/>
+            </xpath>
+            <xpath expr="//filter[@name='representative']" position="after">
+                <filter name="groupby_price_deviation" string="Price Deviation"
+                        context="{'group_by': 'price_deviation_status'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_purchase_price_deviation" model="ir.actions.act_window">
+        <field name="name">Price Deviations</field>
+        <field name="res_model">purchase.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="search_view_id" ref="purchase.purchase_order_view_search"/>
+        <field name="domain">[('has_price_deviation', '=', True)]</field>
+        <field name="context">{'search_default_groupby_price_deviation': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No price deviation detected</p>
+            <p>Orders with lines priced above their reference price by more than the tolerance appear here.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_purchase_price_deviation"
+              name="Price Deviations"
+              parent="purchase.menu_procurement_management"
+              action="action_purchase_price_deviation"
+              sequence="12"/>
+
+</odoo>
