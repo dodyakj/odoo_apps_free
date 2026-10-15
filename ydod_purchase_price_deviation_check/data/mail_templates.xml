@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="message_price_deviation_approved" technical_usage="mail_post_source">
+        <div>
+            <strong>Price deviation approved by <t t-out="approver.name"/></strong>
+            <p class="mb-1"><em>Justification:</em> <t t-out="justification"/></p>
+            <ul>
+                <li t-foreach="lines" t-as="line">
+                    <t t-out="line.product_id.display_name"/>:
+                    <t t-out="line.price_reference" t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
+                    -&gt;
+                    <t t-out="line.price_unit_discounted" t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
+                    (+<t t-out="'%.1f' % (line.price_deviation_rate * 100)"/>%)
+                </li>
+            </ul>
+        </div>
+    </template>
+
+</odoo>

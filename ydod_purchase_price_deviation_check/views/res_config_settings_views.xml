@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_price_deviation" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.price.deviation</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="purchase.res_config_settings_view_form_purchase"/>
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='po_order_approval']" position="after">
+                <setting id="price_deviation_check" company_dependent="1"
+                         help="Send orders priced above the last purchase or vendor price to manager approval">
+                    <field name="price_deviation_check"/>
+                    <div class="content-group" invisible="not price_deviation_check">
+                        <div class="row mt16">
+                            <label for="price_deviation_tolerance" class="col-lg-4 o_light_label"/>
+                            <field name="price_deviation_tolerance"/>
+                        </div>
+                        <div class="row">
+                            <label for="price_deviation_tolerance_amount" class="col-lg-4 o_light_label"/>
+                            <field name="price_deviation_tolerance_amount"/>
+                        </div>
+                        <div class="text-muted mt8">
+                            Override these values on volatile product categories (Configuration &gt; Products &gt; Categories).
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
