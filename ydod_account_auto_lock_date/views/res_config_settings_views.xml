@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_auto_lock" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.auto.lock</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='accounting_reports']" position="after">
+                <block title="Accounting Period Auto-Lock &amp; Bypass" id="auto_lock_date_block">
+                    <setting id="setting_auto_lock_enabled" string="Scheduled Auto-Lock"
+                             help="Automatically lock accounting periods at the designated closing day of each month.">
+                        <field name="auto_lock_enabled"/>
+                        <div class="content-group" invisible="not auto_lock_enabled">
+                            <div class="row mt16">
+                                <label for="auto_lock_day" class="col-lg-5 o_light_label" string="Monthly Closing Day"/>
+                                <field name="auto_lock_day" class="col-lg-3"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="auto_lock_target" class="col-lg-5 o_light_label" string="Lock Scope"/>
+                                <field name="auto_lock_target" class="col-lg-5"/>
+                            </div>
+                            <div class="mt16" invisible="auto_lock_target != 'custom'">
+                                <div class="d-flex flex-column gap-1">
+                                    <div><field name="auto_lock_sale"/> <label for="auto_lock_sale" string="Lock Sales Entries"/></div>
+                                    <div><field name="auto_lock_purchase"/> <label for="auto_lock_purchase" string="Lock Purchase Entries"/></div>
+                                    <div><field name="auto_lock_tax"/> <label for="auto_lock_tax" string="Lock Tax Returns"/></div>
+                                    <div><field name="auto_lock_fiscalyear"/> <label for="auto_lock_fiscalyear" string="Lock Global / Fiscal Year"/></div>
+                                </div>
+                            </div>
+                            <div class="mt16 d-flex align-items-center gap-2">
+                                <button name="action_run_auto_lock" type="object" string="Run Auto-Lock Now" class="btn-primary btn-sm" icon="fa-bolt"/>
+                                <button name="action_view_lock_audit_logs" type="object" string="View Audit Trail" class="btn-link btn-sm" icon="fa-history"/>
+                            </div>
+                            <div class="mt8 text-muted small" invisible="not auto_lock_last_run">
+                                Last executed: <field name="auto_lock_last_run" readonly="1" class="oe_inline"/>
+                            </div>
+                        </div>
+                    </setting>
+                    <setting id="setting_lock_bypass_roles" string="Role-Based Lock Bypass"
+                             help="Allow Chief Accountants and Controllers to post backdated entries in closed periods without lifting locks for everyone.">
+                        <div class="text-muted">
+                            Users in the <b>Bypass Accounting Lock Dates</b> security group can create, edit, and post journal entries in locked periods. All bypass postings are audited.
+                        </div>
+                        <div class="mt8">
+                            <button name="action_view_bypass_users" type="object" string="Manage Authorized Bypass Users" class="btn-secondary btn-sm" icon="fa-users"/>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
