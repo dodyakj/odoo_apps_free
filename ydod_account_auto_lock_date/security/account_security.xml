@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_account_lock_date_bypass" model="res.groups">
+        <field name="name">Bypass Accounting Lock Dates</field>
+        <field name="category_id" ref="base.module_category_accounting_accounting"/>
+        <field name="comment">Allows authorized managers (Chief Accountants, Financial Controllers) to create, edit, and post journal entries in locked periods without removing the lock date for other users.</field>
+        <field name="implied_ids" eval="[(4, ref('account.group_account_invoice'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="account_lock_date_audit_comp_rule" model="ir.rule">
+        <field name="name">Accounting Lock Date Audit multi-company</field>
+        <field name="model_id" ref="model_account_lock_date_audit"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

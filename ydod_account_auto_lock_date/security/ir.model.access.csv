@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_lock_date_audit_user,account.lock.date.audit.user,model_account_lock_date_audit,base.group_user,1,0,0,0
+access_account_lock_date_audit_readonly,account.lock.date.audit.readonly,model_account_lock_date_audit,account.group_account_readonly,1,0,0,0
+access_account_lock_date_audit_manager,account.lock.date.audit.manager,model_account_lock_date_audit,account.group_account_manager,1,1,1,1
