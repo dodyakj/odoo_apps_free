@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_purchase_min_order" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.purchase.min.order</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='purchase']" position="inside">
+                <field name="min_order_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="min_order_quantity"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
