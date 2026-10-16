@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_mass_cancel_wizard_form" model="ir.ui.view">
+        <field name="name">ydod.mass.cancel.wizard.form</field>
+        <field name="model">ydod.mass.cancel.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Mass Operation Confirmation">
+                <sheet>
+                    <group>
+                        <field name="operation_type" widget="radio"/>
+                        <field name="model_name" invisible="1"/>
+                        <field name="reason" placeholder="Provide a detailed mandatory reason for auditing and chatter logging..."/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Confirm" type="object" name="action_confirm" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

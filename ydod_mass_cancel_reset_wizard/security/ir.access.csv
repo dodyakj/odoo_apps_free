@@ -1,0 +1,2 @@
+id,name,model_id,group_id/id,operation,domain
+access_ydod_mass_cancel_wizard,ydod.mass.cancel.wizard user,ydod.mass.cancel.wizard,group_mass_cancel_manager,crud,
