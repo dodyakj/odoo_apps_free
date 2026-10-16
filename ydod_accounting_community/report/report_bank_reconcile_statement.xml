@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_bank_reconcile_statement">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h2 class="text-primary font-weight-bold">Bank Reconciliation Statement</h2>
+                                <p class="text-muted">
+                                    Audited comparison between physical bank statement and general ledger books.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr>
+                                        <th class="w-40">Bank Journal:</th>
+                                        <td><span t-out="doc.journal_id.name"/> (<span t-out="doc.journal_id.code"/>)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Account:</th>
+                                        <td>
+                                            <span t-out="doc.journal_id.default_account_id.display_name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Company:</th>
+                                        <td><span t-out="doc.company_id.name"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr>
+                                        <th class="w-40">Statement Date:</th>
+                                        <td><span t-out="doc.statement_date"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Currency:</th>
+                                        <td><span t-out="doc.currency_id.name"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Status:</th>
+                                        <td>
+                                            <span t-if="doc.difference == 0" class="badge bg-success">Reconciled / Balanced</span>
+                                            <span t-else="" class="badge bg-danger">Variance Detected</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h4 class="border-bottom pb-2">Reconciliation Summary</h4>
+                                <table class="table table-bordered">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Description</th>
+                                            <th class="text-end">Amount (<span t-out="doc.currency_id.symbol"/>)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Bank Statement Ending Balance</strong> (Physical Statement)</td>
+                                            <td class="text-end font-weight-bold">
+                                                <span t-field="doc.bank_statement_balance"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>General Ledger Book Balance</strong> (As of Statement Date)</td>
+                                            <td class="text-end">
+                                                <span t-field="doc.gl_balance"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Uncleared / In-Transit Items</strong> (Unreconciled Payments &amp; Receipts)</td>
+                                            <td class="text-end">
+                                                <span t-field="doc.uncleared_balance"/>
+                                            </td>
+                                        </tr>
+                                        <tr t-att-class="'table-success' if doc.difference == 0 else 'table-danger font-weight-bold'">
+                                            <td><strong>Net Reconciliation Variance</strong></td>
+                                            <td class="text-end font-weight-bold">
+                                                <span t-field="doc.difference"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h4 class="border-bottom pb-2">Uncleared Items Schedule</h4>
+                                <t t-set="uncleared_lines" t-value="doc._get_uncleared_lines()"/>
+                                <table t-if="uncleared_lines" class="table table-sm table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Entry Number</th>
+                                            <th>Partner</th>
+                                            <th>Label</th>
+                                            <th class="text-end">Debit</th>
+                                            <th class="text-end">Credit</th>
+                                            <th class="text-end">Balance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="uncleared_lines" t-as="line">
+                                            <td><span t-out="line.date"/></td>
+                                            <td><span t-out="line.move_id.name"/></td>
+                                            <td><span t-out="line.partner_id.name or '-'"/></td>
+                                            <td><span t-out="line.name or '-'"/></td>
+                                            <td class="text-end"><span t-field="line.debit"/></td>
+                                            <td class="text-end"><span t-field="line.credit"/></td>
+                                            <td class="text-end"><span t-field="line.balance"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p t-else="" class="text-muted font-italic">
+                                    No uncleared items found for this journal as of the statement cutoff date.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

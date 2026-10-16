@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_fiscal_year_2023" model="account.fiscal.year">
+        <field name="name">Fiscal Year 2023</field>
+        <field name="code">FY2023</field>
+        <field name="date_from">2023-01-01</field>
+        <field name="date_to">2023-12-31</field>
+        <field name="state">closed</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_fiscal_year_2024" model="account.fiscal.year">
+        <field name="name">Fiscal Year 2024</field>
+        <field name="code">FY2024</field>
+        <field name="date_from">2024-01-01</field>
+        <field name="date_to">2024-12-31</field>
+        <field name="state">closed</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_fiscal_year_2025" model="account.fiscal.year">
+        <field name="name">Fiscal Year 2025</field>
+        <field name="code">FY2025</field>
+        <field name="date_from">2025-01-01</field>
+        <field name="date_to">2025-12-31</field>
+        <field name="state">closed</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_fiscal_year_2026" model="account.fiscal.year">
+        <field name="name">Fiscal Year 2026</field>
+        <field name="code">FY2026</field>
+        <field name="date_from">2026-01-01</field>
+        <field name="date_to">2026-12-31</field>
+        <field name="state">open</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_fiscal_year_2027" model="account.fiscal.year">
+        <field name="name">Fiscal Year 2027</field>
+        <field name="code">FY2027</field>
+        <field name="date_from">2027-01-01</field>
+        <field name="date_to">2027-12-31</field>
+        <field name="state">draft</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_fiscal_year_2028" model="account.fiscal.year">
+        <field name="name">Fiscal Year 2028</field>
+        <field name="code">FY2028</field>
+        <field name="date_from">2028-01-01</field>
+        <field name="date_to">2028-12-31</field>
+        <field name="state">draft</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>
