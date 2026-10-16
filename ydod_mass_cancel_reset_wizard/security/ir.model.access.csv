@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ydod_mass_cancel_wizard,ydod.mass.cancel.wizard user,model_ydod_mass_cancel_wizard,group_mass_cancel_manager,1,1,1,1

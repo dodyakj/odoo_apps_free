@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Mass Document Cancel &amp; Reset Wizard</title>
+    <style>
+        .ydod-hero { background: linear-gradient(135deg, #714B67 0%, #362933 100%); color: #ffffff; padding: 60px 20px; text-align: center; border-radius: 8px; margin-bottom: 40px; }
+        .ydod-hero h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; }
+        .ydod-hero p { font-size: 1.2rem; max-width: 800px; margin: 0 auto; opacity: 0.9; }
+        .ydod-feature-card { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 30px; height: 100%; transition: transform 0.2s; }
+        .ydod-feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .ydod-feature-card h3 { color: #714B67; font-size: 1.3rem; font-weight: 600; margin-bottom: 15px; }
+        .ydod-step { display: flex; align-items: flex-start; margin-bottom: 25px; }
+        .ydod-step-number { background: #714B67; color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; margin-right: 20px; }
+        .ydod-support { background: #fdfbfd; border-left: 4px solid #714B67; padding: 30px; border-radius: 0 8px 8px 0; margin-top: 40px; }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <!-- Hero Section -->
+        <div class="ydod-hero">
+            <img src="icon.png" alt="Icon" width="80" class="mb-3 rounded-circle bg-white p-2 shadow" />
+            <h1>Mass Document Cancel &amp; Reset to Draft Wizard</h1>
+            <p>Streamline your operational management by batch-cancelling or resetting Sales Orders, Purchase Orders, Invoices, and Stock Transfers with mandatory audit logging.</p>
+        </div>
+
+        <!-- Key Features -->
+        <div class="row mb-5">
+            <div class="col-12 text-center mb-4">
+                <h2 class="fw-bold text-dark">Key Features</h2>
+                <p class="text-muted">Designed for high-efficiency enterprise and operational managers.</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="ydod-feature-card">
+                    <h3>Multi-Model Batch Actions</h3>
+                    <p class="text-muted">Execute mass cancellations or draft resets directly from list views across Sales, Purchase, Accounting, and Inventory apps seamlessly.</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="ydod-feature-card">
+                    <h3>Strict Security Access</h3>
+                    <p class="text-muted">Restricted via a dedicated security group ("Mass Cancel &amp; Reset Manager") ensuring only authorized personnel execute batch mutations.</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="ydod-feature-card">
+                    <h3>Mandatory Audit Reason</h3>
+                    <p class="text-muted">An interactive confirmation wizard requires operational reasons before any document state is modified.</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="ydod-feature-card">
+                    <h3>Automatic Chatter Logging</h3>
+                    <p class="text-muted">Every cancellation or reset reason is automatically posted into the document's chatter for full transparency and traceability.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How To Use -->
+        <div class="row mb-5">
+            <div class="col-12 text-center mb-4">
+                <h2 class="fw-bold text-dark">How To Use</h2>
+                <p class="text-muted">Simple 3-step workflow for operational excellence</p>
+            </div>
+            <div class="col-lg-10 mx-auto">
+                <div class="ydod-step">
+                    <div class="ydod-step-number">1</div>
+                    <div>
+                        <h4 class="fw-bold text-dark">Select Documents</h4>
+                        <p class="text-muted">Navigate to any list view (Sales Orders, Purchase Orders, Invoices, or Stock Transfers) and select multiple records using the list checkboxes.</p>
+                    </div>
+                </div>
+                <div class="ydod-step">
+                    <div class="ydod-step-number">2</div>
+                    <div>
+                        <h4 class="fw-bold text-dark">Trigger Mass Action</h4>
+                        <p class="text-muted">Click on the <strong>Actions</strong> dropdown menu and select the corresponding mass cancel or reset server action.</p>
+                    </div>
+                </div>
+                <div class="ydod-step">
+                    <div class="ydod-step-number">3</div>
+                    <div>
+                        <h4 class="fw-bold text-dark">Provide Reason &amp; Confirm</h4>
+                        <p class="text-muted">Enter the mandatory cancellation or reset justification in the wizard pop-up and click Confirm. Review the audit entries instantly in the chatter.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Section -->
+        <div class="ydod-support">
+            <h3 class="fw-bold text-dark mb-3">Need Support or Customization?</h3>
+            <p class="text-muted mb-2">We are here to help you get the most out of your Odoo ERP implementation.</p>
+            <p class="mb-1"><strong>Author:</strong> Dody Ahmad Kusuma Jaya (yDoD)</p>
+            <p class="mb-1"><strong>Website:</strong> <a href="https://profile.dodyakj.online" target="_blank">https://profile.dodyakj.online</a></p>
+            <p class="mb-0"><strong>Support Email:</strong> <a href="mailto:dodyakj@gmail.com">dodyakj@gmail.com</a></p>
+        </div>
+    </div>
+</body>
+</html>

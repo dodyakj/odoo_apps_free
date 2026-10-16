@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_sale_order_1" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="demo_sale_order_2" model="sale.order">
+        <field name="partner_id" ref="base.res_partner_3"/>
+        <field name="state">sale</field>
+    </record>
+    <record id="demo_purchase_order_1" model="purchase.order">
+        <field name="partner_id" ref="base.res_partner_4"/>
+        <field name="state">purchase</field>
+    </record>
+    <record id="demo_purchase_order_2" model="purchase.order">
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="state">purchase</field>
+    </record>
+</odoo>
