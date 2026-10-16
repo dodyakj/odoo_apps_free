@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Server Action for Sale Order -->
+    <record id="action_server_mass_cancel_sale" model="ir.actions.server">
+        <field name="name">Mass Cancel / Reset Sales Orders</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+if env.user.has_group('ydod_mass_cancel_reset_wizard.group_mass_cancel_manager'):
+    action = {
+        'name': 'Mass Cancel / Reset Sales Orders',
+        'type': 'ir.actions.act_window',
+        'res_model': 'ydod.mass.cancel.wizard',
+        'view_mode': 'form',
+        'target': 'new',
+        'context': {
+            'default_model_name': 'sale.order',
+            'active_ids': env.context.get('active_ids', []),
+        },
+    }
+else:
+    raise UserError(_("You are not authorized to perform mass cancel and reset operations."))
+        </field>
+    </record>
+
+    <!-- Server Action for Purchase Order -->
+    <record id="action_server_mass_cancel_purchase" model="ir.actions.server">
+        <field name="name">Mass Cancel / Reset Purchase Orders</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+if env.user.has_group('ydod_mass_cancel_reset_wizard.group_mass_cancel_manager'):
+    action = {
+        'name': 'Mass Cancel / Reset Purchase Orders',
+        'type': 'ir.actions.act_window',
+        'res_model': 'ydod.mass.cancel.wizard',
+        'view_mode': 'form',
+        'target': 'new',
+        'context': {
+            'default_model_name': 'purchase.order',
+            'active_ids': env.context.get('active_ids', []),
+        },
+    }
+else:
+    raise UserError(_("You are not authorized to perform mass cancel and reset operations."))
+        </field>
+    </record>
+
+    <!-- Server Action for Account Move (Invoices / Bills) -->
+    <record id="action_server_mass_cancel_account" model="ir.actions.server">
+        <field name="name">Mass Cancel / Reset Invoices</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+if env.user.has_group('ydod_mass_cancel_reset_wizard.group_mass_cancel_manager'):
+    action = {
+        'name': 'Mass Cancel / Reset Invoices',
+        'type': 'ir.actions.act_window',
+        'res_model': 'ydod.mass.cancel.wizard',
+        'view_mode': 'form',
+        'target': 'new',
+        'context': {
+            'default_model_name': 'account.move',
+            'active_ids': env.context.get('active_ids', []),
+        },
+    }
+else:
+    raise UserError(_("You are not authorized to perform mass cancel and reset operations."))
+        </field>
+    </record>
+
+    <!-- Server Action for Stock Picking -->
+    <record id="action_server_mass_cancel_stock" model="ir.actions.server">
+        <field name="name">Mass Cancel / Reset Transfers</field>
+        <field name="model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+if env.user.has_group('ydod_mass_cancel_reset_wizard.group_mass_cancel_manager'):
+    action = {
+        'name': 'Mass Cancel / Reset Transfers',
+        'type': 'ir.actions.act_window',
+        'res_model': 'ydod.mass.cancel.wizard',
+        'view_mode': 'form',
+        'target': 'new',
+        'context': {
+            'default_model_name': 'stock.picking',
+            'active_ids': env.context.get('active_ids', []),
+        },
+    }
+else:
+    raise UserError(_("You are not authorized to perform mass cancel and reset operations."))
+        </field>
+    </record>
+</odoo>
