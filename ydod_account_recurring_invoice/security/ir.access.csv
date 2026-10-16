@@ -1,0 +1,11 @@
+id,name,model_id,group_id/id,operation,domain
+access_account_recurring_invoice_readonly,account.recurring.invoice.readonly,account.recurring.invoice,account.group_account_readonly,r,
+access_account_recurring_invoice_user,account.recurring.invoice.user,account.recurring.invoice,account.group_account_invoice,crud,
+access_account_recurring_invoice_manager,account.recurring.invoice.manager,account.recurring.invoice,account.group_account_manager,crud,
+access_account_recurring_invoice_base_user,account.recurring.invoice base user,account.recurring.invoice,base.group_user,r,
+account_recurring_invoice_comp_rule,account.recurring.invoice multi-company,account.recurring.invoice,,crud,"['|', ('company_id', '=', False), ('company_id', 'parent_of', company_ids)]"
+access_account_recurring_invoice_line_readonly,account.recurring.invoice.line.readonly,account.recurring.invoice.line,account.group_account_readonly,r,
+access_account_recurring_invoice_line_user,account.recurring.invoice.line.user,account.recurring.invoice.line,account.group_account_invoice,crud,
+access_account_recurring_invoice_line_manager,account.recurring.invoice.line.manager,account.recurring.invoice.line,account.group_account_manager,crud,
+access_account_recurring_invoice_line_base_user,account.recurring.invoice.line base user,account.recurring.invoice.line,base.group_user,r,
+account_recurring_invoice_line_comp_rule,account.recurring.invoice.line multi-company,account.recurring.invoice.line,,crud,"['|', ('company_id', '=', False), ('company_id', 'parent_of', company_ids)]"
