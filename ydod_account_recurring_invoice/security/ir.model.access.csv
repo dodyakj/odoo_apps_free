@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_recurring_invoice_readonly,account.recurring.invoice.readonly,model_account_recurring_invoice,account.group_account_readonly,1,0,0,0
+access_account_recurring_invoice_user,account.recurring.invoice.user,model_account_recurring_invoice,account.group_account_invoice,1,1,1,1
+access_account_recurring_invoice_manager,account.recurring.invoice.manager,model_account_recurring_invoice,account.group_account_manager,1,1,1,1
+access_account_recurring_invoice_base_user,account.recurring.invoice.base_user,model_account_recurring_invoice,base.group_user,1,0,0,0
+access_account_recurring_invoice_line_readonly,account.recurring.invoice.line.readonly,model_account_recurring_invoice_line,account.group_account_readonly,1,0,0,0
+access_account_recurring_invoice_line_user,account.recurring.invoice.line.user,model_account_recurring_invoice_line,account.group_account_invoice,1,1,1,1
+access_account_recurring_invoice_line_manager,account.recurring.invoice.line.manager,model_account_recurring_invoice_line,account.group_account_manager,1,1,1,1
+access_account_recurring_invoice_line_base_user,account.recurring.invoice.line.base_user,model_account_recurring_invoice_line,base.group_user,1,0,0,0

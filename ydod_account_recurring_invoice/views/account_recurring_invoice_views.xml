@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- SEARCH VIEW -->
+    <record id="view_account_recurring_invoice_search" model="ir.ui.view">
+        <field name="name">account.recurring.invoice.search</field>
+        <field name="model">account.recurring.invoice</field>
+        <field name="arch" type="xml">
+            <search string="Search Recurring Invoices">
+                <field name="name" string="Schedule / Reference" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="partner_id"/>
+                <separator/>
+                <filter string="Running" name="filter_running" domain="[('state', '=', 'running')]"/>
+                <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Paused" name="filter_paused" domain="[('state', '=', 'paused')]"/>
+                <filter string="Closed" name="filter_closed" domain="[('state', '=', 'closed')]"/>
+                <separator/>
+                <filter string="Customer Invoices" name="filter_out_invoice" domain="[('move_type', '=', 'out_invoice')]"/>
+                <filter string="Vendor Bills" name="filter_in_invoice" domain="[('move_type', '=', 'in_invoice')]"/>
+                <separator/>
+                <filter string="Auto-Post Enabled" name="filter_auto_post" domain="[('auto_post', '=', True)]"/>
+                <filter string="Auto-Email Enabled" name="filter_send_email" domain="[('send_email', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Partner" name="group_partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    <filter string="Frequency" name="group_rule_type" context="{'group_by': 'recurring_rule_type'}"/>
+                    <filter string="Next Execution Date" name="group_next_execution" context="{'group_by': 'date_next_execution'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- TREE VIEW -->
+    <record id="view_account_recurring_invoice_tree" model="ir.ui.view">
+        <field name="name">account.recurring.invoice.tree</field>
+        <field name="model">account.recurring.invoice</field>
+        <field name="arch" type="xml">
+            <tree string="Recurring Invoices" decoration-info="state == 'draft'" decoration-warning="state == 'paused'" decoration-muted="state == 'closed'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="move_type" widget="badge"/>
+                <field name="recurring_interval"/>
+                <field name="recurring_rule_type"/>
+                <field name="date_next_execution"/>
+                <field name="amount_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="cycle_count"/>
+                <field name="auto_post" optional="hide"/>
+                <field name="send_email" optional="hide"/>
+                <field name="state" widget="badge" decoration-success="state == 'running'" decoration-info="state == 'draft'" decoration-warning="state == 'paused'" decoration-muted="state == 'closed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_account_recurring_invoice_form" model="ir.ui.view">
+        <field name="name">account.recurring.invoice.form</field>
+        <field name="model">account.recurring.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Recurring Invoice Schedule">
+                <header>
+                    <button name="action_start" string="Start Schedule" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_generate_invoice" string="Generate Invoice Now" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'running')]}"/>
+                    <button name="action_pause" string="Pause" type="object" attrs="{'invisible': [('state', '!=', 'running')]}"/>
+                    <button name="action_resume" string="Resume" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'paused')]}"/>
+                    <button name="action_close" string="Close" type="object" attrs="{'invisible': [('state', 'not in', ('running', 'paused'))]}"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object" attrs="{'invisible': [('state', '!=', 'closed')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_invoices"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o">
+                            <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                        </button>
+                        <button name="action_view_invoices"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-usd">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="total_billed_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                </span>
+                                <span class="o_stat_text">Total Billed</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <span class="o_form_label">Recurring Reference</span>
+                        <h1>
+                            <field name="code" readonly="1"/>
+                        </h1>
+                        <label for="name" string="Schedule Title"/>
+                        <h2>
+                            <field name="name" placeholder="e.g. Monthly Retainer / Cloud Maintenance" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group name="general_info" string="General Information">
+                            <field name="partner_id" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="move_type" widget="radio" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="journal_id" options="{'no_create': True}" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="payment_term_id" options="{'no_create': True}" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="company_id" groups="base.group_multi_company" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="currency_id" options="{'no_create': True}" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                        </group>
+                        <group name="schedule_info" string="Recurrence Schedule">
+                            <label for="recurring_interval" string="Repeat Every"/>
+                            <div class="o_row">
+                                <field name="recurring_interval" class="oe_inline" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                                <field name="recurring_rule_type" class="oe_inline" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            </div>
+                            <field name="date_start" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="date_next_execution" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="end_type" widget="radio" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="date_end" attrs="{'invisible': [('end_type', '!=', 'until_date')], 'required': [('end_type', '=', 'until_date')], 'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="cycle_limit" attrs="{'invisible': [('end_type', '!=', 'cycle_limit')], 'required': [('end_type', '=', 'cycle_limit')], 'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="cycle_count" readonly="1"/>
+                        </group>
+                    </group>
+                    <group name="automation_info" string="Automation Options">
+                        <group>
+                            <field name="auto_post" widget="boolean_toggle" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="send_email" widget="boolean_toggle" attrs="{'invisible': [('auto_post', '=', False)], 'readonly': [('state', '=', 'closed')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Invoice Lines" name="lines">
+                            <field name="line_ids" attrs="{'readonly': [('state', '=', 'closed')]}">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="discount" optional="show"/>
+                                    <field name="tax_ids" widget="many2many_tags" optional="show"/>
+                                    <field name="price_subtotal" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_total" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                        <page string="Generated Invoices" name="history">
+                            <field name="invoice_ids" readonly="1">
+                                <tree string="Invoices" decoration-info="state == 'draft'" decoration-muted="state == 'cancel'">
+                                    <field name="name"/>
+                                    <field name="invoice_date"/>
+                                    <field name="invoice_date_due" optional="show"/>
+                                    <field name="amount_total_signed" string="Total" sum="Total"/>
+                                    <field name="payment_state" widget="badge" optional="show"/>
+                                    <field name="state" widget="badge" decoration-success="state == 'posted'" decoration-info="state == 'draft'"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Internal Notes" name="notes">
+                            <field name="description" placeholder="Internal notes or terms regarding this recurring profile..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTIONS -->
+    <record id="action_account_recurring_invoice_customer" model="ir.actions.act_window">
+        <field name="name">Recurring Invoices</field>
+        <field name="res_model">account.recurring.invoice</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('move_type', '=', 'out_invoice')]</field>
+        <field name="context">{'default_move_type': 'out_invoice', 'search_default_filter_running': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first customer recurring invoice schedule!
+            </p>
+            <p>
+                Set up subscription plans, retainers, and regular billing schedules that automate invoice creation and delivery.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_account_recurring_invoice_vendor" model="ir.actions.act_window">
+        <field name="name">Recurring Bills</field>
+        <field name="res_model">account.recurring.invoice</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('move_type', '=', 'in_invoice')]</field>
+        <field name="context">{'default_move_type': 'in_invoice', 'search_default_filter_running': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first vendor recurring bill schedule!
+            </p>
+            <p>
+                Manage recurring supplier expenses such as rent, software licenses, utilities, and contractor fees.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_account_recurring_invoice_all" model="ir.actions.act_window">
+        <field name="name">All Recurring Schedules</field>
+        <field name="res_model">account.recurring.invoice</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Manage all recurring invoice and bill schedules in one place.
+            </p>
+        </field>
+    </record>
+</odoo>
