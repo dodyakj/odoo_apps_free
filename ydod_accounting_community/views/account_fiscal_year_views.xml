@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_fiscal_year_tree" model="ir.ui.view">
+        <field name="name">account.fiscal.year.tree</field>
+        <field name="model">account.fiscal.year</field>
+        <field name="arch" type="xml">
+            <tree string="Fiscal Years" decoration-info="state == 'draft'" decoration-success="state == 'open'" decoration-muted="state == 'closed'">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'open'" decoration-muted="state == 'closed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_fiscal_year_form" model="ir.ui.view">
+        <field name="name">account.fiscal.year.form</field>
+        <field name="model">account.fiscal.year</field>
+        <field name="arch" type="xml">
+            <form string="Fiscal Year">
+                <header>
+                    <button name="action_open" string="Open Period" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_generate_closing_entry" string="Generate Closing Entry" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'open')]}"/>
+                    <button name="action_close" string="Close Period" type="object" attrs="{'invisible': [('state', '!=', 'open')]}"/>
+                    <button name="action_draft" string="Reset to Draft" type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,open,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_moves" type="object" class="oe_stat_button" icon="fa-bars">
+                            <field name="move_count" widget="statinfo" string="Entries"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" string="Fiscal Year"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. FY2026" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code" placeholder="e.g. FY26" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="company_id" groups="base.group_multi_company" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                        </group>
+                        <group>
+                            <field name="date_from" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="date_to" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="closing_move_id" attrs="{'invisible': [('closing_move_id', '=', False)]}" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_fiscal_year_search" model="ir.ui.view">
+        <field name="name">account.fiscal.year.search</field>
+        <field name="model">account.fiscal.year</field>
+        <field name="arch" type="xml">
+            <search string="Search Fiscal Year">
+                <field name="name" string="Fiscal Year" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="code"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <separator/>
+                <filter string="Open" name="open" domain="[('state', '=', 'open')]"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Closed" name="closed" domain="[('state', '=', 'closed')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                    <filter string="Company" name="group_by_company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_account_fiscal_year" model="ir.actions.act_window">
+        <field name="name">Fiscal Years</field>
+        <field name="res_model">account.fiscal.year</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_account_fiscal_year_search"/>
+        <field name="context">{'search_default_open': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first fiscal year
+            </p>
+            <p>
+                Define fiscal periods, track posted transactions, and perform automated year-end closing entries.
+            </p>
+        </field>
+    </record>
+</odoo>

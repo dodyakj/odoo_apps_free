@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_bank_reconcile_statement_form" model="ir.ui.view">
+        <field name="name">account.bank.reconcile.statement.form</field>
+        <field name="model">account.bank.reconcile.statement</field>
+        <field name="arch" type="xml">
+            <form string="Bank Reconciliation Statement">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="journal_id" options="{'no_create': True}"/>
+                            <field name="statement_date"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="bank_statement_balance" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Reconciliation Audit" name="summary">
+                            <group>
+                                <group string="Balance Verification">
+                                    <field name="gl_balance" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="uncleared_balance" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="difference" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info mt-3" role="alert" attrs="{'invisible': [('difference', '=', 0)]}">
+                                <strong>Reconciliation Variance:</strong> A difference exists between your physical bank statement and the general ledger book balance. Inspect uncleared items or verify statement inputs.
+                            </div>
+                            <div class="alert alert-success mt-3" role="alert" attrs="{'invisible': [('difference', '!=', 0)]}">
+                                <strong>Balanced:</strong> The bank statement matches your general ledger book balance!
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_print_report" string="Print Statement" type="object" class="btn-primary" icon="fa-print"/>
+                    <button name="action_view_uncleared_lines" string="View Uncleared Items" type="object" class="btn-secondary" icon="fa-list"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_bank_reconcile_statement" model="ir.actions.act_window">
+        <field name="name">Bank Reconciliation Statement</field>
+        <field name="res_model">account.bank.reconcile.statement</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_account_bank_reconcile_statement_form"/>
+    </record>
+</odoo>

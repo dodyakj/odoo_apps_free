@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_bank_reconcile_statement" model="ir.actions.report">
+        <field name="name">Bank Reconciliation Statement</field>
+        <field name="model">account.bank.reconcile.statement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ydod_accounting_community.report_bank_reconcile_statement</field>
+        <field name="binding_model_id" ref="model_account_bank_reconcile_statement"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_fiscal_year_closing" model="ir.actions.report">
+        <field name="name">Fiscal Year Closing Summary</field>
+        <field name="model">account.fiscal.year</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ydod_accounting_community.report_fiscal_year_closing_summary</field>
+        <field name="binding_model_id" ref="model_account_fiscal_year"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

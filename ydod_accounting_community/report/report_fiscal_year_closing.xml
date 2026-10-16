@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_fiscal_year_closing_summary">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h2 class="text-primary font-weight-bold">Fiscal Year Closing Summary</h2>
+                                <p class="text-muted">
+                                    Official closing audit report documenting P&amp;L balance transfers to Retained Earnings.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr>
+                                        <th class="w-40">Fiscal Year:</th>
+                                        <td><span t-out="doc.name"/> (<span t-out="doc.code"/>)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Period:</th>
+                                        <td><span t-out="doc.date_from"/> to <span t-out="doc.date_to"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Company:</th>
+                                        <td><span t-out="doc.company_id.name"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6">
+                                <table class="table table-sm table-borderless">
+                                    <tr>
+                                        <th class="w-40">Status:</th>
+                                        <td><span t-out="doc.state.capitalize()"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Posted Moves:</th>
+                                        <td><span t-out="doc.move_count"/></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Closing Entry:</th>
+                                        <td><span t-out="doc.closing_move_id.name or 'Not Generated'"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <h4 class="border-bottom pb-2">Closing Entry Line Breakdown</h4>
+                                <t t-if="doc.closing_move_id and doc.closing_move_id.line_ids">
+                                    <table class="table table-sm table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Account Code</th>
+                                                <th>Account Name</th>
+                                                <th>Label</th>
+                                                <th class="text-end">Debit</th>
+                                                <th class="text-end">Credit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="doc.closing_move_id.line_ids" t-as="line">
+                                                <td><span t-out="line.account_id.code"/></td>
+                                                <td><span t-out="line.account_id.name"/></td>
+                                                <td><span t-out="line.name"/></td>
+                                                <td class="text-end"><span t-field="line.debit"/></td>
+                                                <td class="text-end"><span t-field="line.credit"/></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="table-light font-weight-bold">
+                                                <td colspan="3" class="text-end">Total:</td>
+                                                <td class="text-end">
+                                                    <span t-out="sum(doc.closing_move_id.line_ids.mapped('debit'))" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-out="sum(doc.closing_move_id.line_ids.mapped('credit'))" t-options="{'widget': 'monetary', 'display_currency': doc.company_id.currency_id}"/>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </t>
+                                <p t-else="" class="text-muted font-italic">
+                                    No closing entry has been generated for this fiscal year yet.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
