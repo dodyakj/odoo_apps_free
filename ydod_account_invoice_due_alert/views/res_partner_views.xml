@@ -1,0 +1,28 @@
+<odoo>
+    <record id="view_partner_form_inherit_aging" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.aging</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="Invoice Aging &amp; Risk" name="invoice_aging">
+                        <group>
+                            <group string="Risk Assessment">
+                                <field name="customer_risk_score" widget="radio"/>
+                                <field name="total_overdue_amount" widget="monetary" readonly="1"/>
+                            </group>
+                            <group string="Aging Buckets">
+                                <field name="aging_current" widget="monetary" readonly="1"/>
+                                <field name="aging_1_30" widget="monetary" readonly="1"/>
+                                <field name="aging_31_60" widget="monetary" readonly="1"/>
+                                <field name="aging_61_90" widget="monetary" readonly="1"/>
+                                <field name="aging_90_plus" widget="monetary" readonly="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>
