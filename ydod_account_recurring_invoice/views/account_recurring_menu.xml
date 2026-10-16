@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Customers Menu: Recurring Invoices -->
+    <menuitem id="menu_account_recurring_invoice_customer"
+              name="Recurring Invoices"
+              parent="account.menu_finance_receivables"
+              action="action_account_recurring_invoice_customer"
+              sequence="12"/>
+
+    <!-- Vendors Menu: Recurring Bills -->
+    <menuitem id="menu_account_recurring_invoice_vendor"
+              name="Recurring Bills"
+              parent="account.menu_finance_payables"
+              action="action_account_recurring_invoice_vendor"
+              sequence="12"/>
+
+    <!-- Configuration Menu: All Recurring Schedules -->
+    <menuitem id="menu_account_recurring_invoice_all"
+              name="Recurring Schedules"
+              parent="account.account_invoicing_menu"
+              action="action_account_recurring_invoice_all"
+              sequence="40"/>
+</odoo>

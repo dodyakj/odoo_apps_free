@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Demo Record 1: Monthly Hosting & SLA Support (Running) -->
+    <record id="demo_recurring_schedule_hosting" model="account.recurring.invoice">
+        <field name="name">Monthly Cloud Hosting &amp; SLA Support</field>
+        <field name="code">REC/2026/0001</field>
+        <field name="partner_id" ref="base.res_partner_1"/>
+        <field name="move_type">out_invoice</field>
+        <field name="state">running</field>
+        <field name="recurring_interval">1</field>
+        <field name="recurring_rule_type">monthly</field>
+        <field name="date_start">2026-01-01</field>
+        <field name="date_next_execution">2026-11-01</field>
+        <field name="end_type">forever</field>
+        <field name="auto_post" eval="True"/>
+        <field name="send_email" eval="True"/>
+        <field name="line_ids" eval="[
+            Command.create({
+                'name': 'High-Performance Cloud VPS (8 vCPU, 32GB RAM)',
+                'quantity': 1.0,
+                'price_unit': 350.0,
+            }),
+            Command.create({
+                'name': 'Managed Backup &amp; 24/7 Monitoring SLA',
+                'quantity': 1.0,
+                'price_unit': 100.0,
+            }),
+        ]"/>
+    </record>
+
+    <!-- Demo Record 2: Quarterly Legal & Advisory Retainer (Running, Cycle Limit) -->
+    <record id="demo_recurring_schedule_retainer" model="account.recurring.invoice">
+        <field name="name">Quarterly Enterprise Legal &amp; Advisory Retainer</field>
+        <field name="code">REC/2026/0002</field>
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="move_type">out_invoice</field>
+        <field name="state">running</field>
+        <field name="recurring_interval">1</field>
+        <field name="recurring_rule_type">quarterly</field>
+        <field name="date_start">2026-01-01</field>
+        <field name="date_next_execution">2026-10-01</field>
+        <field name="end_type">cycle_limit</field>
+        <field name="cycle_limit">4</field>
+        <field name="auto_post" eval="True"/>
+        <field name="line_ids" eval="[
+            Command.create({
+                'name': 'Corporate Legal Advisory Retainer (Quarterly)',
+                'quantity': 1.0,
+                'price_unit': 1200.0,
+            }),
+        ]"/>
+    </record>
+
+    <!-- Demo Record 3: Weekly IT Maintenance (Running, Until Date) -->
+    <record id="demo_recurring_schedule_maintenance" model="account.recurring.invoice">
+        <field name="name">Weekly On-Site IT Maintenance</field>
+        <field name="code">REC/2026/0003</field>
+        <field name="partner_id" ref="base.res_partner_3"/>
+        <field name="move_type">out_invoice</field>
+        <field name="state">running</field>
+        <field name="recurring_interval">1</field>
+        <field name="recurring_rule_type">weekly</field>
+        <field name="date_start">2026-06-01</field>
+        <field name="date_next_execution">2026-10-20</field>
+        <field name="end_type">until_date</field>
+        <field name="date_end">2026-12-31</field>
+        <field name="line_ids" eval="[
+            Command.create({
+                'name': 'Scheduled Hardware &amp; Network Maintenance',
+                'quantity': 2.5,
+                'price_unit': 100.0,
+            }),
+        ]"/>
+    </record>
+
+    <!-- Demo Record 4: Annual ERP Licensing (Draft) -->
+    <record id="demo_recurring_schedule_licensing" model="account.recurring.invoice">
+        <field name="name">Annual ERP Licensing &amp; Support Plan</field>
+        <field name="code">REC/2026/0004</field>
+        <field name="partner_id" ref="base.res_partner_12"/>
+        <field name="move_type">out_invoice</field>
+        <field name="state">draft</field>
+        <field name="recurring_interval">1</field>
+        <field name="recurring_rule_type">yearly</field>
+        <field name="date_start">2026-11-01</field>
+        <field name="date_next_execution">2026-11-01</field>
+        <field name="end_type">forever</field>
+        <field name="auto_post" eval="False"/>
+        <field name="line_ids" eval="[
+            Command.create({
+                'name': 'Enterprise User Seat Licenses (Annual)',
+                'quantity': 10.0,
+                'price_unit': 240.0,
+            }),
+            Command.create({
+                'name': 'Dedicated Account Manager SLA',
+                'quantity': 1.0,
+                'price_unit': 1200.0,
+            }),
+        ]"/>
+    </record>
+
+    <!-- Demo Record 5: Vendor Bill - Monthly Office Cleaning (Paused) -->
+    <record id="demo_recurring_schedule_cleaning" model="account.recurring.invoice">
+        <field name="name">Monthly Office Cleaning &amp; Facility Supplies</field>
+        <field name="code">REC/2026/0005</field>
+        <field name="partner_id" ref="base.res_partner_4"/>
+        <field name="move_type">in_invoice</field>
+        <field name="state">paused</field>
+        <field name="recurring_interval">1</field>
+        <field name="recurring_rule_type">monthly</field>
+        <field name="date_start">2026-02-01</field>
+        <field name="date_next_execution">2026-11-01</field>
+        <field name="end_type">forever</field>
+        <field name="line_ids" eval="[
+            Command.create({
+                'name': 'Commercial Janitorial Services',
+                'quantity': 1.0,
+                'price_unit': 300.0,
+            }),
+            Command.create({
+                'name': 'Sanitary &amp; Restroom Consumables',
+                'quantity': 1.0,
+                'price_unit': 85.0,
+            }),
+        ]"/>
+    </record>
+
+    <!-- Demo Record 6: Dedicated Fiber Internet (Closed) -->
+    <record id="demo_recurring_schedule_fiber" model="account.recurring.invoice">
+        <field name="name">Dedicated Fiber Internet 1Gbps Contract</field>
+        <field name="code">REC/2026/0006</field>
+        <field name="partner_id" ref="base.res_partner_2"/>
+        <field name="move_type">out_invoice</field>
+        <field name="state">closed</field>
+        <field name="recurring_interval">1</field>
+        <field name="recurring_rule_type">monthly</field>
+        <field name="date_start">2025-01-01</field>
+        <field name="date_next_execution">2026-01-01</field>
+        <field name="end_type">cycle_limit</field>
+        <field name="cycle_limit">12</field>
+        <field name="line_ids" eval="[
+            Command.create({
+                'name': 'Symmetric Dedicated Leased Line 1Gbps',
+                'quantity': 1.0,
+                'price_unit': 550.0,
+            }),
+        ]"/>
+    </record>
+</odoo>
