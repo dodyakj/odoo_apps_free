@@ -1,0 +1,4 @@
+id,name,model_id,group_id/id,operation,domain
+access_res_partner_min_order_user,res.partner min order user,res.partner,base.group_user,crud,
+access_purchase_order_min_order_user,purchase.order min order user,purchase.order,base.group_user,crud,
+access_purchase_order_line_min_order_user,purchase.order.line min order user,purchase.order.line,base.group_user,crud,

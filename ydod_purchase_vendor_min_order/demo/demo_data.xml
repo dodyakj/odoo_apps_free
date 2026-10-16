@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Demo Vendors with varied minimum requirements -->
+    <record id="vendor_min_amount" model="res.partner">
+        <field name="name">Acme Supplies Co.</field>
+        <field name="supplier_rank">1</field>
+        <field name="min_order_amount">500.0</field>
+        <field name="min_order_quantity">0.0</field>
+        <field name="email">acme@example.com</field>
+        <field name="phone">+1-555-0101</field>
+    </record>
+
+    <record id="vendor_min_qty" model="res.partner">
+        <field name="name">Bulk Goods Logistics</field>
+        <field name="supplier_rank">1</field>
+        <field name="min_order_amount">0.0</field>
+        <field name="min_order_quantity">100.0</field>
+        <field name="email">bulk@example.com</field>
+        <field name="phone">+1-555-0102</field>
+    </record>
+
+    <record id="vendor_both_min" model="res.partner">
+        <field name="name">Global Components Ltd.</field>
+        <field name="supplier_rank">1</field>
+        <field name="min_order_amount">1000.0</field>
+        <field name="min_order_quantity">50.0</field>
+        <field name="email">global@example.com</field>
+        <field name="phone">+1-555-0103</field>
+    </record>
+
+    <record id="vendor_no_min" model="res.partner">
+        <field name="name">Standard Office Depot</field>
+        <field name="supplier_rank">1</field>
+        <field name="min_order_amount">0.0</field>
+        <field name="min_order_quantity">0.0</field>
+        <field name="email">standard@example.com</field>
+        <field name="phone">+1-555-0104</field>
+    </record>
+
+    <!-- Demo Products -->
+    <record id="product_demo_chair" model="product.product">
+        <field name="name">Ergonomic Office Chair</field>
+        <field name="standard_price">110.0</field>
+        <field name="list_price">150.0</field>
+    </record>
+
+    <record id="product_demo_lamp" model="product.product">
+        <field name="name">LED Desk Lamp</field>
+        <field name="standard_price">25.0</field>
+        <field name="list_price">35.0</field>
+    </record>
+
+    <record id="product_demo_stand" model="product.product">
+        <field name="name">Dual Monitor Stand</field>
+        <field name="standard_price">45.0</field>
+        <field name="list_price">60.0</field>
+    </record>
+
+    <record id="product_demo_cable" model="product.product">
+        <field name="name">HDMI Cable 2m</field>
+        <field name="standard_price">8.0</field>
+        <field name="list_price">12.0</field>
+    </record>
+
+    <!-- PO 1: Below minimum amount (Acme requires 500, order is 220) -->
+    <record id="po_demo_below_amount" model="purchase.order">
+        <field name="partner_id" ref="vendor_min_amount"/>
+        <field name="state">draft</field>
+    </record>
+    <record id="po_demo_below_amount_line" model="purchase.order.line">
+        <field name="order_id" ref="po_demo_below_amount"/>
+        <field name="product_id" ref="product_demo_chair"/>
+        <field name="name">Ergonomic Office Chair</field>
+        <field name="product_qty">2.0</field>
+        <field name="price_unit">110.0</field>
+    </record>
+
+    <!-- PO 2: Meets minimum amount (Acme requires 500, order is 550) -->
+    <record id="po_demo_meets_amount" model="purchase.order">
+        <field name="partner_id" ref="vendor_min_amount"/>
+        <field name="state">draft</field>
+    </record>
+    <record id="po_demo_meets_amount_line" model="purchase.order.line">
+        <field name="order_id" ref="po_demo_meets_amount"/>
+        <field name="product_id" ref="product_demo_chair"/>
+        <field name="name">Ergonomic Office Chair</field>
+        <field name="product_qty">5.0</field>
+        <field name="price_unit">110.0</field>
+    </record>
+
+    <!-- PO 3: Below minimum quantity (Bulk requires 100 qty, order is 40 qty) -->
+    <record id="po_demo_below_qty" model="purchase.order">
+        <field name="partner_id" ref="vendor_min_qty"/>
+        <field name="state">draft</field>
+    </record>
+    <record id="po_demo_below_qty_line" model="purchase.order.line">
+        <field name="order_id" ref="po_demo_below_qty"/>
+        <field name="product_id" ref="product_demo_lamp"/>
+        <field name="name">LED Desk Lamp</field>
+        <field name="product_qty">40.0</field>
+        <field name="price_unit">25.0</field>
+    </record>
+
+    <!-- PO 4: Meets minimum quantity (Bulk requires 100 qty, order is 120 qty) -->
+    <record id="po_demo_meets_qty" model="purchase.order">
+        <field name="partner_id" ref="vendor_min_qty"/>
+        <field name="state">draft</field>
+    </record>
+    <record id="po_demo_meets_qty_line" model="purchase.order.line">
+        <field name="order_id" ref="po_demo_meets_qty"/>
+        <field name="product_id" ref="product_demo_lamp"/>
+        <field name="name">LED Desk Lamp</field>
+        <field name="product_qty">120.0</field>
+        <field name="price_unit">25.0</field>
+    </record>
+
+    <!-- PO 5: Below both minimums (Global requires 1000 amount & 50 qty, order is 450 & 10 qty) -->
+    <record id="po_demo_below_both" model="purchase.order">
+        <field name="partner_id" ref="vendor_both_min"/>
+        <field name="state">draft</field>
+    </record>
+    <record id="po_demo_below_both_line" model="purchase.order.line">
+        <field name="order_id" ref="po_demo_below_both"/>
+        <field name="product_id" ref="product_demo_stand"/>
+        <field name="name">Dual Monitor Stand</field>
+        <field name="product_qty">10.0</field>
+        <field name="price_unit">45.0</field>
+    </record>
+
+    <!-- PO 6: Meets both minimums (Global requires 1000 & 50, order is 1365 & 55) -->
+    <record id="po_demo_meets_both" model="purchase.order">
+        <field name="partner_id" ref="vendor_both_min"/>
+        <field name="state">draft</field>
+    </record>
+    <record id="po_demo_meets_both_line1" model="purchase.order.line">
+        <field name="order_id" ref="po_demo_meets_both"/>
+        <field name="product_id" ref="product_demo_stand"/>
+        <field name="name">Dual Monitor Stand</field>
+        <field name="product_qty">25.0</field>
+        <field name="price_unit">45.0</field>
+    </record>
+    <record id="po_demo_meets_both_line2" model="purchase.order.line">
+        <field name="order_id" ref="po_demo_meets_both"/>
+        <field name="product_id" ref="product_demo_cable"/>
+        <field name="name">HDMI Cable 2m</field>
+        <field name="product_qty">30.0</field>
+        <field name="price_unit">8.0</field>
+    </record>
+
+    <!-- PO 7: Vendor with no minimums (always compliant) -->
+    <record id="po_demo_no_min" model="purchase.order">
+        <field name="partner_id" ref="vendor_no_min"/>
+        <field name="state">draft</field>
+    </record>
+    <record id="po_demo_no_min_line" model="purchase.order.line">
+        <field name="order_id" ref="po_demo_no_min"/>
+        <field name="product_id" ref="product_demo_cable"/>
+        <field name="name">HDMI Cable 2m</field>
+        <field name="product_qty">5.0</field>
+        <field name="price_unit">8.0</field>
+    </record>
+</odoo>
