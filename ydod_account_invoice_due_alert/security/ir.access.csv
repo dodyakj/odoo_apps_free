@@ -1,0 +1,3 @@
+id,name,model_id,group_id/id,operation,domain
+access_ydod_invoice_alert_partner_user,ydod.invoice.alert.partner.user,res.partner,base.group_user,crud,
+access_ydod_invoice_alert_move_user,ydod.invoice.alert.move.user,account.move,base.group_user,crud,
