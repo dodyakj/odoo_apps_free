@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Trial Balance Template -->
+    <template id="report_trial_balance">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 13px;">
+                        <div class="text-center mb-4">
+                            <h2 style="font-weight: 700; color: #1e293b;">Trial Balance</h2>
+                            <p class="text-muted">
+                                <span>Company: <strong t-out="doc.company_id.name"/></span> |
+                                <span>As of: <strong t-out="doc.date_to"/></span>
+                                <t t-if="doc.date_from">
+                                    <span> | From: <strong t-out="doc.date_from"/></span>
+                                </t>
+                                <span> | Currency: <strong t-out="doc.company_id.currency_id.name"/></span>
+                            </p>
+                        </div>
+
+                        <t t-set="data" t-value="doc._get_trial_balance_data()"/>
+                        <table class="table table-sm table-bordered mt-3" style="border-collapse: collapse; width: 100%;">
+                            <thead class="table-light text-center" style="font-weight: 600; font-size: 12px;">
+                                <tr>
+                                    <th rowspan="2" style="vertical-align: middle; width: 12%;">Code</th>
+                                    <th rowspan="2" style="vertical-align: middle; width: 28%;">Account Name</th>
+                                    <th colspan="2" style="width: 20%;">Initial Balance</th>
+                                    <th colspan="2" style="width: 20%;">Period Activity</th>
+                                    <th colspan="2" style="width: 20%;">Ending Balance</th>
+                                </tr>
+                                <tr>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="data['lines']" t-as="l">
+                                    <tr>
+                                        <td><span t-out="l['code']"/></td>
+                                        <td><span t-out="l['name']"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(l['initial_debit'])"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(l['initial_credit'])"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(l['period_debit'])"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(l['period_credit'])"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(l['ending_debit'])"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(l['ending_credit'])"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                            <tfoot class="table-light" style="font-weight: 700;">
+                                <tr>
+                                    <td colspan="2" class="text-center">Total</td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['totals']['initial_debit'])"/></td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['totals']['initial_credit'])"/></td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['totals']['period_debit'])"/></td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['totals']['period_credit'])"/></td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['totals']['ending_debit'])"/></td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['totals']['ending_credit'])"/></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Profit and Loss Template -->
+    <template id="report_pnl">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 13px;">
+                        <div class="text-center mb-4">
+                            <h2 style="font-weight: 700; color: #1e293b;">Profit &amp; Loss Statement</h2>
+                            <p class="text-muted">
+                                <span>Company: <strong t-out="doc.company_id.name"/></span> |
+                                <span>Period: <strong t-out="doc.date_from or 'Beginning'"/> to <strong t-out="doc.date_to"/></span>
+                                <t t-if="doc.enable_comparison and doc.comparison_date_to">
+                                    <span> | Comparison: <strong t-out="doc.comparison_date_from or 'Beginning'"/> to <strong t-out="doc.comparison_date_to"/></span>
+                                </t>
+                            </p>
+                        </div>
+
+                        <t t-set="data" t-value="doc._get_pnl_data()"/>
+
+                        <!-- Income Section -->
+                        <h4 class="mt-4 pb-1 border-bottom" style="font-weight: 600; color: #047857;">Operating Income</h4>
+                        <table class="table table-sm mt-2" style="width: 100%;">
+                            <thead>
+                                <tr class="text-muted" style="font-size: 12px;">
+                                    <th style="width: 15%;">Code</th>
+                                    <th style="width: 45%;">Account</th>
+                                    <th class="text-end" style="width: 20%;">Current Period</th>
+                                    <t t-if="doc.enable_comparison">
+                                        <th class="text-end" style="width: 20%;">Prior Period</th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="data['income_lines']" t-as="l">
+                                    <tr>
+                                        <td><span t-out="l['code']"/></td>
+                                        <td><span t-out="l['name']"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(l['current'])"/></td>
+                                        <t t-if="doc.enable_comparison">
+                                            <td class="text-end"><span t-out="'{:,.2f}'.format(l['comparison'])"/></td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <tr class="table-light" style="font-weight: 700;">
+                                    <td colspan="2">Total Operating Income</td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_income_curr'])"/></td>
+                                    <t t-if="doc.enable_comparison">
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_income_comp'])"/></td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Expense Section -->
+                        <h4 class="mt-4 pb-1 border-bottom" style="font-weight: 600; color: #b91c1c;">Operating Expenses</h4>
+                        <table class="table table-sm mt-2" style="width: 100%;">
+                            <thead>
+                                <tr class="text-muted" style="font-size: 12px;">
+                                    <th style="width: 15%;">Code</th>
+                                    <th style="width: 45%;">Account</th>
+                                    <th class="text-end" style="width: 20%;">Current Period</th>
+                                    <t t-if="doc.enable_comparison">
+                                        <th class="text-end" style="width: 20%;">Prior Period</th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="data['expense_lines']" t-as="l">
+                                    <tr>
+                                        <td><span t-out="l['code']"/></td>
+                                        <td><span t-out="l['name']"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(l['current'])"/></td>
+                                        <t t-if="doc.enable_comparison">
+                                            <td class="text-end"><span t-out="'{:,.2f}'.format(l['comparison'])"/></td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <tr class="table-light" style="font-weight: 700;">
+                                    <td colspan="2">Total Operating Expenses</td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_expense_curr'])"/></td>
+                                    <t t-if="doc.enable_comparison">
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_expense_comp'])"/></td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Net Profit / Loss Box -->
+                        <div class="card p-3 mt-4 text-center" style="background-color: #f8fafc; border: 2px solid #cbd5e1; border-radius: 8px;">
+                            <h3 class="mb-1" style="font-weight: 700;">
+                                Net Profit / (Loss): <span t-out="'{:,.2f}'.format(data['net_profit_curr'])"/> <span t-out="doc.company_id.currency_id.symbol"/>
+                            </h3>
+                            <t t-if="doc.enable_comparison">
+                                <div class="text-muted">
+                                    Prior Period: <strong t-out="'{:,.2f}'.format(data['net_profit_comp'])"/> | Variance: <strong t-out="'{:,.2f}'.format(data['net_profit_diff'])"/>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Balance Sheet Template -->
+    <template id="report_balance_sheet">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 13px;">
+                        <div class="text-center mb-4">
+                            <h2 style="font-weight: 700; color: #1e293b;">Balance Sheet</h2>
+                            <p class="text-muted">
+                                <span>Company: <strong t-out="doc.company_id.name"/></span> |
+                                <span>As of: <strong t-out="doc.date_to"/></span>
+                                <t t-if="doc.enable_comparison and doc.comparison_date_to">
+                                    <span> | Comparative Date: <strong t-out="doc.comparison_date_to"/></span>
+                                </t>
+                            </p>
+                        </div>
+
+                        <t t-set="data" t-value="doc._get_balance_sheet_data()"/>
+
+                        <!-- Assets -->
+                        <h4 class="mt-4 pb-1 border-bottom" style="font-weight: 600; color: #1d4ed8;">Assets</h4>
+                        <table class="table table-sm mt-2" style="width: 100%;">
+                            <tbody>
+                                <t t-foreach="data['asset_lines']" t-as="l">
+                                    <tr>
+                                        <td style="width: 15%;"><span t-out="l['code']"/></td>
+                                        <td style="width: 45%;"><span t-out="l['name']"/></td>
+                                        <td class="text-end" style="width: 20%;"><span t-out="'{:,.2f}'.format(l['current'])"/></td>
+                                        <t t-if="doc.enable_comparison">
+                                            <td class="text-end" style="width: 20%;"><span t-out="'{:,.2f}'.format(l['comparison'])"/></td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <tr class="table-light" style="font-weight: 700;">
+                                    <td colspan="2">Total Assets</td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_assets_curr'])"/></td>
+                                    <t t-if="doc.enable_comparison">
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_assets_comp'])"/></td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Liabilities -->
+                        <h4 class="mt-4 pb-1 border-bottom" style="font-weight: 600; color: #b45309;">Liabilities</h4>
+                        <table class="table table-sm mt-2" style="width: 100%;">
+                            <tbody>
+                                <t t-foreach="data['liability_lines']" t-as="l">
+                                    <tr>
+                                        <td style="width: 15%;"><span t-out="l['code']"/></td>
+                                        <td style="width: 45%;"><span t-out="l['name']"/></td>
+                                        <td class="text-end" style="width: 20%;"><span t-out="'{:,.2f}'.format(l['current'])"/></td>
+                                        <t t-if="doc.enable_comparison">
+                                            <td class="text-end" style="width: 20%;"><span t-out="'{:,.2f}'.format(l['comparison'])"/></td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <tr class="table-light" style="font-weight: 700;">
+                                    <td colspan="2">Total Liabilities</td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_liab_curr'])"/></td>
+                                    <t t-if="doc.enable_comparison">
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_liab_comp'])"/></td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- Equity -->
+                        <h4 class="mt-4 pb-1 border-bottom" style="font-weight: 600; color: #4338ca;">Equity</h4>
+                        <table class="table table-sm mt-2" style="width: 100%;">
+                            <tbody>
+                                <t t-foreach="data['equity_lines']" t-as="l">
+                                    <tr>
+                                        <td style="width: 15%;"><span t-out="l['code']"/></td>
+                                        <td style="width: 45%;"><span t-out="l['name']"/></td>
+                                        <td class="text-end" style="width: 20%;"><span t-out="'{:,.2f}'.format(l['current'])"/></td>
+                                        <t t-if="doc.enable_comparison">
+                                            <td class="text-end" style="width: 20%;"><span t-out="'{:,.2f}'.format(l['comparison'])"/></td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td>-</td>
+                                    <td>Unallocated Earnings (Current Year P&amp;L)</td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['unallocated_pnl_curr'])"/></td>
+                                    <t t-if="doc.enable_comparison">
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(data['unallocated_pnl_comp'])"/></td>
+                                    </t>
+                                </tr>
+                                <tr class="table-light" style="font-weight: 700;">
+                                    <td colspan="2">Total Equity</td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_equity_curr'])"/></td>
+                                    <t t-if="doc.enable_comparison">
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_equity_comp'])"/></td>
+                                    </t>
+                                </tr>
+                                <tr class="table-secondary" style="font-weight: 800; font-size: 14px;">
+                                    <td colspan="2">Total Liabilities &amp; Equity</td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_liab_equity_curr'])"/></td>
+                                    <t t-if="doc.enable_comparison">
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(data['total_liab_equity_comp'])"/></td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Aged Partner Balance Template -->
+    <template id="report_aged_partner">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 13px;">
+                        <div class="text-center mb-4">
+                            <h2 style="font-weight: 700; color: #1e293b;">
+                                <t t-if="doc.report_type == 'aged_receivable'">Aged Receivables</t>
+                                <t t-else="">Aged Payables</t>
+                            </h2>
+                            <p class="text-muted">
+                                <span>Company: <strong t-out="doc.company_id.name"/></span> |
+                                <span>Cutoff Date: <strong t-out="doc.date_to"/></span>
+                            </p>
+                        </div>
+
+                        <t t-set="acc_type" t-value="'asset_receivable' if doc.report_type == 'aged_receivable' else 'liability_payable'"/>
+                        <t t-set="data" t-value="doc._get_aged_partner_data(acc_type)"/>
+
+                        <table class="table table-sm table-bordered mt-3" style="width: 100%;">
+                            <thead class="table-light text-center" style="font-size: 11px;">
+                                <tr>
+                                    <th style="width: 25%;">Partner</th>
+                                    <th style="width: 10%;">Current</th>
+                                    <th style="width: 11%;">1 - 30 Days</th>
+                                    <th style="width: 11%;">31 - 60 Days</th>
+                                    <th style="width: 11%;">61 - 90 Days</th>
+                                    <th style="width: 11%;">91 - 120 Days</th>
+                                    <th style="width: 10%;">120+ Days</th>
+                                    <th style="width: 11%;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="data.items()" t-as="p">
+                                    <tr>
+                                        <td><span t-out="p[0]"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(p[1]['current'])"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(p[1]['days_1_30'])"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(p[1]['days_31_60'])"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(p[1]['days_61_90'])"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(p[1]['days_91_120'])"/></td>
+                                        <td class="text-end"><span t-out="'{:,.2f}'.format(p[1]['days_over_120'])"/></td>
+                                        <td class="text-end font-weight-bold"><span t-out="'{:,.2f}'.format(p[1]['total'])"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Cash Flow Statement Template -->
+    <template id="report_cash_flow">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 13px;">
+                        <div class="text-center mb-4">
+                            <h2 style="font-weight: 700; color: #1e293b;">Statement of Cash Flows</h2>
+                            <p class="text-muted">
+                                <span>Company: <strong t-out="doc.company_id.name"/></span> |
+                                <span>Period: <strong t-out="doc.date_from or 'Inception'"/> to <strong t-out="doc.date_to"/></span>
+                            </p>
+                        </div>
+
+                        <t t-set="data" t-value="doc._get_cash_flow_data()"/>
+                        <table class="table table-sm mt-4" style="width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Opening Cash Balance</strong></td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['opening_cash'])"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Operating Cash Inflows (Receipts)</td>
+                                    <td class="text-end text-success"><span t-out="'{:,.2f}'.format(data['period_inflows'])"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Operating Cash Outflows (Disbursements)</td>
+                                    <td class="text-end text-danger"><span t-out="'{:,.2f}'.format(data['period_outflows'])"/></td>
+                                </tr>
+                                <tr class="table-light" style="font-weight: 700;">
+                                    <td>Net Cash Change for the Period</td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['net_change'])"/></td>
+                                </tr>
+                                <tr class="table-secondary" style="font-weight: 800; font-size: 14px;">
+                                    <td>Closing Cash Balance</td>
+                                    <td class="text-end"><span t-out="'{:,.2f}'.format(data['closing_cash'])"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- ydod.fiscal.year Closing Summary Report -->
+    <template id="report_ydod_fiscal_year_closing_summary">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="fy">
+                <t t-call="web.external_layout">
+                    <div class="page" style="font-size: 13px;">
+                        <div class="text-center mb-4">
+                            <h2 style="font-weight: 700; color: #1e293b;">Fiscal Year Closing Summary</h2>
+                            <p class="text-muted">
+                                <span>Fiscal Year: <strong t-out="fy.name"/> (<strong t-out="fy.code"/>)</span> |
+                                <span>Status: <strong t-out="fy.state.upper()"/></span> |
+                                <span>Company: <strong t-out="fy.company_id.name"/></span>
+                            </p>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <strong>Date From:</strong> <span t-out="fy.date_from"/><br/>
+                                <strong>Date To:</strong> <span t-out="fy.date_to"/>
+                            </div>
+                            <div class="col-6 text-end">
+                                <strong>Closing Move:</strong> <span t-out="fy.closing_move_id.name or 'N/A'"/><br/>
+                                <strong>Posted Entries in Period:</strong> <span t-out="fy.move_count"/>
+                            </div>
+                        </div>
+
+                        <t t-if="fy.closing_move_id">
+                            <h4 class="mt-4 pb-1 border-bottom">Closing Journal Entry Details</h4>
+                            <table class="table table-sm table-bordered mt-2">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Account</th>
+                                        <th>Label</th>
+                                        <th class="text-end">Debit</th>
+                                        <th class="text-end">Credit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="fy.closing_move_id.line_ids" t-as="line">
+                                        <tr>
+                                            <td><span t-out="line.account_id.display_name"/></td>
+                                            <td><span t-out="line.name"/></td>
+                                            <td class="text-end"><span t-out="'{:,.2f}'.format(line.debit)"/></td>
+                                            <td class="text-end"><span t-out="'{:,.2f}'.format(line.credit)"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -89,7 +89,7 @@ class TestAccountingCommunity(TransactionCase):
 
     def test_fiscal_year_date_constraint(self):
         """Verify constraint error is raised when date_from is later than date_to."""
-        with self.assertRaises(ValidationError):
+        with mute_logger('odoo.sql_db'), self.assertRaises(ValidationError):
             self.env['account.fiscal.year'].create({
                 'name': 'Invalid FY 2026',
                 'code': 'FY26-INV',
@@ -107,7 +107,7 @@ class TestAccountingCommunity(TransactionCase):
             'date_to': '2026-12-31',
             'company_id': self.company.id,
         })
-        with self.assertRaises(ValidationError):
+        with mute_logger('odoo.sql_db'), self.assertRaises(ValidationError):
             self.env['account.fiscal.year'].create({
                 'name': 'FY2026-UNIQUE',
                 'code': 'FY26U2',

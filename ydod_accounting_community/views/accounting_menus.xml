@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Top-level Accounting Root Menu -->
-    <menuitem id="menu_finance_accounting"
+    <menuitem id="menu_accounting_root"
               name="Accounting"
               web_icon="account,static/description/icon.png"
-              groups="account.group_account_readonly,account.group_account_user,account.group_account_manager"
+              groups="account.group_account_readonly,account.group_account_user,account.group_account_manager,ydod_accounting_community.group_accounting_user,ydod_accounting_community.group_accounting_manager"
               sequence="50"/>
 
-    <!-- Level 2: Accounting -->
+    <!-- Level 2: Accounting Operations -->
     <menuitem id="menu_accounting_accounting"
               name="Accounting"
-              parent="menu_finance_accounting"
+              parent="menu_accounting_root"
               sequence="10"/>
 
     <menuitem id="menu_action_move_journal_line_community"
@@ -31,32 +31,129 @@
               action="action_manual_reconciliation"
               sequence="3"/>
 
+    <!-- Level 2: Fixed Assets -->
+    <menuitem id="menu_accounting_assets"
+              name="Fixed Assets"
+              parent="menu_accounting_root"
+              sequence="15"/>
+
+    <menuitem id="menu_action_ydod_account_asset"
+              name="Fixed Assets"
+              parent="menu_accounting_assets"
+              action="action_ydod_account_asset"
+              sequence="1"/>
+
+    <!-- Level 2: Budgets -->
+    <menuitem id="menu_accounting_budgets"
+              name="Budgets"
+              parent="menu_accounting_root"
+              sequence="18"/>
+
+    <menuitem id="menu_action_ydod_account_budget"
+              name="Budgets"
+              parent="menu_accounting_budgets"
+              action="action_ydod_account_budget"
+              sequence="1"/>
+
     <!-- Level 2: Reporting -->
     <menuitem id="menu_accounting_reporting"
               name="Reporting"
-              parent="menu_finance_accounting"
+              parent="menu_accounting_root"
               sequence="20"/>
+
+    <menuitem id="menu_action_ydod_financial_report_wizard"
+              name="Financial Statements"
+              parent="menu_accounting_reporting"
+              action="action_ydod_financial_report_wizard"
+              sequence="1"/>
+
+    <menuitem id="menu_action_ydod_report_balance_sheet"
+              name="Balance Sheet"
+              parent="menu_accounting_reporting"
+              action="action_ydod_report_balance_sheet"
+              sequence="2"/>
+
+    <menuitem id="menu_action_ydod_report_pnl"
+              name="Profit and Loss"
+              parent="menu_accounting_reporting"
+              action="action_ydod_report_pnl"
+              sequence="3"/>
+
+    <menuitem id="menu_action_ydod_report_trial_balance"
+              name="Trial Balance"
+              parent="menu_accounting_reporting"
+              action="action_ydod_report_trial_balance"
+              sequence="4"/>
+
+    <menuitem id="menu_action_ydod_report_aged_receivable"
+              name="Aged Receivable"
+              parent="menu_accounting_reporting"
+              action="action_ydod_report_aged_receivable"
+              sequence="5"/>
+
+    <menuitem id="menu_action_ydod_report_aged_payable"
+              name="Aged Payable"
+              parent="menu_accounting_reporting"
+              action="action_ydod_report_aged_payable"
+              sequence="6"/>
+
+    <menuitem id="menu_action_ydod_report_cash_flow"
+              name="Cash Flow Statement"
+              parent="menu_accounting_reporting"
+              action="action_ydod_report_cash_flow"
+              sequence="7"/>
 
     <menuitem id="menu_action_bank_reconcile_statement"
               name="Bank Reconciliation Statement"
               parent="menu_accounting_reporting"
+              action="action_ydod_bank_recon_report_wizard"
+              sequence="10"/>
+
+    <menuitem id="menu_action_bank_reconcile_audit_account"
+              name="Bank Reconciliation Audit"
+              parent="menu_accounting_reporting"
               action="action_account_bank_reconcile_statement"
+              sequence="11"/>
+
+    <menuitem id="menu_action_ydod_account_followup"
+              name="Payment Follow-up"
+              parent="menu_accounting_reporting"
+              action="action_ydod_account_followup"
+              sequence="12"/>
+
+    <!-- Level 2: Actions / Periodic Tasks -->
+    <menuitem id="menu_accounting_actions"
+              name="Actions"
+              parent="menu_accounting_root"
+              sequence="25"/>
+
+    <menuitem id="menu_action_ydod_fiscal_year_close_wizard"
+              name="Close Fiscal Year"
+              parent="menu_accounting_actions"
+              action="action_ydod_fiscal_year_close_wizard"
+              groups="account.group_account_manager,ydod_accounting_community.group_accounting_manager"
               sequence="1"/>
 
     <!-- Level 2: Configuration -->
     <menuitem id="menu_accounting_config"
               name="Configuration"
-              parent="menu_finance_accounting"
-              groups="account.group_account_manager"
+              parent="menu_accounting_root"
+              groups="account.group_account_manager,ydod_accounting_community.group_accounting_manager"
               sequence="30"/>
 
-    <menuitem id="menu_action_account_fiscal_year"
+    <menuitem id="menu_action_ydod_fiscal_year"
               name="Fiscal Years"
               parent="menu_accounting_config"
-              action="action_account_fiscal_year"
+              action="action_ydod_fiscal_year"
               sequence="10"/>
 
-    <!-- Shortcut under Configuration > Accounting -->
+    <menuitem id="menu_action_account_fiscal_year"
+              name="Fiscal Years (Legacy)"
+              parent="menu_accounting_config"
+              action="action_account_fiscal_year"
+              sequence="11"/>
+
+    <!-- Shortcut under Invoicing > Configuration > Accounting -->
     <menuitem id="menu_account_fiscal_year_closing"
               name="Fiscal Years"
               parent="account.account_account_menu"

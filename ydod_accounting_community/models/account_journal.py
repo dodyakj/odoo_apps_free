@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import models, _
+from odoo import _, models
 
 
 class AccountJournal(models.Model):

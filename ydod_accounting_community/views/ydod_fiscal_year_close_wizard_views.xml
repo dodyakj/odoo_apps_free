@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_fiscal_year_close_wizard_form" model="ir.ui.view">
+        <field name="name">ydod.fiscal.year.close.wizard.form</field>
+        <field name="model">ydod.fiscal.year.close.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Close Fiscal Year">
+                <sheet>
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Year-End Closing Notice:</strong> This wizard computes net balances across all Income and Expense accounts for the selected fiscal year, generates a balanced closing journal entry transferring profit/loss to Retained Earnings, locks the fiscal period, and updates the company lock date.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="fiscal_year_id" readonly="1"/>
+                            <field name="closing_date"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="journal_id" options="{'no_create': True}"/>
+                            <field name="closing_account_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_close_fiscal_year" string="Post Closing Entry &amp; Close Year" type="object" class="btn-primary" icon="fa-lock"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ydod_fiscal_year_close_wizard" model="ir.actions.act_window">
+        <field name="name">Close Fiscal Year</field>
+        <field name="res_model">ydod.fiscal.year.close.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_ydod_fiscal_year_close_wizard_form"/>
+    </record>
+</odoo>

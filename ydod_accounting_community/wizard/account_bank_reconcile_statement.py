@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
 class AccountBankReconcileStatement(models.TransientModel):
     _name = 'account.bank.reconcile.statement'
     _description = "Bank Reconciliation Statement"
-
-    _sql_constraints = [
-        ('check_statement_date', 'CHECK(statement_date IS NOT NULL)', 'Statement audit cutoff date is required.'),
-    ]
 
     journal_id = fields.Many2one(
         comodel_name='account.journal',
