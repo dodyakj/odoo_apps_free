@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_ydod_backup_config" model="ir.actions.act_window">
+        <field name="name">Backup Configurations</field>
+        <field name="res_model">ydod.backup.config</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first automated backup configuration!
+            </p>
+            <p>
+                Configure local folders, cloud mounts, or remote FTP destinations with automatic retention schedules.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_ydod_backup_log" model="ir.actions.act_window">
+        <field name="name">Execution Logs</field>
+        <field name="res_model">ydod.backup.log</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No backup logs recorded yet.
+            </p>
+            <p>
+                Execution logs are automatically generated whenever backups are run manually or via scheduled actions.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_ydod_backup_root"
+              name="Database Backups"
+              parent="base.menu_administration"
+              sequence="70"/>
+
+    <menuitem id="menu_ydod_backup_config"
+              name="Configurations"
+              parent="menu_ydod_backup_root"
+              action="action_ydod_backup_config"
+              sequence="10"/>
+
+    <menuitem id="menu_ydod_backup_log"
+              name="Execution Logs"
+              parent="menu_ydod_backup_root"
+              action="action_ydod_backup_log"
+              sequence="20"/>
+</odoo>

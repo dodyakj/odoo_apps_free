@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ydod_backup_config_view_tree" model="ir.ui.view">
+        <field name="name">ydod.backup.config.view.tree</field>
+        <field name="model">ydod.backup.config</field>
+        <field name="arch" type="xml">
+            <tree string="Backup Configurations">
+                <field name="name"/>
+                <field name="db_name"/>
+                <field name="destination_type"/>
+                <field name="last_run_status" widget="badge" decoration-success="last_run_status == 'success'" decoration-danger="last_run_status == 'failed'"/>
+                <field name="last_run_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ydod_backup_config_view_kanban" model="ir.ui.view">
+        <field name="name">ydod.backup.config.view.kanban</field>
+        <field name="model">ydod.backup.config</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="db_name"/>
+                <field name="destination_type"/>
+                <field name="last_run_status"/>
+                <field name="last_run_date"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <field name="name" class="fw-bolder fs-5"/>
+                                <field name="last_run_status" widget="badge" decoration-success="last_run_status == 'success'" decoration-danger="last_run_status == 'failed'"/>
+                            </div>
+                            <div class="text-muted mb-1">
+                                <i class="fa fa-database me-1"/>
+                                <field name="db_name"/>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center small text-muted">
+                                <span><i class="fa fa-folder-open me-1"/><field name="destination_type"/></span>
+                                <span><i class="fa fa-clock-o me-1"/><field name="last_run_date"/></span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="ydod_backup_config_view_form" model="ir.ui.view">
+        <field name="name">ydod.backup.config.view.form</field>
+        <field name="model">ydod.backup.config</field>
+        <field name="arch" type="xml">
+            <form string="Backup Configuration">
+                <header>
+                    <button name="action_backup_now"
+                            type="object"
+                            string="Backup Now"
+                            class="btn-primary"
+                            icon="fa-play"
+                            groups="ydod_database_backup_manager.group_backup_manager"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_logs" type="object" class="oe_stat_button" icon="fa-history">
+                            <field name="log_count" widget="statinfo" string="Logs"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Daily Production Backup"/></h1>
+                    </div>
+                    <group>
+                        <group string="Database &amp; Format">
+                            <field name="active" invisible="1"/>
+                            <field name="db_name"/>
+                            <field name="backup_format"/>
+                            <field name="destination_type"/>
+                        </group>
+                        <group string="Execution Status">
+                            <field name="last_run_date" readonly="1"/>
+                            <field name="last_run_status" widget="badge" decoration-success="last_run_status == 'success'" decoration-danger="last_run_status == 'failed'" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Storage Destination" name="storage">
+                            <group invisible="destination_type != 'local'">
+                                <field name="local_path" required="destination_type == 'local'"/>
+                            </group>
+                            <group invisible="destination_type != 'ftp'">
+                                <group>
+                                    <field name="ftp_host" required="destination_type == 'ftp'"/>
+                                    <field name="ftp_port" required="destination_type == 'ftp'"/>
+                                    <field name="ftp_path"/>
+                                </group>
+                                <group>
+                                    <field name="ftp_user" required="destination_type == 'ftp'"/>
+                                    <field name="ftp_password" password="True"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Retention &amp; Alerts" name="retention_alerts">
+                            <group>
+                                <group string="Retention Schedule">
+                                    <field name="retention_days"/>
+                                </group>
+                                <group string="Failure Notifications">
+                                    <field name="notify_user_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Recent Logs" name="recent_logs">
+                            <field name="log_ids" readonly="1">
+                                <tree string="Execution Logs" limit="10" decoration-danger="status == 'failed'" decoration-success="status == 'success'">
+                                    <field name="run_date"/>
+                                    <field name="destination_summary"/>
+                                    <field name="file_size"/>
+                                    <field name="duration"/>
+                                    <field name="status" widget="badge" decoration-success="status == 'success'" decoration-danger="status == 'failed'"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="ydod_backup_config_view_search" model="ir.ui.view">
+        <field name="name">ydod.backup.config.view.search</field>
+        <field name="model">ydod.backup.config</field>
+        <field name="arch" type="xml">
+            <search string="Search Backup Configurations">
+                <field name="name"/>
+                <field name="db_name"/>
+                <field name="destination_type"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Failed Last Run" name="failed_last_run" domain="[('last_run_status', '=', 'failed')]"/>
+                <filter string="Success Last Run" name="success_last_run" domain="[('last_run_status', '=', 'success')]"/>
+                <separator/>
+                <group>
+                    <filter string="Destination Type" name="group_by_destination" domain="[]" context="{'group_by': 'destination_type'}"/>
+                    <filter string="Backup Format" name="group_by_format" domain="[]" context="{'group_by': 'backup_format'}"/>
+                    <filter string="Last Run Status" name="group_by_status" domain="[]" context="{'group_by': 'last_run_status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>
