@@ -37,7 +37,9 @@
         'views/stock_warehouse_orderpoint_views.xml',
         'views/ydod_replenish_request_views.xml'],
     'demo': ['demo/ydod_replenish_request_demo.xml'],
-    'images': ['static/description/banner.png', 'static/description/screenshot_1.png'],
+    'images': [   'static/description/demo.gif',
+        'static/description/banner.png',
+        'static/description/screenshot_1.png'],
     'installable': True,
     'application': False,
 }
