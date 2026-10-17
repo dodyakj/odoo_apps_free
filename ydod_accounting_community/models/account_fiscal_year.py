@@ -59,6 +59,21 @@ class AccountFiscalYear(models.Model):
             if record.date_from and record.date_to and record.date_from > record.date_to:
                 raise ValidationError(self.env._("Fiscal year start date must precede end date."))
 
+    @api.constrains('name', 'company_id')
+    def _check_name_unique(self):
+        for company in self.company_id:
+            fys = self.filtered(lambda r: r.company_id == company)
+            names = fys.mapped('name')
+            if len(names) != len(set(names)):
+                raise ValidationError(self.env._("Fiscal year name must be unique per company."))
+            domain = [
+                ('company_id', '=', company.id),
+                ('name', 'in', names),
+                ('id', 'not in', fys.ids),
+            ]
+            if self.search_count(domain):
+                raise ValidationError(self.env._("Fiscal year name must be unique per company."))
+
     @api.depends('date_from', 'date_to', 'company_id')
     def _compute_move_count(self):
         for fy in self:

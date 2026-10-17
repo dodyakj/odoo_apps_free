@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_financial_report_wizard_form" model="ir.ui.view">
+        <field name="name">ydod.financial.report.wizard.form</field>
+        <field name="model">ydod.financial.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Financial Reports">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        <strong>Financial Statements &amp; Audit Reports:</strong> Select your analysis dates, target move status, and comparative periods. Reports can be previewed/printed as professional PDF documents or exported to Excel/CSV.
+                    </div>
+                    <group>
+                        <group string="Report Configuration">
+                            <field name="report_type"/>
+                            <field name="target_move"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Primary Period">
+                            <field name="date_from" invisible="report_type == 'balance_sheet'"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    <group string="Comparative Period Analysis" invisible="report_type not in ('pnl', 'balance_sheet', 'trial_balance')">
+                        <field name="enable_comparison"/>
+                        <field name="comparison_date_from" invisible="not enable_comparison or report_type == 'balance_sheet'"/>
+                        <field name="comparison_date_to" invisible="not enable_comparison"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_print_pdf" string="Print PDF Report" type="object" class="btn-primary" icon="fa-print"/>
+                    <button name="action_export_excel" string="Export to Excel / CSV" type="object" class="btn-secondary" icon="fa-file-excel-o"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ydod_financial_report_wizard" model="ir.actions.act_window">
+        <field name="name">Financial Reports &amp; Statements</field>
+        <field name="res_model">ydod.financial.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_ydod_financial_report_wizard_form"/>
+    </record>
+
+    <record id="action_ydod_report_trial_balance" model="ir.actions.act_window">
+        <field name="name">Trial Balance</field>
+        <field name="res_model">ydod.financial.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_report_type': 'trial_balance'}</field>
+        <field name="view_id" ref="view_ydod_financial_report_wizard_form"/>
+    </record>
+
+    <record id="action_ydod_report_pnl" model="ir.actions.act_window">
+        <field name="name">Profit and Loss</field>
+        <field name="res_model">ydod.financial.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_report_type': 'pnl', 'default_enable_comparison': True}</field>
+        <field name="view_id" ref="view_ydod_financial_report_wizard_form"/>
+    </record>
+
+    <record id="action_ydod_report_balance_sheet" model="ir.actions.act_window">
+        <field name="name">Balance Sheet</field>
+        <field name="res_model">ydod.financial.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_report_type': 'balance_sheet', 'default_enable_comparison': True}</field>
+        <field name="view_id" ref="view_ydod_financial_report_wizard_form"/>
+    </record>
+
+    <record id="action_ydod_report_aged_receivable" model="ir.actions.act_window">
+        <field name="name">Aged Receivable</field>
+        <field name="res_model">ydod.financial.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_report_type': 'aged_receivable'}</field>
+        <field name="view_id" ref="view_ydod_financial_report_wizard_form"/>
+    </record>
+
+    <record id="action_ydod_report_aged_payable" model="ir.actions.act_window">
+        <field name="name">Aged Payable</field>
+        <field name="res_model">ydod.financial.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_report_type': 'aged_payable'}</field>
+        <field name="view_id" ref="view_ydod_financial_report_wizard_form"/>
+    </record>
+
+    <record id="action_ydod_report_cash_flow" model="ir.actions.act_window">
+        <field name="name">Cash Flow Statement</field>
+        <field name="res_model">ydod.financial.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_report_type': 'cash_flow'}</field>
+        <field name="view_id" ref="view_ydod_financial_report_wizard_form"/>
+    </record>
+</odoo>
