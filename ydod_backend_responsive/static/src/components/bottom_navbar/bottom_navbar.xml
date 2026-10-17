@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ydod_backend_responsive.BottomNavBar">
+        <nav t-if="this.isVisible" class="ydod_bottom_navbar" aria-label="Mobile Bottom Navigation">
+            <button type="button" class="ydod_nav_item" t-on-click="this.openApps" aria-label="Apps">
+                <i class="oi oi-apps fa fa-th"/>
+                <span>Apps</span>
+            </button>
+            <button type="button" class="ydod_nav_item" t-on-click="this.goBack" aria-label="Back">
+                <i class="oi oi-chevron-left fa fa-arrow-left"/>
+                <span>Back</span>
+            </button>
+            <button type="button" class="ydod_nav_item" t-on-click="this.toggleActions" aria-label="Menu">
+                <i class="oi oi-view-list fa fa-bars"/>
+                <span>Menu</span>
+            </button>
+            <button type="button" class="ydod_nav_item" t-on-click="this.scrollToChatter" aria-label="Chatter">
+                <i class="oi oi-chat-bubble fa fa-comments"/>
+                <span>Chatter</span>
+            </button>
+        </nav>
+    </t>
+</templates>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extension of the main Users form view -->
+    <record id="view_users_form_inherit_ydod_responsive" model="ir.ui.view">
+        <field name="name">res.users.form.inherit.ydod.responsive</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='preferences']" position="inside">
+                <group string="Responsive UI" name="ydod_responsive_ui">
+                    <field name="ydod_chatter_position" widget="radio"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extension of User Preferences (My Profile) form view -->
+    <record id="view_users_form_simple_modif_inherit_ydod_responsive" model="ir.ui.view">
+        <field name="name">res.users.preferences.form.inherit.ydod.responsive</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tz']" position="after">
+                <field name="ydod_chatter_position" widget="radio"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
