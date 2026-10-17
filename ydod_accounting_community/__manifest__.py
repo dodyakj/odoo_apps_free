@@ -45,7 +45,12 @@
         'views/account_journal_views.xml',
         'views/accounting_menus.xml'],
     'demo': ['demo/account_fiscal_year_demo.xml'],
-    'images': ['static/description/banner.png'],
+    'images': [   'static/description/demo.gif',
+        'static/description/banner.png',
+        'static/description/screenshot_1.png',
+        'static/description/screenshot_2.png',
+        'static/description/screenshot_3.png',
+        'static/description/screenshot_4.png'],
     'installable': True,
     'application': True,
 }
