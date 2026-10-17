@@ -51,7 +51,12 @@
         'views/backup_config_views.xml',
         'views/backup_menus.xml'],
     'demo': ['demo/backup_demo.xml'],
-    'images': ['static/description/banner.png'],
+    'images': [   'static/description/demo.gif',
+        'static/description/banner.png',
+        'static/description/screenshot_1.png',
+        'static/description/screenshot_2.png',
+        'static/description/screenshot_3.png',
+        'static/description/screenshot_4.png'],
     'installable': True,
     'application': True,
 }
