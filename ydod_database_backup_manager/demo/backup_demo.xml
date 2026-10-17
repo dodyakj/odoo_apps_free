@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_backup_config_local_prod" model="ydod.backup.config">
+        <field name="name">Daily Production Backup (Local Storage)</field>
+        <field name="db_name">odoo_prod</field>
+        <field name="backup_format">zip</field>
+        <field name="destination_type">local</field>
+        <field name="local_path">/var/odoo/backups/daily</field>
+        <field name="retention_days">7</field>
+        <field name="notify_user_ids" eval="[Command.link(ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="demo_backup_config_ftp_offsite" model="ydod.backup.config">
+        <field name="name">Weekly Offsite Vault (Remote FTP)</field>
+        <field name="db_name">odoo_prod</field>
+        <field name="backup_format">zip</field>
+        <field name="destination_type">ftp</field>
+        <field name="ftp_host">ftp.backup-vault.internal</field>
+        <field name="ftp_port">21</field>
+        <field name="ftp_user">odoo_backup</field>
+        <field name="ftp_password">demo_secret_pass</field>
+        <field name="ftp_path">/vault/weekly</field>
+        <field name="retention_days">30</field>
+        <field name="notify_user_ids" eval="[Command.link(ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="demo_backup_config_cloud_mount" model="ydod.backup.config">
+        <field name="name">Monthly Archive (Cloud Mount / S3 / Drive)</field>
+        <field name="db_name">odoo_prod</field>
+        <field name="backup_format">dump</field>
+        <field name="destination_type">local</field>
+        <field name="local_path">/mnt/cloud-storage/odoo-monthly</field>
+        <field name="retention_days">90</field>
+        <field name="notify_user_ids" eval="[Command.link(ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="demo_backup_config_staging_sync" model="ydod.backup.config">
+        <field name="name">Staging Environment Daily Sync</field>
+        <field name="db_name">odoo_staging</field>
+        <field name="backup_format">zip</field>
+        <field name="destination_type">local</field>
+        <field name="local_path">/var/odoo/backups/staging</field>
+        <field name="retention_days">3</field>
+    </record>
+
+    <!-- Execution Logs -->
+    <record id="demo_log_prod_today" model="ydod.backup.log">
+        <field name="config_id" ref="demo_backup_config_local_prod"/>
+        <field name="run_date" eval="(DateTime.now() - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="db_name">odoo_prod</field>
+        <field name="destination_summary">/var/odoo/backups/daily</field>
+        <field name="file_size">342.50</field>
+        <field name="duration">18.20</field>
+        <field name="status">success</field>
+    </record>
+
+    <record id="demo_log_prod_yesterday" model="ydod.backup.log">
+        <field name="config_id" ref="demo_backup_config_local_prod"/>
+        <field name="run_date" eval="(DateTime.now() - timedelta(days=1, hours=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="db_name">odoo_prod</field>
+        <field name="destination_summary">/var/odoo/backups/daily</field>
+        <field name="file_size">339.80</field>
+        <field name="duration">17.80</field>
+        <field name="status">success</field>
+    </record>
+
+    <record id="demo_log_ftp_failed" model="ydod.backup.log">
+        <field name="config_id" ref="demo_backup_config_ftp_offsite"/>
+        <field name="run_date" eval="(DateTime.now() - timedelta(hours=3)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="db_name">odoo_prod</field>
+        <field name="destination_summary">ftp://odoo_backup@ftp.backup-vault.internal:21/vault/weekly</field>
+        <field name="file_size">0.0</field>
+        <field name="duration">30.05</field>
+        <field name="status">failed</field>
+        <field name="error_message">TimeoutError: [Errno 110] Connection timed out to remote FTP host ftp.backup-vault.internal:21</field>
+    </record>
+
+    <record id="demo_log_ftp_success_last_week" model="ydod.backup.log">
+        <field name="config_id" ref="demo_backup_config_ftp_offsite"/>
+        <field name="run_date" eval="(DateTime.now() - timedelta(days=7)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="db_name">odoo_prod</field>
+        <field name="destination_summary">ftp://odoo_backup@ftp.backup-vault.internal:21/vault/weekly</field>
+        <field name="file_size">330.15</field>
+        <field name="duration">45.60</field>
+        <field name="status">success</field>
+    </record>
+
+    <record id="demo_log_cloud_mount" model="ydod.backup.log">
+        <field name="config_id" ref="demo_backup_config_cloud_mount"/>
+        <field name="run_date" eval="(DateTime.now() - timedelta(days=10)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="db_name">odoo_prod</field>
+        <field name="destination_summary">/mnt/cloud-storage/odoo-monthly</field>
+        <field name="file_size">124.60</field>
+        <field name="duration">8.90</field>
+        <field name="status">success</field>
+    </record>
+
+    <record id="demo_log_staging" model="ydod.backup.log">
+        <field name="config_id" ref="demo_backup_config_staging_sync"/>
+        <field name="run_date" eval="(DateTime.now() - timedelta(hours=12)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="db_name">odoo_staging</field>
+        <field name="destination_summary">/var/odoo/backups/staging</field>
+        <field name="file_size">88.40</field>
+        <field name="duration">6.20</field>
+        <field name="status">success</field>
+    </record>
+</odoo>

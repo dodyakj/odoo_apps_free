@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ydod_backup_config_mgr,backup config manager,model_ydod_backup_config,ydod_database_backup_manager.group_backup_manager,1,1,1,1
+access_ydod_backup_config_user,backup config user,model_ydod_backup_config,ydod_database_backup_manager.group_backup_user,1,0,0,0
+access_ydod_backup_log_mgr,backup log manager,model_ydod_backup_log,ydod_database_backup_manager.group_backup_manager,1,1,1,1
+access_ydod_backup_log_user,backup log user,model_ydod_backup_log,ydod_database_backup_manager.group_backup_user,1,0,0,0

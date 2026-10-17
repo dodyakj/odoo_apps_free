@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ydod_backup_log_view_tree" model="ir.ui.view">
+        <field name="name">ydod.backup.log.view.tree</field>
+        <field name="model">ydod.backup.log</field>
+        <field name="arch" type="xml">
+            <tree string="Execution Logs" create="0" edit="0" decoration-danger="status == 'failed'" decoration-success="status == 'success'">
+                <field name="run_date"/>
+                <field name="config_id"/>
+                <field name="db_name"/>
+                <field name="destination_summary"/>
+                <field name="file_size"/>
+                <field name="duration"/>
+                <field name="status" widget="badge" decoration-success="status == 'success'" decoration-danger="status == 'failed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="ydod_backup_log_view_form" model="ir.ui.view">
+        <field name="name">ydod.backup.log.view.form</field>
+        <field name="model">ydod.backup.log</field>
+        <field name="arch" type="xml">
+            <form string="Execution Log" create="0" edit="0">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="db_name" string="Database"/>
+                        <h1><field name="db_name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Execution Metrics">
+                            <field name="run_date"/>
+                            <field name="config_id"/>
+                            <field name="status" widget="badge" decoration-success="status == 'success'" decoration-danger="status == 'failed'"/>
+                        </group>
+                        <group string="Performance Details">
+                            <field name="file_size"/>
+                            <field name="duration"/>
+                            <field name="destination_summary"/>
+                        </group>
+                    </group>
+                    <group string="Error Traceback" attrs="{'invisible': [('status', '!=', 'failed')]}">
+                        <field name="error_message" nolabel="1" widget="text" style="font-family: monospace; font-size: 12px;"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ydod_backup_log_view_search" model="ir.ui.view">
+        <field name="name">ydod.backup.log.view.search</field>
+        <field name="model">ydod.backup.log</field>
+        <field name="arch" type="xml">
+            <search string="Search Backup Logs">
+                <field name="db_name"/>
+                <field name="config_id"/>
+                <filter string="Success" name="success" domain="[('status', '=', 'success')]"/>
+                <filter string="Failed" name="failed" domain="[('status', '=', 'failed')]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter string="Configuration" name="group_by_config" domain="[]" context="{'group_by': 'config_id'}"/>
+                    <filter string="Status" name="group_by_status" domain="[]" context="{'group_by': 'status'}"/>
+                    <filter string="Execution Date" name="group_by_date" domain="[]" context="{'group_by': 'run_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>

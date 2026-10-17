@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_backup_failure" model="mail.template">
+            <field name="name">Backup: Execution Failure Alert</field>
+            <field name="model_id" ref="ydod_database_backup_manager.model_ydod_backup_config"/>
+            <field name="subject">[BACKUP ALERT] Database Backup Failed: {{ object.name }} ({{ ctx.get('db_name') or object.db_name }})</field>
+            <field name="email_from">{{ (user.email_formatted or object.env.company.email_formatted) }}</field>
+            <field name="description">Sent to configured administrators when automated or manual database backup fails</field>
+            <field name="body_html" type="html">
+<div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: #333333; margin: 0px; padding: 20px;">
+    <div style="background-color: #d9534f; color: #ffffff; padding: 15px; border-radius: 4px; font-size: 18px; font-weight: bold;">
+        ⚠️ Odoo Database Backup Failure Alert
+    </div>
+    <div style="margin-top: 15px; line-height: 1.6;">
+        <p>Dear Administrator,</p>
+        <p>The database backup for profile <strong t-out="object.name">Production Backup</strong> encountered an error and could not complete.</p>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 15px;">
+            <tr style="border-bottom: 1px solid #eeeeee;">
+                <td style="padding: 8px; font-weight: bold; width: 180px;">Database Name:</td>
+                <td style="padding: 8px;"><t t-out="ctx.get('db_name') or object.db_name"/></td>
+            </tr>
+            <tr style="border-bottom: 1px solid #eeeeee;">
+                <td style="padding: 8px; font-weight: bold;">Destination Type:</td>
+                <td style="padding: 8px;"><t t-out="object.destination_type"/></td>
+            </tr>
+            <tr style="border-bottom: 1px solid #eeeeee;">
+                <td style="padding: 8px; font-weight: bold;">Configuration Profile:</td>
+                <td style="padding: 8px;"><t t-out="object.name"/></td>
+            </tr>
+        </table>
+        <p style="font-weight: bold; color: #d9534f;">Error Details:</p>
+        <pre style="background-color: #f8f9fa; border: 1px solid #e9ecef; border-left: 4px solid #d9534f; padding: 12px; font-family: monospace; font-size: 12px; overflow-x: auto; white-space: pre-wrap;"><t t-out="ctx.get('error_message') or 'Unknown error occurred during backup execution.'" /></pre>
+        <p style="margin-top: 20px;">Please inspect the backup configuration and server storage to resolve this issue.</p>
+    </div>
+</div>
+            </field>
+        </record>
+    </data>
+</odoo>
