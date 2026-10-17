@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ydod_backend_responsive.AppDrawer">
+        <div t-if="this.state.isOpen" class="ydod_app_drawer_overlay" t-on-click.self="this.close">
+            <div class="ydod_app_drawer_header">
+                <input type="text"
+                       class="form-control ydod_search_input flex-grow-1"
+                       placeholder="Search apps..."
+                       t-model="this.state.query"
+                       autofocus="autofocus"/>
+                <button type="button" class="btn btn-close btn-close-white" aria-label="Close" t-on-click="this.close"/>
+            </div>
+            <div class="ydod_app_drawer_body" t-on-click.self="this.close">
+                <div class="ydod_app_grid">
+                    <t t-foreach="this.filteredApps" t-as="app" t-key="app.id">
+                        <button type="button" class="ydod_app_item" t-on-click="() => this.selectApp(app)">
+                            <img t-if="app.webIconData" class="ydod_app_icon" t-att-src="app.webIconData" t-att-alt="app.name"/>
+                            <div t-else="" class="ydod_app_icon_font">
+                                <i class="oi oi-apps fa fa-th"/>
+                            </div>
+                            <span class="ydod_app_name" t-out="app.name"/>
+                        </button>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

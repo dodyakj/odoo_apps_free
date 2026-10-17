@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_ydod_responsive" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.ydod.responsive</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Responsive UI" string="Responsive UI" name="ydod_backend_responsive">
+                    <block title="Mobile &amp; Responsive Layout" name="ydod_responsive_settings_block">
+                        <setting id="ydod_default_chatter_position_setting" string="Default Chatter Position" help="Configure the default chatter placement for new users (sided or bottom-stacked).">
+                            <field name="ydod_default_chatter_position"/>
+                        </setting>
+                        <setting id="ydod_enable_mobile_bottombar_setting" string="Mobile Navigation Bar" help="Enable adaptive bottom navigation bar on mobile viewports for one-thumb access.">
+                            <field name="ydod_enable_mobile_bottombar"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_ydod_responsive_config_settings" model="ir.actions.act_window">
+        <field name="name">Responsive Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'module': 'ydod_backend_responsive'}</field>
+    </record>
+</odoo>

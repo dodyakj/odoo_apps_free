@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Update standard admin user with responsive preferences -->
+    <record id="base.user_admin" model="res.users">
+        <field name="ydod_chatter_position">sided</field>
+    </record>
+
+    <!-- Demo users for mobile and tablet responsive layout testing -->
+    <record id="partner_demo_mobile_tech" model="res.partner">
+        <field name="name">Alex Morgan (Field Mobile)</field>
+        <field name="email">alex.morgan@example.com</field>
+    </record>
+    <record id="user_demo_mobile_tech" model="res.users">
+        <field name="name">Alex Morgan (Field Mobile)</field>
+        <field name="partner_id" ref="partner_demo_mobile_tech"/>
+        <field name="login">alex_mobile</field>
+        <field name="ydod_chatter_position">bottom</field>
+    </record>
+
+    <record id="partner_demo_tablet_sales" model="res.partner">
+        <field name="name">Jordan Lee (Tablet Sales)</field>
+        <field name="email">jordan.lee@example.com</field>
+    </record>
+    <record id="user_demo_tablet_sales" model="res.users">
+        <field name="name">Jordan Lee (Tablet Sales)</field>
+        <field name="partner_id" ref="partner_demo_tablet_sales"/>
+        <field name="login">jordan_tablet</field>
+        <field name="ydod_chatter_position">sided</field>
+    </record>
+
+    <record id="partner_demo_warehouse_user" model="res.partner">
+        <field name="name">Sam Taylor (Warehouse Scanner)</field>
+        <field name="email">sam.taylor@example.com</field>
+    </record>
+    <record id="user_demo_warehouse_user" model="res.users">
+        <field name="name">Sam Taylor (Warehouse Scanner)</field>
+        <field name="partner_id" ref="partner_demo_warehouse_user"/>
+        <field name="login">sam_warehouse</field>
+        <field name="ydod_chatter_position">bottom</field>
+    </record>
+
+    <record id="partner_demo_ops_lead" model="res.partner">
+        <field name="name">Chris Evans (Operations Lead)</field>
+        <field name="email">chris.evans@example.com</field>
+    </record>
+    <record id="user_demo_ops_lead" model="res.users">
+        <field name="name">Chris Evans (Operations Lead)</field>
+        <field name="partner_id" ref="partner_demo_ops_lead"/>
+        <field name="login">chris_ops</field>
+        <field name="ydod_chatter_position">sided</field>
+    </record>
+</odoo>
