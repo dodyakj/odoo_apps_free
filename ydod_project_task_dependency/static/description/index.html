@@ -1,0 +1,86 @@
+<section class="container my-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-12 text-center" style="background: linear-gradient(135deg, #714B67 0%, #4e3447 100%); padding: 50px 20px; border-radius: 16px; color: #ffffff;">
+            <h1 class="display-5 fw-bold mb-3">Project Task Dependencies &amp; Blocking Guards</h1>
+            <p class="lead mb-0 mx-auto" style="max-width: 800px; opacity: 0.95;">
+                Enforce structured execution order in Odoo Community. Prevent closing tasks prematurely before their predecessor dependencies are completed.
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 text-center" style="border-radius: 12px; background: #fafafa;">
+                <div class="mb-3">
+                    <span class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle" style="width: 56px; height: 56px; font-size: 22px;">
+                        <i class="fa fa-link"></i>
+                    </span>
+                </div>
+                <h4 class="fw-bold mb-2">Predecessor Relations</h4>
+                <p class="text-muted mb-0">Define multiple predecessor tasks that must finish before dependent tasks can be completed.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 text-center" style="border-radius: 12px; background: #fafafa;">
+                <div class="mb-3">
+                    <span class="d-inline-flex align-items-center justify-content-center bg-danger text-white rounded-circle" style="width: 56px; height: 56px; font-size: 22px;">
+                        <i class="fa fa-lock"></i>
+                    </span>
+                </div>
+                <h4 class="fw-bold mb-2">Blocking Guard</h4>
+                <p class="text-muted mb-0">Strict validation blocks tasks from being moved to Done while any predecessor is still in progress.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 text-center" style="border-radius: 12px; background: #fafafa;">
+                <div class="mb-3">
+                    <span class="d-inline-flex align-items-center justify-content-center bg-success text-white rounded-circle" style="width: 56px; height: 56px; font-size: 22px;">
+                        <i class="fa fa-bell"></i>
+                    </span>
+                </div>
+                <h4 class="fw-bold mb-2">Chatter Alerts</h4>
+                <p class="text-muted mb-0">Automatic notifications post directly to the task chatter the moment all predecessor tasks are resolved.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="p-4 border rounded-3 bg-light">
+                <h3 class="fw-bold mb-4" style="color: #714B67;">How It Works</h3>
+                <div class="d-flex mb-3">
+                    <div class="badge bg-secondary me-3 align-self-start" style="font-size: 1rem; width: 32px; height: 32px; line-height: 20px;">1</div>
+                    <div>
+                        <h5 class="fw-semibold mb-1">Set Predecessors</h5>
+                        <p class="text-muted mb-0">Open any task and navigate to the <b>Dependencies</b> tab to add predecessor tasks.</p>
+                    </div>
+                </div>
+                <div class="d-flex mb-3">
+                    <div class="badge bg-secondary me-3 align-self-start" style="font-size: 1rem; width: 32px; height: 32px; line-height: 20px;">2</div>
+                    <div>
+                        <h5 class="fw-semibold mb-1">Visual Warning Banner</h5>
+                        <p class="text-muted mb-0">A warning banner appears at the top of the task form as long as any predecessor remains unfinished.</p>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="badge bg-secondary me-3 align-self-start" style="font-size: 1rem; width: 32px; height: 32px; line-height: 20px;">3</div>
+                    <div>
+                        <h5 class="fw-semibold mb-1">Automatic Resolution Notification</h5>
+                        <p class="text-muted mb-0">When the last predecessor is closed, the banner disappears and an update notification is logged in chatter.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="p-4 border rounded-3" style="border-left: 5px solid #714B67 !important; background: #ffffff;">
+                <h4 class="fw-bold mb-2" style="color: #714B67;">Support &amp; Customization</h4>
+                <p class="text-muted mb-2">Developed and maintained by <strong>yDoD</strong> (Dody Ahmad Kusuma Jaya).</p>
+                <p class="mb-1"><i class="fa fa-envelope me-2 text-muted"></i> Support: <a href="mailto:dodyakj@gmail.com" class="text-decoration-none fw-semibold">dodyakj@gmail.com</a></p>
+                <p class="mb-0"><i class="fa fa-globe me-2 text-muted"></i> Website: <a href="https://profile.dodyakj.online" target="_blank" rel="noopener noreferrer" class="text-decoration-none fw-semibold">https://profile.dodyakj.online</a></p>
+            </div>
+        </div>
+    </div>
+</section>
