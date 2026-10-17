@@ -1,0 +1,39 @@
+// yDoD Backend Responsive - Sticky Table Headers & Scroll Indicators
+
+.o_list_renderer {
+    .o_list_table {
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 5;
+
+            th {
+                position: sticky;
+                top: 0;
+                z-index: 5;
+                background-color: var(--ListRenderer-table-bg, #ffffff);
+                box-shadow: inset 0 -1px 0 var(--border-color, #dee2e6);
+                white-space: nowrap;
+            }
+        }
+    }
+}
+
+@media (max-width: 767.98px) {
+    .o_list_renderer {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 14px;
+            pointer-events: none;
+            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.08));
+        }
+    }
+}
