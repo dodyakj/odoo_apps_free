@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Task Form Inheritance -->
+    <record id="view_task_form2_inherit_stage_duration" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.stage.duration</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="is_stage_bottleneck" invisible="1"/>
+                <field name="stage_entered_date" invisible="1"/>
+                <field name="current_stage_duration_display" widget="badge"
+                       decoration-danger="is_stage_bottleneck == True"
+                       decoration-info="is_stage_bottleneck == False"
+                       attrs="{'invisible': [('stage_entered_date', '=', False)]}"
+                       string="Time in Stage"/>
+            </xpath>
+            <xpath expr="//header" position="after">
+                <div class="alert alert-danger d-flex align-items-center mb-0" role="alert" attrs="{'invisible': [('is_stage_bottleneck', '=', False)]}">
+                    <i class="fa fa-exclamation-triangle me-2 fs-5"/>
+                    <div>
+                        <strong>Stage Bottleneck:</strong> This task has exceeded the target maximum duration for the current stage.
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Stage History" name="stage_history_page">
+                    <field name="stage_history_ids" readonly="1">
+                        <tree string="Stage History" decoration-info="is_current" decoration-muted="not is_current" create="0" delete="0" edit="0">
+                            <field name="stage_id"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="date_start" string="Entered Date"/>
+                            <field name="date_end" string="Exited Date"/>
+                            <field name="duration_hours" widget="float_time" sum="Total Hours"/>
+                            <field name="duration_days" sum="Total Days"/>
+                            <field name="is_current" widget="boolean_toggle" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Task Kanban Inheritance -->
+    <record id="view_task_card_inherit_stage_duration" model="ir.ui.view">
+        <field name="name">project.task.kanban.inherit.stage.duration</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="inside">
+                <field name="current_stage_duration_display"/>
+                <field name="is_stage_bottleneck"/>
+                <field name="stage_entered_date"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_kanban_bottom_left')]" position="inside">
+                <span t-if="record.is_stage_bottleneck.raw_value" class="badge rounded-pill text-bg-danger me-1">
+                    <i class="fa fa-exclamation-triangle me-1"/>Bottleneck
+                </span>
+                <span t-if="record.current_stage_duration_display.raw_value"
+                      t-att-class="'badge rounded-pill ' + (record.is_stage_bottleneck.raw_value ? 'text-bg-danger' : 'text-bg-secondary opacity-75')"
+                      t-att-title="record.is_stage_bottleneck.raw_value ? 'Stage Bottleneck exceeded' : 'Time in current stage'">
+                    <i class="fa fa-hourglass-half me-1"/>
+                    <t t-out="record.current_stage_duration_display.raw_value"/>
+                </span>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Task Search View Inheritance -->
+    <record id="view_task_search_form_inherit_stage_duration" model="ir.ui.view">
+        <field name="name">project.task.search.inherit.stage.duration</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='open_tasks']" position="after">
+                <filter string="Bottleneck Tasks" name="filter_bottleneck_tasks" domain="[('is_stage_bottleneck', '=', True)]"/>
+            </xpath>
+            <xpath expr="//filter[@name='stage']" position="after">
+                <filter string="Current Stage" name="groupby_current_stage" context="{'group_by': 'stage_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
