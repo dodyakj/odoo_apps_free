@@ -1,0 +1,53 @@
+<odoo>
+    <record id="demo_project_dependency" model="project.project">
+        <field name="name">Product Launch Workflow</field>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+
+    <record id="demo_task_1" model="project.task">
+        <field name="name">Market Research &amp; Requirements</field>
+        <field name="project_id" ref="demo_project_dependency"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="state">1_done</field>
+    </record>
+
+    <record id="demo_task_2" model="project.task">
+        <field name="name">Product Architecture &amp; UI Design</field>
+        <field name="project_id" ref="demo_project_dependency"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="state">01_in_progress</field>
+        <field name="predecessor_ids" eval="[(4, ref('demo_task_1'))]"/>
+    </record>
+
+    <record id="demo_task_3" model="project.task">
+        <field name="name">Core Module Development</field>
+        <field name="project_id" ref="demo_project_dependency"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="state">01_in_progress</field>
+        <field name="predecessor_ids" eval="[(4, ref('demo_task_2'))]"/>
+    </record>
+
+    <record id="demo_task_4" model="project.task">
+        <field name="name">API Integration &amp; Connectors</field>
+        <field name="project_id" ref="demo_project_dependency"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="state">01_in_progress</field>
+        <field name="predecessor_ids" eval="[(4, ref('demo_task_2'))]"/>
+    </record>
+
+    <record id="demo_task_5" model="project.task">
+        <field name="name">Automated Testing &amp; Security Audit</field>
+        <field name="project_id" ref="demo_project_dependency"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="state">01_in_progress</field>
+        <field name="predecessor_ids" eval="[(4, ref('demo_task_3')), (4, ref('demo_task_4'))]"/>
+    </record>
+
+    <record id="demo_task_6" model="project.task">
+        <field name="name">Production Deployment &amp; Go-Live</field>
+        <field name="project_id" ref="demo_project_dependency"/>
+        <field name="user_ids" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="state">01_in_progress</field>
+        <field name="predecessor_ids" eval="[(4, ref('demo_task_5'))]"/>
+    </record>
+</odoo>
