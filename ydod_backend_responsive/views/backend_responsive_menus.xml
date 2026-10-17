@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_ydod_responsive_settings"
+              name="Responsive Settings"
+              parent="base.next_id_2"
+              sequence="95"
+              action="action_ydod_responsive_config_settings"
+              groups="base.group_system"/>
+</odoo>
