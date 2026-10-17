@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_bank_recon_report_wizard_form" model="ir.ui.view">
+        <field name="name">ydod.bank.recon.report.wizard.form</field>
+        <field name="model">ydod.bank.recon.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Bank Reconciliation Audit">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="journal_id" options="{'no_create': True}"/>
+                            <field name="statement_date"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="statement_balance" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Audit Balances" name="audit_balances">
+                            <group>
+                                <group string="Book Figures">
+                                    <field name="gl_balance" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="uncleared_deposits" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="uncleared_payments" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <group string="Reconciliation Status">
+                                    <field name="balance_difference" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-danger="balance_difference != 0" decoration-success="balance_difference == 0"/>
+                                </group>
+                            </group>
+                            <div class="alert alert-info mt-3" role="alert" attrs="{'invisible': [('balance_difference', '=', 0)]}">
+                                <strong>Reconciliation Variance:</strong> A difference exists between your physical bank statement and the general ledger book balance. Click <em>Smart Auto-Match</em> to identify counterpart candidates or inspect uncleared items.
+                            </div>
+                            <div class="alert alert-success mt-3" role="alert" attrs="{'invisible': [('balance_difference', '!=', 0)]}">
+                                <strong>Balanced:</strong> The physical bank statement matches the general ledger adjusted book balance!
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_print_report" string="Print Audit PDF" type="object" class="btn-primary" icon="fa-print"/>
+                    <button name="action_auto_match_suggestions" string="Smart Auto-Match" type="object" class="btn-secondary" icon="fa-magic"/>
+                    <button name="action_view_uncleared_lines" string="View Uncleared Items" type="object" class="btn-secondary" icon="fa-list"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ydod_bank_recon_report_wizard" model="ir.actions.act_window">
+        <field name="name">Bank Reconciliation Audit Statement</field>
+        <field name="res_model">ydod.bank.recon.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_ydod_bank_recon_report_wizard_form"/>
+    </record>
+</odoo>

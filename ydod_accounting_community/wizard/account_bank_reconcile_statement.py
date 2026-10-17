@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -91,19 +91,18 @@ class AccountBankReconcileStatement(models.TransientModel):
                 ('date', '<=', rec.statement_date),
                 ('parent_state', '=', 'posted'),
             ]
-            groups = self.env['account.move.line']._read_group(
-                domain=domain,
-                fields=['balance', 'reconciled'],
+            groups = self.env['account.move.line'].read_group(
+                domain,
+                fields=['reconciled', 'balance'],
                 groupby=['reconciled'],
                 lazy=False,
             )
             total_gl = 0.0
             uncleared = 0.0
-            for res in groups:
-                bal = res.get('balance', 0.0) or 0.0
-                reconciled = res.get('reconciled', False)
+            for g in groups:
+                bal = g.get('balance', 0.0) or 0.0
                 total_gl += bal
-                if not reconciled:
+                if not g.get('reconciled'):
                     uncleared += bal
             rec.gl_balance = total_gl
             rec.uncleared_balance = uncleared

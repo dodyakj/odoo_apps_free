@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form_inherit_ydod_accounting" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.ydod.accounting</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_submit_for_approval" string="Submit for Approval" type="object" class="btn-secondary" attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('approval_state', 'not in', ('not_required', 'rejected'))]}"/>
+                <button name="action_approve" string="Approve" type="object" class="btn-success" groups="ydod_accounting_community.group_accounting_manager" attrs="{'invisible': [('approval_state', '!=', 'to_approve')]}"/>
+                <button name="action_reject" string="Reject" type="object" class="btn-danger" groups="ydod_accounting_community.group_accounting_manager" attrs="{'invisible': [('approval_state', '!=', 'to_approve')]}"/>
+                <field name="approval_state" widget="badge" decoration-warning="approval_state == 'to_approve'" decoration-success="approval_state == 'approved'" decoration-danger="approval_state == 'rejected'" attrs="{'invisible': [('approval_state', '=', 'not_required')]}"/>
+            </xpath>
+            <xpath expr="//page[@id='other_tab_entry']//group[1]" position="inside">
+                <group string="Period Closing &amp; Approval" name="closing_approval_info">
+                    <field name="fiscal_year_id" readonly="1" attrs="{'invisible': [('fiscal_year_id', '=', False)]}"/>
+                    <field name="is_closing_entry" widget="boolean_toggle" readonly="1" attrs="{'invisible': [('is_closing_entry', '=', False)]}"/>
+                    <field name="approval_state" readonly="1"/>
+                    <field name="approver_id" readonly="1" attrs="{'invisible': [('approver_id', '=', False)]}"/>
+                </group>
+            </xpath>
+            <xpath expr="//page[@id='other_tab']//group[1]" position="inside">
+                <group string="Period Closing &amp; Approval" name="closing_approval_info_invoice">
+                    <field name="fiscal_year_id" readonly="1" attrs="{'invisible': [('fiscal_year_id', '=', False)]}"/>
+                    <field name="is_closing_entry" widget="boolean_toggle" readonly="1" attrs="{'invisible': [('is_closing_entry', '=', False)]}"/>
+                    <field name="approval_state" readonly="1"/>
+                    <field name="approver_id" readonly="1" attrs="{'invisible': [('approver_id', '=', False)]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -9,12 +9,65 @@
         <field name="binding_type">report</field>
     </record>
 
+    <record id="action_report_ydod_bank_recon_wizard" model="ir.actions.report">
+        <field name="name">Bank Reconciliation Statement</field>
+        <field name="model">ydod.bank.recon.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ydod_accounting_community.report_bank_reconcile_statement</field>
+        <field name="binding_model_id" ref="model_ydod_bank_recon_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
     <record id="action_report_fiscal_year_closing" model="ir.actions.report">
         <field name="name">Fiscal Year Closing Summary</field>
         <field name="model">account.fiscal.year</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">ydod_accounting_community.report_fiscal_year_closing_summary</field>
         <field name="binding_model_id" ref="model_account_fiscal_year"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_trial_balance" model="ir.actions.report">
+        <field name="name">Trial Balance</field>
+        <field name="model">ydod.financial.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ydod_accounting_community.report_trial_balance</field>
+    </record>
+
+    <record id="action_report_pnl" model="ir.actions.report">
+        <field name="name">Profit and Loss</field>
+        <field name="model">ydod.financial.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ydod_accounting_community.report_pnl</field>
+    </record>
+
+    <record id="action_report_balance_sheet" model="ir.actions.report">
+        <field name="name">Balance Sheet</field>
+        <field name="model">ydod.financial.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ydod_accounting_community.report_balance_sheet</field>
+    </record>
+
+    <record id="action_report_aged_partner" model="ir.actions.report">
+        <field name="name">Aged Partner Balance</field>
+        <field name="model">ydod.financial.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ydod_accounting_community.report_aged_partner</field>
+    </record>
+
+    <record id="action_report_cash_flow" model="ir.actions.report">
+        <field name="name">Cash Flow Statement</field>
+        <field name="model">ydod.financial.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ydod_accounting_community.report_cash_flow</field>
+    </record>
+
+    <record id="action_report_ydod_fiscal_year_closing" model="ir.actions.report">
+        <field name="name">Fiscal Year Closing Summary</field>
+        <field name="model">ydod.fiscal.year</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ydod_accounting_community.report_ydod_fiscal_year_closing_summary</field>
+        <field name="binding_model_id" ref="model_ydod_fiscal_year"/>
         <field name="binding_type">report</field>
     </record>
 </odoo>

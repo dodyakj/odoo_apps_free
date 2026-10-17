@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 
@@ -10,21 +10,28 @@ class AccountFiscalYear(models.Model):
     _order = 'date_from desc, id desc'
 
     _sql_constraints = [
-        ('check_dates', 'CHECK(date_from <= date_to)', 'Fiscal year start date must precede end date.'),
-        ('name_company_uniq', 'unique(name, company_id)', 'Fiscal year name must be unique per company.'),
+        (
+            'check_dates',
+            'CHECK(date_from <= date_to)',
+            'Fiscal year start date must precede end date.',
+        ),
+        (
+            'name_company_uniq',
+            'UNIQUE(name, company_id)',
+            'Fiscal year name must be unique per company.',
+        ),
     ]
 
     name = fields.Char(string="Fiscal Year", required=True, tracking=True)
     code = fields.Char(string="Code", required=True, tracking=True)
-    date_from = fields.Date(string="Start Date", required=True, tracking=True, index=True)
-    date_to = fields.Date(string="End Date", required=True, tracking=True, index=True)
+    date_from = fields.Date(string="Start Date", required=True, tracking=True)
+    date_to = fields.Date(string="End Date", required=True, tracking=True)
     company_id = fields.Many2one(
         comodel_name='res.company',
         string="Company",
         required=True,
         default=lambda self: self.env.company,
         tracking=True,
-        index=True,
     )
     state = fields.Selection(
         selection=[
@@ -70,38 +77,6 @@ class AccountFiscalYear(models.Model):
             if self.search_count(domain):
                 raise ValidationError(_("Fiscal year name must be unique per company."))
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        seen = set()
-        for vals in vals_list:
-            date_from = vals.get('date_from')
-            date_to = vals.get('date_to')
-            if date_from and date_to and str(date_from) > str(date_to):
-                raise ValidationError(_("Fiscal year start date must precede end date."))
-            name = vals.get('name')
-            company_id = vals.get('company_id') or self.default_get(['company_id']).get('company_id') or self.env.company.id
-            if name and company_id:
-                key = (name, company_id)
-                if key in seen or self.search_count([('name', '=', name), ('company_id', '=', company_id)]):
-                    raise ValidationError(_("Fiscal year name must be unique per company."))
-                seen.add(key)
-        return super().create(vals_list)
-
-    def write(self, vals):
-        if 'date_from' in vals or 'date_to' in vals:
-            for rec in self:
-                df = vals.get('date_from', rec.date_from)
-                dt = vals.get('date_to', rec.date_to)
-                if df and dt and str(df) > str(dt):
-                    raise ValidationError(_("Fiscal year start date must precede end date."))
-        if 'name' in vals or 'company_id' in vals:
-            for rec in self:
-                name = vals.get('name', rec.name)
-                company_id = vals.get('company_id', rec.company_id.id)
-                if self.search_count([('name', '=', name), ('company_id', '=', company_id), ('id', '!=', rec.id)]):
-                    raise ValidationError(_("Fiscal year name must be unique per company."))
-        return super().write(vals)
-
     @api.depends('date_from', 'date_to', 'company_id')
     def _compute_move_count(self):
         for fy in self:
@@ -114,6 +89,42 @@ class AccountFiscalYear(models.Model):
                 ('date', '<=', fy.date_to),
                 ('state', '=', 'posted'),
             ])
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            df = fields.Date.to_date(vals.get('date_from'))
+            dt = fields.Date.to_date(vals.get('date_to'))
+            if df and dt and df > dt:
+                raise ValidationError(_("Fiscal year start date must precede end date."))
+            name = vals.get('name')
+            company_id = vals.get('company_id') or self.env.company.id
+            if name and company_id:
+                if self.search_count([('name', '=', name), ('company_id', '=', company_id)]):
+                    raise ValidationError(_("Fiscal year name must be unique per company."))
+        seen = set()
+        for vals in vals_list:
+            name = vals.get('name')
+            company_id = vals.get('company_id') or self.env.company.id
+            if name and company_id:
+                key = (name, company_id)
+                if key in seen:
+                    raise ValidationError(_("Fiscal year name must be unique per company."))
+                seen.add(key)
+        return super().create(vals_list)
+
+    def write(self, vals):
+        for record in self:
+            df = fields.Date.to_date(vals.get('date_from', record.date_from))
+            dt = fields.Date.to_date(vals.get('date_to', record.date_to))
+            if df and dt and df > dt:
+                raise ValidationError(_("Fiscal year start date must precede end date."))
+            name = vals.get('name', record.name)
+            company_id = vals.get('company_id', record.company_id.id if record.company_id else False)
+            if ('name' in vals or 'company_id' in vals) and name and company_id:
+                if self.search_count([('name', '=', name), ('company_id', '=', company_id), ('id', '!=', record.id)]):
+                    raise ValidationError(_("Fiscal year name must be unique per company."))
+        return super().write(vals)
 
     def action_open(self):
         self.check_access_rights('write')
@@ -159,12 +170,12 @@ class AccountFiscalYear(models.Model):
             account = company.get_unaffected_earnings_account()
         if not account:
             account = self.env['account.account'].search([
-                ('company_id', '=', company.id),
+                *self.env['account.account']._check_company_domain(company),
                 ('account_type', '=', 'equity_unaffected'),
             ], limit=1)
         if not account:
             account = self.env['account.account'].search([
-                ('company_id', '=', company.id),
+                *self.env['account.account']._check_company_domain(company),
                 ('internal_group', '=', 'equity'),
             ], limit=1)
         if not account:
@@ -213,9 +224,9 @@ class AccountFiscalYear(models.Model):
             ('parent_state', '=', 'posted'),
             ('account_id.internal_group', 'in', ['income', 'expense']),
         ]
-        groups = self.env['account.move.line']._read_group(
-            domain=domain,
-            fields=['balance', 'account_id'],
+        groups = self.env['account.move.line'].read_group(
+            domain,
+            fields=['account_id', 'balance'],
             groupby=['account_id'],
         )
 
@@ -223,8 +234,8 @@ class AccountFiscalYear(models.Model):
         net_pl_balance = 0.0
 
         for res in groups:
-            account_id = res['account_id'][0]
-            account = self.env['account.account'].browse(account_id)
+            acc_id = res['account_id'][0]
+            account = self.env['account.account'].browse(acc_id)
             bal = res.get('balance', 0.0) or 0.0
             if self.company_id.currency_id.is_zero(bal):
                 continue

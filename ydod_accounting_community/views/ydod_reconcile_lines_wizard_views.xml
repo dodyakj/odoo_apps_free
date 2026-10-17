@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_reconcile_lines_wizard_form" model="ir.ui.view">
+        <field name="name">ydod.reconcile.lines.wizard.form</field>
+        <field name="model">ydod.reconcile.lines.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Manual Reconciliation">
+                <sheet>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="h4 mb-0">Reconcile Move Lines</div>
+                        <button name="action_suggest_matches" string="Suggest Matching Items" type="object" class="btn btn-sm btn-outline-primary" icon="fa-magic"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="company_id" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="balance_difference" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-danger="balance_difference != 0" decoration-success="balance_difference == 0"/>
+                        </group>
+                        <group attrs="{'invisible': [('balance_difference', '=', 0)]}">
+                            <field name="writeoff_journal_id" options="{'no_create': True}" attrs="{'required': [('balance_difference', '!=', 0)]}"/>
+                            <field name="writeoff_account_id" options="{'no_create': True}" attrs="{'required': [('balance_difference', '!=', 0)]}"/>
+                            <field name="writeoff_label" attrs="{'required': [('balance_difference', '!=', 0)]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Selected Items" name="lines">
+                            <field name="line_ids" widget="many2many">
+                                <tree string="Journal Items" create="false" edit="false">
+                                    <field name="date"/>
+                                    <field name="move_id"/>
+                                    <field name="journal_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="name"/>
+                                    <field name="account_id"/>
+                                    <field name="debit" sum="Total Debit"/>
+                                    <field name="credit" sum="Total Credit"/>
+                                    <field name="balance" sum="Net Balance"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_reconcile" string="Reconcile Selected" type="object" class="btn-primary" icon="fa-exchange"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ydod_reconcile_lines_wizard" model="ir.actions.act_window">
+        <field name="name">Manual Reconciliation</field>
+        <field name="res_model">ydod.reconcile.lines.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_ydod_reconcile_lines_wizard_form"/>
+    </record>
+</odoo>

@@ -23,7 +23,7 @@
                                 <group string="Balance Verification">
                                     <field name="gl_balance" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                     <field name="uncleared_balance" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                                    <field name="difference" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="difference" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-danger="difference != 0" decoration-success="difference == 0"/>
                                 </group>
                             </group>
                             <div class="alert alert-info mt-3" role="alert" attrs="{'invisible': [('difference', '=', 0)]}">

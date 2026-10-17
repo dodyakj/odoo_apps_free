@@ -188,8 +188,8 @@ class TestAccountingCommunity(TransactionCase):
             ('date', '<=', fy.date_to),
             ('parent_state', '=', 'posted'),
         ]
-        income_res = self.env['account.move.line'].read_group(domain_income, ['balance'], [])
-        income_balance = income_res[0]['balance'] if income_res else 0.0
+        income_groups = self.env['account.move.line'].read_group(domain_income, ['balance:sum'], [])
+        income_balance = income_groups[0]['balance'] or 0.0 if income_groups and income_groups[0].get('balance') else 0.0
         self.assertAlmostEqual(income_balance, 0.0)
 
         domain_expense = [
@@ -197,8 +197,8 @@ class TestAccountingCommunity(TransactionCase):
             ('date', '<=', fy.date_to),
             ('parent_state', '=', 'posted'),
         ]
-        expense_res = self.env['account.move.line'].read_group(domain_expense, ['balance'], [])
-        expense_balance = expense_res[0]['balance'] if expense_res else 0.0
+        expense_groups = self.env['account.move.line'].read_group(domain_expense, ['balance:sum'], [])
+        expense_balance = expense_groups[0]['balance'] or 0.0 if expense_groups and expense_groups[0].get('balance') else 0.0
         self.assertAlmostEqual(expense_balance, 0.0)
 
     def test_reconcile_wizard_gl_balance(self):

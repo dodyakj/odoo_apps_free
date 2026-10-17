@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_account_asset_list" model="ir.ui.view">
+        <field name="name">ydod.account.asset.tree</field>
+        <field name="model">ydod.account.asset</field>
+        <field name="arch" type="xml">
+            <tree string="Fixed Assets" decoration-info="state == 'draft'" decoration-success="state == 'running'" decoration-muted="state == 'closed'">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="purchase_date"/>
+                <field name="purchase_value" sum="Total Cost"/>
+                <field name="value_depreciated" sum="Total Depreciated"/>
+                <field name="value_residual" sum="Residual Value"/>
+                <field name="currency_id" invisible="1"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'running'" decoration-warning="state == 'paused'" decoration-muted="state == 'closed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ydod_account_asset_form" model="ir.ui.view">
+        <field name="name">ydod.account.asset.form</field>
+        <field name="model">ydod.account.asset</field>
+        <field name="arch" type="xml">
+            <form string="Fixed Asset">
+                <header>
+                    <button name="action_compute_depreciation_board" string="Compute Depreciation" type="object" class="btn-secondary" attrs="{'invisible': [('state', 'not in', ('draft', 'running'))]}"/>
+                    <button name="action_confirm" string="Confirm Asset" type="object" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_post_pending_depreciation" string="Post Due Depreciations" type="object" class="btn-secondary" attrs="{'invisible': [('state', '!=', 'running')]}"/>
+                    <button name="action_pause" string="Pause" type="object" attrs="{'invisible': [('state', '!=', 'running')]}"/>
+                    <button name="action_resume" string="Resume" type="object" attrs="{'invisible': [('state', '!=', 'paused')]}"/>
+                    <button name="action_close" string="Close Asset" type="object" attrs="{'invisible': [('state', 'not in', ('running', 'paused'))]}"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object" attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Asset Name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Delivery Van Model X" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Asset Values">
+                            <field name="code" placeholder="e.g. AST-001" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="purchase_date" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                            <field name="purchase_value" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'readonly': [('state', 'in', ('running', 'closed'))]}"/>
+                            <field name="salvage_value" widget="monetary" options="{'currency_field': 'currency_id'}" attrs="{'readonly': [('state', 'in', ('running', 'closed'))]}"/>
+                            <field name="depreciable_value" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group string="Depreciation Method">
+                            <field name="method_number" attrs="{'readonly': [('state', 'in', ('running', 'closed'))]}"/>
+                            <field name="method_period" attrs="{'readonly': [('state', 'in', ('running', 'closed'))]}"/>
+                            <field name="company_id" groups="base.group_multi_company" attrs="{'readonly': [('state', '=', 'closed')]}"/>
+                        </group>
+                    </group>
+                    <group string="Accounting Configuration">
+                        <group>
+                            <field name="account_asset_id" options="{'no_create': True}" attrs="{'readonly': [('state', 'in', ('running', 'closed'))]}"/>
+                            <field name="account_depreciation_id" options="{'no_create': True}" attrs="{'readonly': [('state', 'in', ('running', 'closed'))]}"/>
+                        </group>
+                        <group>
+                            <field name="account_expense_id" options="{'no_create': True}" attrs="{'readonly': [('state', 'in', ('running', 'closed'))]}"/>
+                            <field name="journal_id" options="{'no_create': True}" attrs="{'readonly': [('state', 'in', ('running', 'closed'))]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Depreciation Board" name="board">
+                            <field name="line_ids">
+                                <tree string="Depreciation Lines" create="false" decoration-muted="state == 'posted'">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="depreciation_date"/>
+                                    <field name="amount" sum="Total Depreciation"/>
+                                    <field name="depreciated_value"/>
+                                    <field name="remaining_value"/>
+                                    <field name="move_id"/>
+                                    <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'posted'"/>
+                                    <button name="action_post_entry" string="Post Move" type="object" icon="fa-play" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="value_depreciated" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="value_residual" widget="monetary" options="{'currency_field': 'currency_id'}" class="oe_subtotal_footer_separator"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ydod_account_asset_search" model="ir.ui.view">
+        <field name="name">ydod.account.asset.search</field>
+        <field name="model">ydod.account.asset</field>
+        <field name="arch" type="xml">
+            <search string="Search Assets">
+                <field name="name" string="Asset" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="code"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <separator/>
+                <filter string="Running" name="running" domain="[('state', '=', 'running')]"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Closed" name="closed" domain="[('state', '=', 'closed')]"/>
+                <group>
+                    <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                    <filter string="Company" name="group_by_company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ydod_account_asset" model="ir.actions.act_window">
+        <field name="name">Fixed Assets</field>
+        <field name="res_model">ydod.account.asset</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_ydod_account_asset_search"/>
+        <field name="context">{'search_default_running': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Register a new fixed asset
+            </p>
+            <p>
+                Compute depreciation schedules, track asset residual book values, and automate periodic depreciation journal entries.
+            </p>
+        </field>
+    </record>
+</odoo>
