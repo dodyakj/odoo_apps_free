@@ -51,7 +51,9 @@
                                   'ydod_backend_responsive/static/src/components/bottom_navbar/bottom_navbar.xml',
                                   'ydod_backend_responsive/static/src/components/chatter/chatter_patch.js',
                                   'ydod_backend_responsive/static/src/components/chatter/chatter_patch.xml']},
-    'images': ['static/description/banner.png', 'static/description/screenshot_1.png'],
+    'images': [   'static/description/demo.gif',
+        'static/description/banner.png',
+        'static/description/screenshot_1.png'],
     'installable': True,
     'application': False,
 }
