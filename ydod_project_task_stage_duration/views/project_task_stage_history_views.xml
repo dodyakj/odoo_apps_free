@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_project_task_stage_history_list" model="ir.ui.view">
+        <field name="name">project.task.stage.history.list</field>
+        <field name="model">project.task.stage.history</field>
+        <field name="arch" type="xml">
+            <list string="Stage Duration Analysis" create="0" delete="0" edit="0" decoration-info="is_current">
+                <field name="task_id"/>
+                <field name="project_id"/>
+                <field name="stage_id"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="date_start" string="Entered Date"/>
+                <field name="date_end" string="Exited Date"/>
+                <field name="duration_hours" widget="float_time" sum="Total Hours"/>
+                <field name="duration_days" sum="Total Days"/>
+                <field name="is_current" widget="boolean_toggle"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_project_task_stage_history_form" model="ir.ui.view">
+        <field name="name">project.task.stage.history.form</field>
+        <field name="model">project.task.stage.history</field>
+        <field name="arch" type="xml">
+            <form string="Stage History" create="0" delete="0" edit="0">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="display_name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="task_id"/>
+                            <field name="project_id"/>
+                            <field name="stage_id"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="duration_hours" widget="float_time"/>
+                            <field name="duration_days"/>
+                            <field name="is_current" widget="boolean_toggle"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_project_task_stage_history_search" model="ir.ui.view">
+        <field name="name">project.task.stage.history.search</field>
+        <field name="model">project.task.stage.history</field>
+        <field name="arch" type="xml">
+            <search string="Stage History Search">
+                <field name="task_id"/>
+                <field name="project_id"/>
+                <field name="stage_id"/>
+                <field name="user_id"/>
+                <separator/>
+                <filter string="Current Stage Logs" name="filter_current" domain="[('is_current', '=', True)]"/>
+                <filter string="Completed Logs" name="filter_completed" domain="[('is_current', '=', False)]"/>
+                <separator/>
+                <group>
+                    <filter string="Stage" name="groupby_stage" context="{'group_by': 'stage_id'}"/>
+                    <filter string="Project" name="groupby_project" context="{'group_by': 'project_id'}"/>
+                    <filter string="Task" name="groupby_task" context="{'group_by': 'task_id'}"/>
+                    <filter string="User" name="groupby_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Start Month" name="groupby_date_start" context="{'group_by': 'date_start:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_project_task_stage_history_pivot" model="ir.ui.view">
+        <field name="name">project.task.stage.history.pivot</field>
+        <field name="model">project.task.stage.history</field>
+        <field name="arch" type="xml">
+            <pivot string="Stage Duration Analysis" sample="1">
+                <field name="project_id" type="row"/>
+                <field name="stage_id" type="row"/>
+                <field name="duration_hours" type="measure"/>
+                <field name="duration_days" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_project_task_stage_history_graph" model="ir.ui.view">
+        <field name="name">project.task.stage.history.graph</field>
+        <field name="model">project.task.stage.history</field>
+        <field name="arch" type="xml">
+            <graph string="Stage Duration Analysis" type="bar" sample="1">
+                <field name="stage_id"/>
+                <field name="duration_hours" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_project_task_stage_history" model="ir.actions.act_window">
+        <field name="name">Stage Duration Analysis</field>
+        <field name="res_model">project.task.stage.history</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+        <field name="search_view_id" ref="view_project_task_stage_history_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No stage history records found
+            </p>
+            <p>
+                Stage transition history will automatically be logged here as tasks move between stages.
+            </p>
+        </field>
+    </record>
+</odoo>
