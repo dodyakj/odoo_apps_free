@@ -10,29 +10,20 @@ class AccountFiscalYear(models.Model):
     _order = 'date_from desc, id desc'
 
     _sql_constraints = [
-        (
-            'check_dates',
-            'CHECK(date_from <= date_to)',
-            'Fiscal year start date must precede end date.',
-        ),
-        (
-            'name_company_uniq',
-            'UNIQUE(name, company_id)',
-            'Fiscal year name must be unique per company.',
-        ),
+        ('check_dates', 'CHECK(date_from <= date_to)', 'Fiscal year start date must precede end date.'),
+        ('name_company_uniq', 'UNIQUE(name, company_id)', 'Fiscal year name must be unique per company.'),
     ]
 
     name = fields.Char(string="Fiscal Year", required=True, tracking=True)
     code = fields.Char(string="Code", required=True, tracking=True)
-    date_from = fields.Date(string="Start Date", required=True, tracking=True, index=True)
-    date_to = fields.Date(string="End Date", required=True, tracking=True, index=True)
+    date_from = fields.Date(string="Start Date", required=True, tracking=True)
+    date_to = fields.Date(string="End Date", required=True, tracking=True)
     company_id = fields.Many2one(
         comodel_name='res.company',
         string="Company",
         required=True,
         default=lambda self: self.env.company,
         tracking=True,
-        index=True,
     )
     state = fields.Selection(
         selection=[
@@ -179,7 +170,7 @@ class AccountFiscalYear(models.Model):
                 'name': self.env._("Miscellaneous Operations"),
                 'code': 'MISC',
                 'type': 'general',
-                'company_id': self.company.id,
+                'company_id': self.company_id.id,
             })
 
         domain = [

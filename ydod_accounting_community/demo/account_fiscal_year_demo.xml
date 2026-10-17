@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Legacy account.fiscal.year records -->
     <record id="demo_fiscal_year_2023" model="account.fiscal.year">
         <field name="name">Fiscal Year 2023</field>
         <field name="code">FY2023</field>
@@ -52,5 +53,79 @@
         <field name="date_to">2028-12-31</field>
         <field name="state">draft</field>
         <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <!-- ydod.fiscal.year records -->
+    <record id="demo_ydod_fiscal_year_2024" model="ydod.fiscal.year">
+        <field name="name">Fiscal Year 2024</field>
+        <field name="code">FY2024-Y</field>
+        <field name="date_from">2024-01-01</field>
+        <field name="date_to">2024-12-31</field>
+        <field name="state">closed</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_ydod_fiscal_year_2025" model="ydod.fiscal.year">
+        <field name="name">Fiscal Year 2025</field>
+        <field name="code">FY2025-Y</field>
+        <field name="date_from">2025-01-01</field>
+        <field name="date_to">2025-12-31</field>
+        <field name="state">closed</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_ydod_fiscal_year_2026" model="ydod.fiscal.year">
+        <field name="name">Fiscal Year 2026</field>
+        <field name="code">FY2026-Y</field>
+        <field name="date_from">2026-01-01</field>
+        <field name="date_to">2026-12-31</field>
+        <field name="state">open</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_ydod_fiscal_year_2027" model="ydod.fiscal.year">
+        <field name="name">Fiscal Year 2027</field>
+        <field name="code">FY2027-Y</field>
+        <field name="date_from">2027-01-01</field>
+        <field name="date_to">2027-12-31</field>
+        <field name="state">draft</field>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <!-- ydod.account.budget demo records -->
+    <record id="demo_ydod_budget_2026_q1" model="ydod.account.budget">
+        <field name="name">Q1 2026 Operating Budget</field>
+        <field name="date_from">2026-01-01</field>
+        <field name="date_to">2026-03-31</field>
+        <field name="state">approved</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+
+    <record id="demo_ydod_budget_2026_q2" model="ydod.account.budget">
+        <field name="name">Q2 2026 Marketing &amp; Sales Budget</field>
+        <field name="date_from">2026-04-01</field>
+        <field name="date_to">2026-06-30</field>
+        <field name="state">confirmed</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+
+    <record id="demo_ydod_budget_2026_capex" model="ydod.account.budget">
+        <field name="name">2026 Capital Expenditure Budget</field>
+        <field name="date_from">2026-01-01</field>
+        <field name="date_to">2026-12-31</field>
+        <field name="state">draft</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="user_id" ref="base.user_admin"/>
+    </record>
+
+    <record id="demo_ydod_budget_2025_annual" model="ydod.account.budget">
+        <field name="name">2025 Annual Operational Budget</field>
+        <field name="date_from">2025-01-01</field>
+        <field name="date_to">2025-12-31</field>
+        <field name="state">done</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="user_id" ref="base.user_admin"/>
     </record>
 </odoo>

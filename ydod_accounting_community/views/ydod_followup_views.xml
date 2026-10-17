@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_account_followup_form" model="ir.ui.view">
+        <field name="name">ydod.account.followup.form</field>
+        <field name="model">ydod.account.followup</field>
+        <field name="arch" type="xml">
+            <form string="Customer Payment Follow-up">
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        <strong>Credit Control &amp; Overdue Follow-up:</strong> Review outstanding receivables, overdue balances, and automatically dispatch follow-up reminders and schedule debtor call activities.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create': True}"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="overdue_amount" widget="monetary" options="{'currency_field': 'currency_id'}" decoration-danger="overdue_amount > 0"/>
+                            <field name="total_due_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Unpaid Customer Invoices" name="invoices">
+                            <field name="invoice_ids" widget="many2many">
+                                <list string="Invoices" create="false" edit="false">
+                                    <field name="name"/>
+                                    <field name="invoice_date"/>
+                                    <field name="invoice_date_due"/>
+                                    <field name="amount_total" sum="Total"/>
+                                    <field name="amount_residual" sum="Residual"/>
+                                    <field name="payment_state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button name="action_send_followup" string="Send Follow-up &amp; Schedule Activity" type="object" class="btn-primary" icon="fa-envelope"/>
+                    <button string="Close" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ydod_account_followup" model="ir.actions.act_window">
+        <field name="name">Payment Follow-up</field>
+        <field name="res_model">ydod.account.followup</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_ydod_account_followup_form"/>
+    </record>
+</odoo>

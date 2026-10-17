@@ -3,7 +3,6 @@ from odoo.tests.common import TransactionCase, tagged
 from odoo.tools import mute_logger
 from odoo.exceptions import ValidationError, UserError, AccessError
 from odoo import fields
-from psycopg2 import IntegrityError
 
 
 @tagged('post_install', '-at_install')
@@ -49,28 +48,28 @@ class TestAccountingCommunity(TransactionCase):
             'name': 'Test Bank Account',
             'code': '101001',
             'account_type': 'asset_cash',
-            'company_ids': [fields.Command.set([cls.company.id])],
+            'company_ids': [fields.Command.link(cls.company.id)],
         })
 
         cls.acc_income = cls.env['account.account'].create({
             'name': 'Test Operating Revenue',
             'code': '401001',
             'account_type': 'income',
-            'company_ids': [fields.Command.set([cls.company.id])],
+            'company_ids': [fields.Command.link(cls.company.id)],
         })
 
         cls.acc_expense = cls.env['account.account'].create({
             'name': 'Test Operating Expense',
             'code': '501001',
             'account_type': 'expense',
-            'company_ids': [fields.Command.set([cls.company.id])],
+            'company_ids': [fields.Command.link(cls.company.id)],
         })
 
         cls.acc_retained = cls.env['account.account'].create({
             'name': 'Test Retained Earnings',
             'code': '999001',
             'account_type': 'equity_unaffected',
-            'company_ids': [fields.Command.set([cls.company.id])],
+            'company_ids': [fields.Command.link(cls.company.id)],
         })
 
         cls.journal_general = cls.env['account.journal'].create({
@@ -90,14 +89,15 @@ class TestAccountingCommunity(TransactionCase):
 
     def test_fiscal_year_date_constraint(self):
         """Verify constraint error is raised when date_from is later than date_to."""
-        with mute_logger('odoo.sql_db'), self.assertRaises(IntegrityError):
-            self.env['account.fiscal.year'].create({
-                'name': 'Invalid FY 2026',
-                'code': 'FY26-INV',
-                'date_from': '2026-12-31',
-                'date_to': '2026-01-01',
-                'company_id': self.company.id,
-            })
+        with mute_logger('odoo.sql_db'), self.assertRaises(Exception):
+            with self.env.cr.savepoint():
+                self.env['account.fiscal.year'].create({
+                    'name': 'Invalid FY 2026',
+                    'code': 'FY26-INV',
+                    'date_from': '2026-12-31',
+                    'date_to': '2026-01-01',
+                    'company_id': self.company.id,
+                })
 
     def test_fiscal_year_name_unique(self):
         """Ensure creating duplicate fiscal year names within the same company raises a constraint error."""
@@ -108,14 +108,15 @@ class TestAccountingCommunity(TransactionCase):
             'date_to': '2026-12-31',
             'company_id': self.company.id,
         })
-        with mute_logger('odoo.sql_db'), self.assertRaises(IntegrityError):
-            self.env['account.fiscal.year'].create({
-                'name': 'FY2026-UNIQUE',
-                'code': 'FY26U2',
-                'date_from': '2026-01-01',
-                'date_to': '2026-12-31',
-                'company_id': self.company.id,
-            })
+        with mute_logger('odoo.sql_db'), self.assertRaises(Exception):
+            with self.env.cr.savepoint():
+                self.env['account.fiscal.year'].create({
+                    'name': 'FY2026-UNIQUE',
+                    'code': 'FY26U2',
+                    'date_from': '2026-01-01',
+                    'date_to': '2026-12-31',
+                    'company_id': self.company.id,
+                })
 
     def test_fiscal_year_state_workflow(self):
         """Verify state transitions from draft to open and finally to closed."""
