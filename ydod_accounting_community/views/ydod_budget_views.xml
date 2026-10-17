@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_account_budget_list" model="ir.ui.view">
+        <field name="name">ydod.account.budget.list</field>
+        <field name="model">ydod.account.budget</field>
+        <field name="arch" type="xml">
+            <list string="Budgets" decoration-info="state == 'draft'" decoration-warning="state == 'confirmed'" decoration-success="state == 'approved'" decoration-muted="state in ('done', 'canceled')">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="user_id"/>
+                <field name="total_planned_amount" sum="Total Planned"/>
+                <field name="total_practical_amount" sum="Total Actual"/>
+                <field name="total_percentage" widget="progressbar"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirmed'" decoration-success="state == 'approved'" decoration-muted="state in ('done', 'canceled')"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ydod_account_budget_form" model="ir.ui.view">
+        <field name="name">ydod.account.budget.form</field>
+        <field name="model">ydod.account.budget</field>
+        <field name="arch" type="xml">
+            <form string="Budget">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approve" type="object" class="btn-primary" invisible="state != 'confirmed'" groups="ydod_accounting_community.group_accounting_manager"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state not in ('confirmed', 'approved')"/>
+                    <button name="action_reset_draft" string="Reset to Draft" type="object" invisible="state not in ('canceled', 'confirmed')"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,approved,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Budget Name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Q1 2026 Operating Budget" readonly="state in ('approved', 'done')"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date_from" readonly="state in ('approved', 'done')"/>
+                            <field name="date_to" readonly="state in ('approved', 'done')"/>
+                        </group>
+                        <group>
+                            <field name="user_id" readonly="state in ('approved', 'done')"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="state in ('approved', 'done')"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Budget Lines" name="lines">
+                            <field name="line_ids" readonly="state in ('approved', 'done')">
+                                <list string="Budget Lines" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="analytic_account_id" options="{'no_create': True}"/>
+                                    <field name="account_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                                    <field name="date_from"/>
+                                    <field name="date_to"/>
+                                    <field name="planned_amount" sum="Planned Total"/>
+                                    <field name="practical_amount" sum="Actual Total"/>
+                                    <field name="percentage" widget="progressbar"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total_planned_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="total_practical_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="total_percentage" widget="progressbar"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ydod_account_budget_search" model="ir.ui.view">
+        <field name="name">ydod.account.budget.search</field>
+        <field name="model">ydod.account.budget</field>
+        <field name="arch" type="xml">
+            <search string="Search Budgets">
+                <field name="name" string="Budget"/>
+                <field name="user_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <separator/>
+                <filter string="Approved" name="approved" domain="[('state', '=', 'approved')]"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <group>
+                    <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                    <filter string="Responsible" name="group_by_user" context="{'group_by': 'user_id'}"/>
+                    <filter string="Company" name="group_by_company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ydod_account_budget" model="ir.actions.act_window">
+        <field name="name">Budgets</field>
+        <field name="res_model">ydod.account.budget</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ydod_account_budget_search"/>
+        <field name="context">{'search_default_approved': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Establish an analytic or financial budget
+            </p>
+            <p>
+                Track planned targets against actual general ledger and analytic account expenses in real time.
+            </p>
+        </field>
+    </record>
+</odoo>

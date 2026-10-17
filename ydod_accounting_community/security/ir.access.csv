@@ -4,3 +4,24 @@ access_account_fiscal_year_manager,account.fiscal.year manager,account.fiscal.ye
 account_fiscal_year_comp_rule,Account fiscal year multi-company,account.fiscal.year,,crud,"[('company_id','in',company_ids+[False])]"
 access_bank_reconcile_stat_user,account.bank.reconcile.statement user,account.bank.reconcile.statement,base.group_user,crud,
 access_account_move_line_user,account.move.line accountant,account.move.line,account.group_account_user,crud,"[('company_id','in',company_ids+[False])]"
+access_ydod_fiscal_year_user,ydod.fiscal.year user,ydod.fiscal.year,ydod_accounting_community.group_accounting_user,r,
+access_ydod_fiscal_year_mgr,ydod.fiscal.year manager,ydod.fiscal.year,ydod_accounting_community.group_accounting_manager,crud,
+access_ydod_fiscal_close_mgr,ydod.fiscal.year.close.wizard manager,ydod.fiscal.year.close.wizard,ydod_accounting_community.group_accounting_manager,crud,
+access_ydod_bank_recon_user,ydod.bank.recon.report.wizard user,ydod.bank.recon.report.wizard,ydod_accounting_community.group_accounting_user,crud,
+access_ydod_financial_report_user,ydod.financial.report.wizard user,ydod.financial.report.wizard,ydod_accounting_community.group_accounting_user,crud,
+access_ydod_reconcile_lines_user,ydod.reconcile.lines.wizard user,ydod.reconcile.lines.wizard,ydod_accounting_community.group_accounting_user,crud,
+access_ydod_fiscal_year_comp,ydod.fiscal.year company,ydod.fiscal.year,,crud,"[('company_id', 'in', company_ids + [False])]"
+access_ydod_account_asset_user,ydod.account.asset user,ydod.account.asset,ydod_accounting_community.group_accounting_user,crud,
+access_ydod_account_asset_mgr,ydod.account.asset manager,ydod.account.asset,ydod_accounting_community.group_accounting_manager,crud,
+access_ydod_account_asset_comp,ydod.account.asset company,ydod.account.asset,,crud,"[('company_id', 'in', company_ids + [False])]"
+access_ydod_account_asset_line_user,ydod.account.asset.line user,ydod.account.asset.line,ydod_accounting_community.group_accounting_user,crud,
+access_ydod_account_asset_line_mgr,ydod.account.asset.line manager,ydod.account.asset.line,ydod_accounting_community.group_accounting_manager,crud,
+access_ydod_account_asset_line_comp,ydod.account.asset.line company,ydod.account.asset.line,,crud,"[('company_id', 'in', company_ids + [False])]"
+access_ydod_account_budget_user,ydod.account.budget user,ydod.account.budget,ydod_accounting_community.group_accounting_user,crud,
+access_ydod_account_budget_mgr,ydod.account.budget manager,ydod.account.budget,ydod_accounting_community.group_accounting_manager,crud,
+access_ydod_account_budget_comp,ydod.account.budget company,ydod.account.budget,,crud,"[('company_id', 'in', company_ids + [False])]"
+access_ydod_account_budget_line_user,ydod.account.budget.line user,ydod.account.budget.line,ydod_accounting_community.group_accounting_user,crud,
+access_ydod_account_budget_line_mgr,ydod.account.budget.line manager,ydod.account.budget.line,ydod_accounting_community.group_accounting_manager,crud,
+access_ydod_account_budget_line_comp,ydod.account.budget.line company,ydod.account.budget.line,,crud,"[('company_id', 'in', company_ids + [False])]"
+access_ydod_account_followup_user,ydod.account.followup user,ydod.account.followup,ydod_accounting_community.group_accounting_user,crud,
+access_ydod_account_followup_mgr,ydod.account.followup manager,ydod.account.followup,ydod_accounting_community.group_accounting_manager,crud,

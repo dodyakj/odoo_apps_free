@@ -6,6 +6,8 @@ from odoo.exceptions import UserError
 class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
+    _date_acc_comp_idx = models.Index("(date, account_id, company_id)")
+
     def action_manual_reconcile(self):
         """Reconcile selected lines together, verifying balance."""
         if not self:
