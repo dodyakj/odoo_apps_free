@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="menu_project_task_stage_duration_analysis"
+        name="Stage Duration Analysis"
+        parent="project.menu_project_report"
+        action="action_project_task_stage_history"
+        sequence="25"
+    />
+</odoo>
