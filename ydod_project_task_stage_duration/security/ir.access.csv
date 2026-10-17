@@ -1,0 +1,4 @@
+id,name,model_id,group_id/id,operation,domain
+access_stage_history_user,Stage History User,project.task.stage.history,project.group_project_user,r,
+access_stage_history_manager,Stage History Manager,project.task.stage.history,project.group_project_manager,crud,
+rule_stage_history_company,Stage History Multi-Company,project.task.stage.history,,crud,"[('company_id', 'in', company_ids + [False])]"
