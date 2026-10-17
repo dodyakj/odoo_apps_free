@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Demo Stages with Thresholds -->
+    <record id="demo_stage_backlog" model="project.task.type">
+        <field name="name">Backlog</field>
+        <field name="sequence">1</field>
+        <field name="max_duration_hours">0.0</field>
+    </record>
+
+    <record id="demo_stage_in_progress" model="project.task.type">
+        <field name="name">In Progress</field>
+        <field name="sequence">10</field>
+        <field name="max_duration_hours">24.0</field>
+    </record>
+
+    <record id="demo_stage_review" model="project.task.type">
+        <field name="name">Review</field>
+        <field name="sequence">20</field>
+        <field name="max_duration_hours">8.0</field>
+    </record>
+
+    <record id="demo_stage_done" model="project.task.type">
+        <field name="name">Done</field>
+        <field name="sequence">30</field>
+        <field name="max_duration_hours">0.0</field>
+        <field name="fold" eval="True"/>
+    </record>
+
+    <!-- Demo Project -->
+    <record id="demo_project_core" model="project.project">
+        <field name="name">Core Platform Infrastructure</field>
+        <field name="type_ids" eval="[Command.link(ref('demo_stage_backlog')), Command.link(ref('demo_stage_in_progress')), Command.link(ref('demo_stage_review')), Command.link(ref('demo_stage_done'))]"/>
+    </record>
+
+    <!-- Demo Tasks -->
+    <record id="demo_task_bottleneck_review" model="project.task">
+        <field name="name">Database Connection Pooling Architecture</field>
+        <field name="project_id" ref="demo_project_core"/>
+        <field name="stage_id" ref="demo_stage_review"/>
+        <field name="user_ids" eval="[Command.link(ref('base.user_admin'))]"/>
+        <field name="stage_entered_date" eval="(DateTime.now() - timedelta(hours=14)).strftime('%Y-%m-%d %H:%M:%S')"/>
+    </record>
+
+    <record id="demo_task_in_progress_healthy" model="project.task">
+        <field name="name">Multi-Factor Authentication Flow</field>
+        <field name="project_id" ref="demo_project_core"/>
+        <field name="stage_id" ref="demo_stage_in_progress"/>
+        <field name="user_ids" eval="[Command.link(ref('base.user_admin'))]"/>
+        <field name="stage_entered_date" eval="(DateTime.now() - timedelta(hours=6)).strftime('%Y-%m-%d %H:%M:%S')"/>
+    </record>
+
+    <record id="demo_task_bottleneck_dev" model="project.task">
+        <field name="name">Real-Time WebSocket Event Bus</field>
+        <field name="project_id" ref="demo_project_core"/>
+        <field name="stage_id" ref="demo_stage_in_progress"/>
+        <field name="user_ids" eval="[Command.link(ref('base.user_admin'))]"/>
+        <field name="stage_entered_date" eval="(DateTime.now() - timedelta(hours=32)).strftime('%Y-%m-%d %H:%M:%S')"/>
+    </record>
+
+    <record id="demo_task_done_shipped" model="project.task">
+        <field name="name">API Rate Limiting Middleware</field>
+        <field name="project_id" ref="demo_project_core"/>
+        <field name="stage_id" ref="demo_stage_done"/>
+        <field name="user_ids" eval="[Command.link(ref('base.user_admin'))]"/>
+        <field name="stage_entered_date" eval="(DateTime.now() - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+    </record>
+
+    <!-- Stage History Records for Auditing and Analysis -->
+    <record id="demo_history_1" model="project.task.stage.history">
+        <field name="task_id" ref="demo_task_done_shipped"/>
+        <field name="stage_id" ref="demo_stage_backlog"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(hours=72)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="date_end" eval="(DateTime.now() - timedelta(hours=60)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="duration_hours">12.0</field>
+        <field name="is_current" eval="False"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_history_2" model="project.task.stage.history">
+        <field name="task_id" ref="demo_task_done_shipped"/>
+        <field name="stage_id" ref="demo_stage_in_progress"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(hours=60)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="date_end" eval="(DateTime.now() - timedelta(hours=38)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="duration_hours">22.0</field>
+        <field name="is_current" eval="False"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_history_3" model="project.task.stage.history">
+        <field name="task_id" ref="demo_task_done_shipped"/>
+        <field name="stage_id" ref="demo_stage_review"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(hours=38)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="date_end" eval="(DateTime.now() - timedelta(hours=32)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="duration_hours">6.0</field>
+        <field name="is_current" eval="False"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_history_4" model="project.task.stage.history">
+        <field name="task_id" ref="demo_task_done_shipped"/>
+        <field name="stage_id" ref="demo_stage_done"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="is_current" eval="True"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_history_5" model="project.task.stage.history">
+        <field name="task_id" ref="demo_task_bottleneck_review"/>
+        <field name="stage_id" ref="demo_stage_backlog"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(hours=40)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="date_end" eval="(DateTime.now() - timedelta(hours=32)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="duration_hours">8.0</field>
+        <field name="is_current" eval="False"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_history_6" model="project.task.stage.history">
+        <field name="task_id" ref="demo_task_bottleneck_review"/>
+        <field name="stage_id" ref="demo_stage_in_progress"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(hours=32)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="date_end" eval="(DateTime.now() - timedelta(hours=14)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="duration_hours">18.0</field>
+        <field name="is_current" eval="False"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_history_7" model="project.task.stage.history">
+        <field name="task_id" ref="demo_task_bottleneck_review"/>
+        <field name="stage_id" ref="demo_stage_review"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(hours=14)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="is_current" eval="True"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_history_8" model="project.task.stage.history">
+        <field name="task_id" ref="demo_task_bottleneck_dev"/>
+        <field name="stage_id" ref="demo_stage_in_progress"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_start" eval="(DateTime.now() - timedelta(hours=32)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="is_current" eval="True"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>
