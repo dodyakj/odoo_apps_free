@@ -1,0 +1,508 @@
+<section class="container py-5" style="background-color: #1f2937; color: #ffffff;">
+    <div class="row align-items-center">
+        <div class="col-md-7">
+            <div class="d-flex align-items-center mb-3">
+                <img src="icon.png" alt="yDoD Widget Collection" style="width: 72px; height: 72px; border-radius: 12px; background-color: #ffffff;" class="me-3"/>
+                <h1 class="display-6 fw-bold mb-0" style="color: #ffffff;">yDoD Widget Collection</h1>
+            </div>
+            <p class="lead mb-4" style="color: #e5e7eb;">
+                Three drop-in field widgets for Odoo 20.0: a labeled boolean toggle, an HTML print preview with
+                &ldquo;Save as PDF&rdquo;, and a clickable Many2many / One2many list. One <code>widget</code>
+                attribute, zero Python, zero models, no external library.
+            </p>
+            <div class="mb-4">
+                <span class="badge rounded-pill me-2 mb-2 px-3 py-2" style="background-color: #198754; color: #ffffff;"><i class="fa fa-toggle-on me-1"></i> Labeled Toggle</span>
+                <span class="badge rounded-pill me-2 mb-2 px-3 py-2" style="background-color: #0d6efd; color: #ffffff;"><i class="fa fa-print me-1"></i> HTML Print Preview</span>
+                <span class="badge rounded-pill me-2 mb-2 px-3 py-2" style="background-color: #6f42c1; color: #ffffff;"><i class="fa fa-list-ul me-1"></i> Many2many List</span>
+                <span class="badge rounded-pill me-2 mb-2 px-3 py-2" style="background-color: #fd7e14; color: #ffffff;"><i class="fa fa-code me-1"></i> No Code Required</span>
+            </div>
+            <p class="mb-0" style="color: #9ca3af;">
+                <i class="fa fa-check-circle me-1" style="color: #22c55e;"></i> Odoo 20.0 Community &amp; Enterprise
+                &nbsp;&middot;&nbsp; <i class="fa fa-balance-scale me-1"></i> LGPL-3
+                &nbsp;&middot;&nbsp; <i class="fa fa-puzzle-piece me-1"></i> Depends only on <code>web</code>
+            </p>
+        </div>
+        <div class="col-md-5 text-center mt-4 mt-md-0">
+            <img src="banner.png" alt="yDoD Widget Collection banner" class="img-fluid rounded shadow" style="max-height: 320px;"/>
+        </div>
+    </div>
+</section>
+<!-- oaa:showcase:start -->
+<section style="padding:56px 16px;background-color:#5E35B114">
+  <div style="max-width:1100px;margin:0 auto;text-align:center">
+    <span style="display:inline-block;padding:6px 16px;border-radius:999px;background-color:#5E35B1;color:#fff;font-weight:700;font-size:13px;letter-spacing:.08em">SEE IT IN ACTION</span>
+    <h2 style="font-size:32px;font-weight:800;color:#1f2937;margin:16px 0 28px">yDoD Widget Collection: Labeled Toggle, HTML Print Preview &amp; Many2many List at work</h2>
+    <div style="max-width:1000px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 22px 60px rgba(15,23,42,.22)">
+      <img src="demo.gif" alt="yDoD Widget Collection: Labeled Toggle, HTML Print Preview &amp; Many2many List animated demo" style="width:100%;display:block"/>
+    </div>
+  </div>
+</section>
+<!-- oaa:showcase:end -->
+
+
+<section class="container py-5">
+    <h2 class="fw-bold mb-3"><i class="fa fa-info-circle me-2" style="color: #0d6efd;"></i>Overview</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <p>
+                Standard Odoo views ship with a plain checkbox for boolean fields, a rich-text editor for HTML fields
+                and a cloud of colored tags for Many2many fields. These are fine for data entry, but they fall short
+                when a form must read like a document: a status switch that says <strong>Active</strong> or
+                <strong>Archived</strong> instead of a nameless checkbox, a contract body that looks like the paper
+                page the customer will receive, or a list of related records that users can scan top to bottom and
+                open in one click.
+            </p>
+            <p>
+                <strong>yDoD Widget Collection</strong> fills this gap with three native OWL 3 field widgets registered
+                in the standard field registry. You add them to any form or list view with a single
+                <code>widget="..."</code> attribute and a few <code>options</code>. No Python, no new models, no
+                menus, no settings page and no third-party JavaScript or PDF library are involved. The module only
+                grows the <code>web.assets_backend</code> bundle, so it is safe to declare as a dependency of your own
+                modules.
+            </p>
+            <p class="mb-0">
+                It is built for <strong>Odoo developers, integrators and functional consultants</strong> who customize
+                Odoo 20.0 views (in module XML or in Developer mode) and want polished, consistent widgets without
+                writing or maintaining their own components.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 rounded h-100" style="background-color: #f3f4f6;">
+                <h5 class="fw-bold mb-3"><i class="fa fa-cube me-2" style="color: #6f42c1;"></i>What you get</h5>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><i class="fa fa-check me-2" style="color: #198754;"></i><code>ydod_toggle_label</code> for Boolean fields</li>
+                    <li class="mb-2"><i class="fa fa-check me-2" style="color: #198754;"></i><code>ydod_html_print_preview</code> for Html fields</li>
+                    <li class="mb-2"><i class="fa fa-check me-2" style="color: #198754;"></i><code>ydod_many2many_list</code> for Many2many and One2many fields</li>
+                    <li class="mb-2"><i class="fa fa-check me-2" style="color: #198754;"></i>Demo contact views showing all three widgets</li>
+                    <li class="mb-0"><i class="fa fa-check me-2" style="color: #198754;"></i>Server-side and browser tests included</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5" style="background-color: #f9fafb;">
+    <h2 class="fw-bold mb-4 text-center"><i class="fa fa-star me-2" style="color: #fd7e14;"></i>Key Highlights</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fa fa-toggle-on fa-2x mb-3" style="color: #198754;"></i>
+                    <h5 class="card-title fw-bold">Labeled Toggle</h5>
+                    <p class="card-text">A Bootstrap switch with your own on/off texts and colors, usable in forms and editable lists.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fa fa-print fa-2x mb-3" style="color: #0d6efd;"></i>
+                    <h5 class="card-title fw-bold">Print / Save as PDF</h5>
+                    <p class="card-text">One button opens the browser print dialog with only the paper content, so users save a PDF without wkhtmltopdf.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fa fa-file-text-o fa-2x mb-3" style="color: #0dcaf0;"></i>
+                    <h5 class="card-title fw-bold">True Paper Preview</h5>
+                    <p class="card-text">HTML content renders in an isolated A4, A3, A5, Letter or Legal frame, portrait or landscape, untouched by form or dark-mode CSS.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fa fa-list-ol fa-2x mb-3" style="color: #6f42c1;"></i>
+                    <h5 class="card-title fw-bold">Clickable Record List</h5>
+                    <p class="card-text">Many2many and One2many records appear as a bulleted, numbered or plain list; each item opens its form in one click.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fa fa-compress fa-2x mb-3" style="color: #dc3545;"></i>
+                    <h5 class="card-title fw-bold">Collapse with &ldquo;+N more&rdquo;</h5>
+                    <p class="card-text">Set a <code>limit</code> and long lists fold behind a &ldquo;+N more&rdquo; link with &ldquo;Show less&rdquo; to collapse again, with no reload.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fa fa-lock fa-2x mb-3" style="color: #6c757d;"></i>
+                    <h5 class="card-title fw-bold">Respects Access Rights</h5>
+                    <p class="card-text">Widgets honor <code>readonly</code> and field <code>groups</code>; they add no RPC and write only through the loaded record.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fa fa-bolt fa-2x mb-3" style="color: #ffc107;"></i>
+                    <h5 class="card-title fw-bold">Zero Extra Requests</h5>
+                    <p class="card-text">Display names load with the parent record and the print frame is rebuilt only when the value changes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center">
+                    <i class="fa fa-language fa-2x mb-3" style="color: #20c997;"></i>
+                    <h5 class="card-title fw-bold">Translatable &amp; Dark-Mode Ready</h5>
+                    <p class="card-text">Every default text is translatable and the SCSS adapts to the Odoo dark theme.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <h2 class="fw-bold mb-4"><i class="fa fa-list-alt me-2" style="color: #0d6efd;"></i>Features in Detail</h2>
+
+    <div class="row mb-5">
+        <div class="col-md-5">
+            <h4 class="fw-bold"><i class="fa fa-toggle-on me-2" style="color: #198754;"></i>Labeled Toggle <small class="text-muted">widget="ydod_toggle_label"</small></h4>
+            <p>
+                Replaces the plain checkbox of a Boolean field with a Bootstrap switch followed by a text that
+                reflects the current state. Supported options:
+            </p>
+            <ul>
+                <li><code>on_label</code> / <code>off_label</code>: texts shown next to the switch (defaults: On / Off, translatable).</li>
+                <li><code>on_color</code> / <code>off_color</code>: any CSS color applied to the switch and the text (defaults: Bootstrap success / secondary).</li>
+                <li><code>label_position</code>: <code>right</code> (default) or <code>left</code>.</li>
+                <li><code>autosave</code>: <code>True</code> (default) saves immediately like the core <code>boolean_toggle</code>; set <code>False</code> to wait for the form Save button.</li>
+            </ul>
+            <p class="mb-0">
+                Works in form views and in editable or read-only list views. When the field is readonly the switch is
+                disabled but the label still shows the state.
+            </p>
+        </div>
+        <div class="col-md-7">
+            <div class="p-3 rounded" style="background-color: #1f2937; color: #e5e7eb;">
+<pre class="mb-0" style="color: #e5e7eb; background-color: #1f2937;"><code>&lt;field name="active" widget="ydod_toggle_label"
+       options="{'on_label': 'Active', 'off_label': 'Archived',
+                 'on_color': '#198754', 'off_color': '#6c757d',
+                 'label_position': 'right', 'autosave': False}"/&gt;
+
+&lt;!-- in a list view --&gt;
+&lt;list editable="bottom"&gt;
+    &lt;field name="active" widget="ydod_toggle_label"
+           options="{'on_label': 'Yes', 'off_label': 'No'}"/&gt;
+&lt;/list&gt;</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-5">
+            <h4 class="fw-bold"><i class="fa fa-print me-2" style="color: #0d6efd;"></i>HTML Print Preview <small class="text-muted">widget="ydod_html_print_preview"</small></h4>
+            <p>
+                Shows an Html field (a computed contract body, a quotation note, a generated letter) as a white paper
+                page inside a sandboxed iframe. The surrounding form, the backend theme and dark mode cannot alter the
+                page, and scripts inside the content never run. Above the paper a small toolbar shows the page format
+                and the <strong>Print / Save as PDF</strong> button, which opens the browser's native print dialog with
+                only the paper content. An empty field displays <em>Nothing to print</em> and the button is disabled.
+            </p>
+            <ul class="mb-0">
+                <li><code>page_size</code>: <code>A4</code> (default), <code>A3</code>, <code>A5</code>, <code>Letter</code> or <code>Legal</code>.</li>
+                <li><code>orientation</code>: <code>portrait</code> (default) or <code>landscape</code>.</li>
+                <li><code>title</code>: document title used by the print dialog and the PDF file (default: the record display name).</li>
+                <li><code>hide_button</code>: <code>True</code> to show the paper only.</li>
+            </ul>
+        </div>
+        <div class="col-md-7">
+            <div class="p-3 rounded" style="background-color: #1f2937; color: #e5e7eb;">
+<pre class="mb-0" style="color: #e5e7eb; background-color: #1f2937;"><code>&lt;field name="comment" widget="ydod_html_print_preview"
+       options="{'page_size': 'A4', 'orientation': 'portrait',
+                 'title': 'Partner notes', 'hide_button': False}"/&gt;</code></pre>
+            </div>
+            <div class="alert mt-3 mb-0" style="background-color: #e7f1ff; color: #084298;">
+                <i class="fa fa-lightbulb-o me-2"></i>The widget is read-only by design: keep your usual
+                <code>html</code> editor field for editing and add a second occurrence of the field with this widget
+                for the preview.
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-5">
+            <h4 class="fw-bold"><i class="fa fa-list-ul me-2" style="color: #6f42c1;"></i>Many2many List <small class="text-muted">widget="ydod_many2many_list"</small></h4>
+            <p>
+                Displays the linked records of a Many2many or One2many field as a vertical list instead of inline
+                tags. Each item is a link that opens the record's form view. Display names arrive with the parent
+                record, so the widget performs no extra request per item or per row.
+            </p>
+            <ul class="mb-0">
+                <li><code>style</code>: <code>bullet</code> (default), <code>number</code> or <code>plain</code>.</li>
+                <li><code>limit</code>: show only the first N items and a <strong>+N more</strong> link; <strong>Show less</strong> collapses again (0 = unlimited).</li>
+                <li><code>open_target</code>: <code>current</code> (default) opens in the main window, <code>new</code> opens in a dialog.</li>
+                <li><code>no_open</code>: <code>True</code> renders plain text without links.</li>
+            </ul>
+        </div>
+        <div class="col-md-7">
+            <div class="p-3 rounded" style="background-color: #1f2937; color: #e5e7eb;">
+<pre class="mb-0" style="color: #e5e7eb; background-color: #1f2937;"><code>&lt;field name="category_id" widget="ydod_many2many_list"
+       options="{'style': 'bullet', 'limit': 3,
+                 'open_target': 'current', 'no_open': False}"/&gt;</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <h4 class="fw-bold"><i class="fa fa-flask me-2" style="color: #fd7e14;"></i>Demo Views &amp; Tests</h4>
+            <p class="mb-0">
+                When the database is created with demo data, the module adds a <strong>yDoD Widgets Demo</strong> page
+                to the contact form (Contacts &rarr; any partner) showing the Status toggle, the Tags list and the
+                notes print preview, and an <strong>Active</strong> toggle column to the contact list. Production
+                installs without demo data get no view change at all. Server-side tests validate the view
+                architecture, asset bundling, field groups and manifest, and a browser test checks that the web client
+                boots with the widgets registered.
+            </p>
+        </div>
+        <div class="col-md-7">
+            <div class="p-4 rounded" style="background-color: #f3f4f6;">
+                <h6 class="fw-bold mb-3">Option defaults at a glance</h6>
+                <table class="table table-sm mb-0" style="background-color: #ffffff;">
+                    <thead>
+                        <tr><th>Widget</th><th>Option</th><th>Default</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>ydod_toggle_label</td><td>on_label / off_label</td><td>On / Off</td></tr>
+                        <tr><td>ydod_toggle_label</td><td>label_position / autosave</td><td>right / True</td></tr>
+                        <tr><td>ydod_html_print_preview</td><td>page_size / orientation</td><td>A4 / portrait</td></tr>
+                        <tr><td>ydod_html_print_preview</td><td>title</td><td>record display name</td></tr>
+                        <tr><td>ydod_many2many_list</td><td>style / limit</td><td>bullet / 0 (unlimited)</td></tr>
+                        <tr><td>ydod_many2many_list</td><td>open_target / no_open</td><td>current / False</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5" style="background-color: #f9fafb;">
+    <h2 class="fw-bold mb-4"><i class="fa fa-play-circle me-2" style="color: #198754;"></i>How to Use</h2>
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="ms-2"><strong>Install the module.</strong> Go to Apps, remove the default filter, search for
+                    &ldquo;yDoD Widget Collection&rdquo; and click Install. Only the <code>web</code> module is required; no
+                    settings or user groups need to be configured.</div>
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="ms-2"><strong>Check the result (demo databases only).</strong> Open Contacts, pick any partner and
+                    look at the <em>yDoD Widgets Demo</em> notebook page to see the three widgets in action.</div>
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="ms-2"><strong>Edit a view.</strong> In your own module XML, or in Developer mode via the form's
+                    debug menu &rarr; Edit View, locate the field you want to enhance.</div>
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="ms-2"><strong>Boolean fields.</strong> Add <code>widget="ydod_toggle_label"</code> and, optionally,
+                    <code>options="{'on_label': '...', 'off_label': '...'}"</code> plus colors, label position or autosave.</div>
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="ms-2"><strong>Html fields.</strong> Add <code>widget="ydod_html_print_preview"</code> with the page
+                    size, orientation and title you need. Users then click <strong>Print / Save as PDF</strong> and choose
+                    &ldquo;Save as PDF&rdquo; in the browser dialog.</div>
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="ms-2"><strong>Many2many or One2many fields.</strong> Add <code>widget="ydod_many2many_list"</code>
+                    with <code>style</code> and <code>limit</code>. Users click an item to open it and use
+                    <strong>+N more</strong> / <strong>Show less</strong> to expand or collapse.</div>
+                </li>
+                <li class="list-group-item d-flex align-items-start">
+                    <div class="ms-2"><strong>Reuse in your modules.</strong> Add <code>ydod_web_widget_collection</code> to the
+                    <code>depends</code> of your module and use the widgets in its views without copying any JavaScript.</div>
+                </li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <h2 class="fw-bold mb-4"><i class="fa fa-question-circle me-2" style="color: #6f42c1;"></i>Frequently Asked Questions</h2>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <h5 class="fw-bold">Does the module create models, menus or settings?</h5>
+            <p class="mb-0">No. It is a pure asset bundle: no model, no menu, no action, no security file, no cron. Apps lists
+            it under the Hidden category and nothing changes in your database structure.</p>
+        </div>
+        <div class="col-md-6 mb-4">
+            <h5 class="fw-bold">Which access rights do users need?</h5>
+            <p class="mb-0">Exactly the same as without the widgets. Read and write stay governed by the model access and the
+            field <code>groups</code>; a field restricted to Administrators stays hidden from other users, and readonly
+            fields render a disabled switch.</p>
+        </div>
+        <div class="col-md-6 mb-4">
+            <h5 class="fw-bold">Does the PDF export need wkhtmltopdf or a bundled library?</h5>
+            <p class="mb-0">No. The Print / Save as PDF button opens the browser's native print dialog on the paper frame
+            only. Choose &ldquo;Save as PDF&rdquo; as the destination in Chrome, Edge, Firefox or Safari.</p>
+        </div>
+        <div class="col-md-6 mb-4">
+            <h5 class="fw-bold">Is it multi-company safe?</h5>
+            <p class="mb-0">Yes. The widgets have no server-side logic and no company-dependent data. They show whatever
+            records the current user and company context already loaded in the view.</p>
+        </div>
+        <div class="col-md-6 mb-4">
+            <h5 class="fw-bold">Can I use the widgets in list and kanban views?</h5>
+            <p class="mb-0">The labeled toggle is designed for form and list views (editable or not). The print preview and
+            the Many2many list are meant for form views, where there is room for a paper page or a vertical list.</p>
+        </div>
+        <div class="col-md-6 mb-4">
+            <h5 class="fw-bold">What happens when I uninstall?</h5>
+            <p class="mb-0">The assets and the demo views are removed. Views in other modules that still reference a yDoD
+            widget fall back to Odoo's default widget for the field type, and no data is lost.</p>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5" style="background-color: #1f2937; color: #ffffff;">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h2 class="fw-bold mb-3" style="color: #ffffff;"><i class="fa fa-life-ring me-2" style="color: #22c55e;"></i>Support &amp; Customization</h2>
+            <p style="color: #e5e7eb;">
+                Questions about installation, options or integration in your own views are welcome. Need a fourth
+                widget, a different list layout or a print preview with your company header? Custom development and
+                adaptation for your project are available on request.
+            </p>
+            <ul class="list-unstyled mb-0" style="color: #e5e7eb;">
+                <li class="mb-2"><i class="fa fa-envelope me-2" style="color: #22c55e;"></i>Email: <a href="mailto:dodyakj@gmail.com" style="color: #93c5fd;">dodyakj@gmail.com</a></li>
+                <li class="mb-2"><i class="fa fa-globe me-2" style="color: #22c55e;"></i>Website: <a href="https://profile.dodyakj.online" target="_blank" style="color: #93c5fd;">https://profile.dodyakj.online</a></li>
+                <li class="mb-0"><i class="fa fa-user me-2" style="color: #22c55e;"></i>Author: Dody Ahmad Kusuma Jaya (yDoD)</li>
+            </ul>
+        </div>
+        <div class="col-md-4 text-center mt-4 mt-md-0">
+            <div class="p-4 rounded" style="background-color: #111827;">
+                <i class="fa fa-puzzle-piece fa-3x mb-3" style="color: #fd7e14;"></i>
+                <h5 class="fw-bold" style="color: #ffffff;">yDoD</h5>
+                <p class="mb-0" style="color: #9ca3af;">Odoo 20.0 Community &amp; Enterprise &middot; LGPL-3</p>
+            </div>
+        </div>
+    </div>
+    <hr style="border-color: #374151;"/>
+    <p class="text-center mb-0" style="color: #9ca3af;">
+        &copy; Dody Ahmad Kusuma Jaya &mdash; yDoD &middot; <a href="https://profile.dodyakj.online" target="_blank" style="color: #93c5fd;">profile.dodyakj.online</a> &middot; <a href="mailto:dodyakj@gmail.com" style="color: #93c5fd;">dodyakj@gmail.com</a>
+    </p>
+</section>
+
+<!-- oaa:more-apps:start -->
+<section style="padding:48px 16px 16px;background-color:#f8fafc">
+  <div style="max-width:1140px;margin:0 auto;padding:0 0 40px">
+    <h2 style="font-size:30px;font-weight:800;color:#141a26;margin:0 0 6px">Related <span style="color:#7c3aed">Modules</span></h2>
+    <p style="font-size:15px;color:#64748b;margin:0 0 16px">Work even better together with yDoD apps for Odoo 20.0.</p>
+    <div class="row">
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_backend_responsive" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #B3541E;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_backend_responsive/banner.png" alt="yDoD Web Responsive: Mobile &amp; Tablet Backend UI" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">yDoD Web Responsive: Mobile &amp; Tablet Backend UI</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Transforms Odoo Community backend into a fluid, touch-friendly responsive interface with an app drawer, mobile navbar,...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#B3541E">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_tender_management" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #37474F;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_tender_management/banner.png" alt="Advance Tender &amp; Vendor Bid Management" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Advance Tender &amp; Vendor Bid Management</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Manage competitive tender lifecycles, vendor bid submissions, pre-qualification, side-by-side bid evaluation, and one-click...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#ede9fe;color:#5b21b6">$149</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#37474F">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_api_access_control" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #C62828;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_api_access_control/banner.png" alt="API Access Control &amp; Resource Permissions" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">API Access Control &amp; Resource Permissions</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Manage granular model-level CRUD permissions, record rules, and dedicated service accounts for external API integrations and...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#ede9fe;color:#5b21b6">$89</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#C62828">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1140px;margin:0 auto;padding:0 0 40px">
+    <h2 style="font-size:30px;font-weight:800;color:#141a26;margin:0 0 6px">Most <span style="color:#7c3aed">Downloaded</span></h2>
+    <p style="font-size:15px;color:#64748b;margin:0 0 16px">The apps Odoo users install the most. &middot; <a href="https://apps.odoo.com/apps/modules/browse?author=Dody%20Ahmad%20Kusuma%20Jaya" target="_blank" rel="noopener" style="font-weight:700;color:#1f2937">All apps by Dody Ahmad Kusuma Jaya &rarr;</a></p>
+    <div class="row">
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/19.0/ydod_web_responsive" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #2E7D32;border-radius:0 0 14px 14px;overflow:hidden">
+          <div style="height:170px;padding:15px;text-align:center;background-color:#2E7D321f;border-bottom:1px solid #eef0f4"><img src="https://apps.odoocdn.com/apps/module_image?image_id=31070343" alt="yDoD Web Responsive" style="max-height:140px;max-width:100%"/></div>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">yDoD Web Responsive</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Responsive web design for yDoD with dark mode support and customizable theme.</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#2E7D32">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/19.0/ydod_indonesian_public_holiday" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #2E7D32;border-radius:0 0 14px 14px;overflow:hidden">
+          <div style="height:170px;padding:15px;text-align:center;background-color:#2E7D321f;border-bottom:1px solid #eef0f4"><img src="https://apps.odoocdn.com/apps/module_image?image_id=31070336" alt="Indonesian Public Holiday" style="max-height:140px;max-width:100%"/></div>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Indonesian Public Holiday</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Import Indonesian public holidays into Odoo Time Off (Odoo 19)</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#2E7D32">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/19.0/ydod_web_customizer" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #37474F;border-radius:0 0 14px 14px;overflow:hidden">
+          <div style="height:170px;padding:15px;text-align:center;background-color:#37474F1f;border-bottom:1px solid #eef0f4"><img src="https://apps.odoocdn.com/apps/module_image?image_id=31070342" alt="yDoD Web Customizer" style="max-height:140px;max-width:100%"/></div>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">yDoD Web Customizer</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Customize web appearance with custom background image, color, and favicon.</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#37474F">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_sale_commission" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #37474F;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_sale_commission/banner.png" alt="Sales Commission Management" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Sales Commission Management</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Automatically calculate salesperson/team commissions on confirmed sale orders with configurable plans and a payout report.</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#37474F">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_database_backup_manager" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #017E84;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_database_backup_manager/banner.png" alt="Automatic Database Backup to Local, Remote &amp; Cloud Mount Storage" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Automatic Database Backup to Local, Remote &amp; Cloud Mount Storage</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Schedule automated Odoo database backups with retention cleanup, remote FTP transfer, local and cloud-mounted storage sync,...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#017E84">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_purchase_price_deviation_check" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #017E84;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_purchase_price_deviation_check/banner.png" alt="Purchase Price Deviation Guard" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Purchase Price Deviation Guard</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Flags purchase order lines whose unit price is higher than the product&#x27;s last confirmed purchase price or the vendor&#x27;s...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#017E84">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- oaa:more-apps:end -->
