@@ -1,0 +1,32 @@
+<odoo>
+    <data noupdate="1">
+        <record id="demo_disciplinary_action_1" model="ydod.disciplinary.action">
+            <field name="name">DISC/2024/0001</field>
+            <field name="employee_id" ref="hr.employee_admin"/>
+            <field name="manager_id" ref="base.user_admin"/>
+            <field name="action_type">verbal</field>
+            <field name="severity">low</field>
+            <field name="incident_date" eval="(DateTime.today() - relativedelta(days=30)).strftime('%Y-%m-%d')"/>
+            <field name="expiration_date" eval="(DateTime.today() + relativedelta(days=60)).strftime('%Y-%m-%d')"/>
+            <field name="subject">Frequent Unexcused Tardiness</field>
+            <field name="description">&lt;p&gt;Employee arrived over 30 minutes late for morning shifts on multiple occasions without prior notification.&lt;/p&gt;</field>
+            <field name="corrective_action">&lt;p&gt;Please ensure arrival by 9:00 AM daily or inform the supervisor ahead of time.&lt;/p&gt;</field>
+            <field name="employee_remarks">Traffic congestion caused unexpected delays.</field>
+            <field name="state">confirmed</field>
+        </record>
+
+        <record id="demo_disciplinary_action_2" model="ydod.disciplinary.action">
+            <field name="name">DISC/2024/0002</field>
+            <field name="employee_id" ref="hr.employee_qdp"/>
+            <field name="manager_id" ref="base.user_admin"/>
+            <field name="action_type">written</field>
+            <field name="severity">medium</field>
+            <field name="incident_date" eval="(DateTime.today() - relativedelta(days=15)).strftime('%Y-%m-%d')"/>
+            <field name="expiration_date" eval="(DateTime.today() + relativedelta(days=180)).strftime('%Y-%m-%d')"/>
+            <field name="subject">Failure to Meet Project Milestone</field>
+            <field name="description">&lt;p&gt;Key deliverables for Phase 1 were missed by more than two weeks without status updates to management.&lt;/p&gt;</field>
+            <field name="corrective_action">&lt;p&gt;Submit weekly project status reports every Friday afternoon.&lt;/p&gt;</field>
+            <field name="state">confirmed</field>
+        </record>
+    </data>
+</odoo>

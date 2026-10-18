@@ -1,0 +1,11 @@
+<odoo>
+    <data noupdate="1">
+        <record id="seq_ydod_disciplinary_action" model="ir.sequence">
+            <field name="name">Disciplinary Action Sequence</field>
+            <field name="code">ydod.disciplinary.action</field>
+            <field name="prefix">DISC/%(year)s/</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>
