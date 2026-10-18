@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="ydod_web_widget_collection.HtmlPrintPreviewField">
+        <div class="o_ydod_html_print_preview w-100">
+            <div t-if="!props.hideButton" class="o_ydod_html_print_toolbar d-flex align-items-center justify-content-between mb-2">
+                <span class="text-muted small">
+                    <i class="fa fa-file-text-o me-1" role="img" aria-label="Page"/>
+                    <t t-out="pageLabel"/>
+                </span>
+                <button type="button"
+                        class="btn btn-primary btn-sm o_ydod_html_print_button"
+                        t-att-disabled="!hasContent"
+                        t-on-click="onPrint">
+                    <i class="fa fa-print me-1" role="img" aria-label="Print"/>Print / Save as PDF
+                </button>
+            </div>
+            <div class="o_ydod_html_print_paper_wrap">
+                <t t-if="hasContent">
+                    <iframe class="o_ydod_html_print_paper"
+                            t-ref="iframe"
+                            sandbox="allow-same-origin allow-modals"
+                            t-att-srcdoc="srcdoc"
+                            t-att-title="title"
+                            t-att-style="paperStyle"
+                            t-on-load="onIframeLoad"/>
+                </t>
+                <div t-else="" class="o_ydod_html_print_empty text-muted fst-italic text-center p-4">
+                    <i class="fa fa-file-o fa-2x d-block mb-2" role="img" aria-label="Empty"/>
+                    Nothing to print
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>
