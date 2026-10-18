@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Demo only: shows the three widgets on the standard contact form -->
+    <record id="view_partner_form_ydod_widgets_demo" model="ir.ui.view">
+        <field name="name">res.partner.form.ydod.widgets.demo</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="yDoD Widgets Demo" name="ydod_widgets_demo">
+                    <group>
+                        <group string="Labeled Toggle">
+                            <field name="active" string="Status" widget="ydod_toggle_label"
+                                   options="{'on_label': 'Active', 'off_label': 'Archived', 'on_color': '#198754', 'off_color': '#6c757d', 'label_position': 'right', 'autosave': False}"/>
+                        </group>
+                        <group string="Many2many List">
+                            <field name="category_id" string="Tags" widget="ydod_many2many_list"
+                                   options="{'style': 'bullet', 'limit': 3, 'open_target': 'current'}"/>
+                        </group>
+                    </group>
+                    <group string="HTML Print Preview">
+                        <field name="comment" nolabel="1" colspan="2" widget="ydod_html_print_preview"
+                               options="{'page_size': 'A4', 'orientation': 'portrait', 'title': 'Partner notes'}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Demo only: labeled toggle in the contact list view -->
+    <record id="view_partner_tree_ydod_widgets_demo" model="ir.ui.view">
+        <field name="name">res.partner.list.ydod.widgets.demo</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="active" string="Active" widget="ydod_toggle_label" optional="show"
+                       options="{'on_label': 'Yes', 'off_label': 'No'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
