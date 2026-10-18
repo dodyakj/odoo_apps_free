@@ -1,0 +1,33 @@
+// yDoD Many2many List widget
+.o_ydod_many2many_list {
+    .o_ydod_m2m_list {
+        margin-bottom: 0;
+    }
+
+    .o_ydod_m2m_item {
+        line-height: 1.6;
+    }
+
+    .o_ydod_m2m_link {
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+            text-decoration: underline;
+        }
+    }
+
+    .o_ydod_m2m_more {
+        font-size: 0.875em;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+// Compact rendering inside list cells
+.o_list_table .o_ydod_many2many_list .o_ydod_m2m_item {
+    line-height: 1.4;
+}

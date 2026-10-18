@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="ydod_web_widget_collection.ToggleLabelField">
+        <div t-att-class="wrapperClass" t-on-click="onWrapperClick">
+            <div class="form-check form-switch m-0 p-0 ps-0 d-flex align-items-center">
+                <input type="checkbox"
+                       role="switch"
+                       class="form-check-input m-0 ms-0 float-none"
+                       t-att-id="props.id"
+                       t-att-checked="value"
+                       t-att-disabled="isReadonly"
+                       t-att-style="switchStyle"
+                       t-att-aria-label="label"
+                       t-on-change="onChange"/>
+            </div>
+            <span class="o_ydod_toggle_text" t-att-style="labelStyle" t-out="label"/>
+        </div>
+    </t>
+
+</templates>
