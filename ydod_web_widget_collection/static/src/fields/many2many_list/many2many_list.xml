@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="ydod_web_widget_collection.Many2manyListField" owl="1">
+        <div class="o_ydod_many2many_list">
+            <t t-if="items.length">
+                <ol t-if="styleName === 'number'" t-att-class="listClass">
+                    <li t-foreach="visibleItems" t-as="item" t-key="item.key" class="o_ydod_m2m_item">
+                        <a t-if="canOpen and item.id" href="#" class="o_ydod_m2m_link"
+                           t-on-click.prevent.stop="() => this.openRecord(item)" t-esc="item.name"/>
+                        <span t-else="" t-esc="item.name"/>
+                    </li>
+                </ol>
+                <ul t-else="" t-att-class="listClass">
+                    <li t-foreach="visibleItems" t-as="item" t-key="item.key" class="o_ydod_m2m_item">
+                        <a t-if="canOpen and item.id" href="#" class="o_ydod_m2m_link"
+                           t-on-click.prevent.stop="() => this.openRecord(item)" t-esc="item.name"/>
+                        <span t-else="" t-esc="item.name"/>
+                    </li>
+                </ul>
+                <a t-if="hiddenCount > 0" href="#" class="o_ydod_m2m_more d-inline-block mt-1"
+                   t-on-click.prevent.stop="toggleExpanded">
+                    <i class="fa fa-angle-down me-1" role="img" aria-label="Expand"/><t t-esc="moreLabel"/>
+                </a>
+                <a t-elif="canCollapse" href="#" class="o_ydod_m2m_more d-inline-block mt-1"
+                   t-on-click.prevent.stop="toggleExpanded">
+                    <i class="fa fa-angle-up me-1" role="img" aria-label="Collapse"/>Show less
+                </a>
+            </t>
+        </div>
+    </t>
+
+</templates>
