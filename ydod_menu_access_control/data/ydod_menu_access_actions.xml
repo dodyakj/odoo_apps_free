@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_server_ydod_cascade_menu_access" model="ir.actions.server">
+        <field name="name">Cascade Restrictions to Sub-Menus</field>
+        <field name="model_id" ref="base.model_ir_ui_menu"/>
+        <field name="binding_model_id" ref="base.model_ir_ui_menu"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">records.action_ydod_cascade_restrictions()</field>
+        <field name="group_ids" eval="[Command.link(ref('base.group_system'))]"/>
+    </record>
+</odoo>

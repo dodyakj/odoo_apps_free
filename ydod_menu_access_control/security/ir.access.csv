@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_ydod_menu_access_system,ydod.menu.access system,ydod.menu.access,base.group_system,crud,
+access_ydod_menu_access_manager,ydod.menu.access manager,ydod.menu.access,ydod_menu_access_control.group_menu_access_manager,crud,"[('company_id', 'in', company_ids + [False])]"
+access_ydod_menu_access_copy_system,ydod.menu.access.copy system,ydod.menu.access.copy,base.group_system,crud,
+access_ydod_menu_access_copy_manager,ydod.menu.access.copy manager,ydod.menu.access.copy,ydod_menu_access_control.group_menu_access_manager,crud,
