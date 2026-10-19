@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_menu_access_list" model="ir.ui.view">
+        <field name="name">ydod.menu.access.list</field>
+        <field name="model">ydod.menu.access</field>
+        <field name="arch" type="xml">
+            <list multi_edit="1">
+                <field name="menu_id"/>
+                <field name="user_id" widget="many2one_avatar"/>
+                <field name="group_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="cascade" widget="boolean_toggle" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ydod_menu_access_form" model="ir.ui.view">
+        <field name="name">ydod.menu.access.form</field>
+        <field name="model">ydod.menu.access</field>
+        <field name="arch" type="xml">
+            <form string="Menu Restriction">
+                <sheet>
+                    <group>
+                        <group string="Hidden Menu">
+                            <field name="menu_id" options="{'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="cascade"/>
+                        </group>
+                        <group string="Hidden For">
+                            <field name="user_id" required="not group_id" options="{'no_create': True}"/>
+                            <field name="group_id" required="not user_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ydod_menu_access_search" model="ir.ui.view">
+        <field name="name">ydod.menu.access.search</field>
+        <field name="model">ydod.menu.access</field>
+        <field name="arch" type="xml">
+            <search string="Menu Restrictions">
+                <field name="menu_id"/>
+                <field name="user_id"/>
+                <field name="group_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <filter name="filter_user" string="User Rules" domain="[('user_id', '!=', False)]"/>
+                <filter name="filter_group" string="Group Rules" domain="[('group_id', '!=', False)]"/>
+                <separator/>
+                <filter name="filter_manual" string="Defined Manually" domain="[('cascade', '=', False)]"/>
+                <filter name="filter_cascade" string="Inherited from Parent" domain="[('cascade', '=', True)]"/>
+                <group>
+                    <filter name="group_by_menu" string="Menu" context="{'group_by': 'menu_id'}"/>
+                    <filter name="group_by_user" string="User" context="{'group_by': 'user_id'}"/>
+                    <filter name="group_by_group" string="Group" context="{'group_by': 'group_id'}"/>
+                    <filter name="group_by_company" string="Company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ydod_menu_access" model="ir.actions.act_window">
+        <field name="name">Menu Restrictions</field>
+        <field name="res_model">ydod.menu.access</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_ydod_menu_access_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Hide your first menu</p>
+            <p>Pick a menu and the user or group that must not see it. System administrators always keep the full menu.</p>
+        </field>
+    </record>
+</odoo>
