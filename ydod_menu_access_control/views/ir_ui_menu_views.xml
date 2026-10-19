@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="edit_menu_access_inherit_ydod_menu_access" model="ir.ui.view">
+        <field name="name">ir.ui.menu.form.inherit.ydod.menu.access</field>
+        <field name="model">ir.ui.menu</field>
+        <field name="inherit_id" ref="base.edit_menu_access"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Restrict Access" name="ydod_restrict_access">
+                    <field name="ydod_menu_access_count" invisible="1"/>
+                    <div class="mb-3">
+                        <button name="action_ydod_cascade_restrictions" type="object" string="Cascade to Sub-Menus"
+                                class="btn btn-secondary" icon="fa-sitemap"
+                                invisible="not id or not ydod_menu_access_count"/>
+                    </div>
+                    <field name="ydod_menu_access_ids">
+                        <tree editable="bottom">
+                            <field name="group_id" required="not user_id" options="{'no_create': True}"/>
+                            <field name="user_id" required="not group_id" options="{'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="cascade" readonly="1"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ydod_menu_access_system,ydod.menu.access system,model_ydod_menu_access,base.group_system,1,1,1,1
+access_ydod_menu_access_manager,ydod.menu.access manager,model_ydod_menu_access,ydod_menu_access_control.group_menu_access_manager,1,1,1,1
+access_ydod_menu_access_copy_system,ydod.menu.access.copy system,model_ydod_menu_access_copy,base.group_system,1,1,1,1
+access_ydod_menu_access_copy_manager,ydod.menu.access.copy manager,model_ydod_menu_access_copy,ydod_menu_access_control.group_menu_access_manager,1,1,1,1
