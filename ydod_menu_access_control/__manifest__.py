@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'yDoD Menu Access Control - User & Group Wise',
+    'name': 'Menu Access Control - User & Group Wise',
     'version': '17.0.1.0.0',
     'summary': ('Hide any menu or sub-menu for specific users or groups: central Menu Restrictions '
      'screen, user-form and menu-form tabs, Copy Hidden Menus wizard, Cascade to Sub-Menus. '
