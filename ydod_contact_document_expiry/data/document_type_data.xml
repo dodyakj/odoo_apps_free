@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="doc_type_passport" model="contact_document_type">
+            <field name="name">Passport</field>
+            <field name="code">PASSPORT</field>
+            <field name="description">Official travel document or national identity card.</field>
+            <field name="alert_days">30</field>
+        </record>
+        <record id="doc_type_trade_license" model="contact_document_type">
+            <field name="name">Trade License</field>
+            <field name="code">TRADE_LICENSE</field>
+            <field name="description">Commercial registration or business operating license.</field>
+            <field name="alert_days">60</field>
+        </record>
+        <record id="doc_type_insurance" model="contact_document_type">
+            <field name="name">Liability Insurance</field>
+            <field name="code">INSURANCE</field>
+            <field name="description">Commercial general liability or professional indemnity insurance.</field>
+            <field name="alert_days">30</field>
+        </record>
+        <record id="doc_type_iso" model="contact_document_type">
+            <field name="name">ISO Certification</field>
+            <field name="code">ISO_CERT</field>
+            <field name="description">Quality management or security standards certification.</field>
+            <field name="alert_days">90</field>
+        </record>
+    </data>
+</odoo>

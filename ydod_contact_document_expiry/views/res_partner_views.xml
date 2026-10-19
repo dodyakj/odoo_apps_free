@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_document_inherit" model="ir.ui.view">
+        <field name="name">res.partner.form.document.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_compliance_documents" type="object" class="oe_stat_button" icon="fa-id-card-o">
+                    <field name="document_count" widget="statinfo" string="Documents"/>
+                </button>
+            </xpath>
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Compliance Documents" name="compliance_documents">
+                    <group>
+                        <field name="document_status" widget="badge" decoration-danger="document_status == 'expired'" decoration-warning="document_status == 'expiring'" decoration-success="document_status == 'valid'" decoration-muted="document_status == 'none'"/>
+                    </group>
+                    <field name="document_ids" context="{'default_partner_id': id}">
+                        <list editable="bottom" decoration-danger="state == 'expired'" decoration-warning="state == 'expiring'" decoration-success="state == 'valid'">
+                            <field name="document_type_id"/>
+                            <field name="name"/>
+                            <field name="document_number"/>
+                            <field name="issue_date"/>
+                            <field name="expiry_date"/>
+                            <field name="days_to_expiry"/>
+                            <field name="state" widget="badge" decoration-danger="state == 'expired'" decoration-warning="state == 'expiring'" decoration-success="state == 'valid'"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter_document_inherit" model="ir.ui.view">
+        <field name="name">res.partner.filter.document.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='type_company']" position="after">
+                <separator/>
+                <filter string="Expired Documents" name="filter_expired_docs" domain="[('document_status', '=', 'expired')]"/>
+                <filter string="Expiring Documents" name="filter_expiring_docs" domain="[('document_status', '=', 'expiring')]"/>
+                <filter string="Valid Compliance" name="filter_valid_docs" domain="[('document_status', '=', 'valid')]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

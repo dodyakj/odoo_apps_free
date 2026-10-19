@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_contact_compliance_root"
+              name="Compliance"
+              parent="contacts.menu_contacts"
+              sequence="20"/>
+
+    <menuitem id="menu_contact_document"
+              name="Compliance Documents"
+              parent="menu_contact_compliance_root"
+              action="action_contact_document"
+              sequence="10"/>
+
+    <menuitem id="menu_contact_document_type"
+              name="Document Types"
+              parent="menu_contact_compliance_root"
+              action="action_contact_document_type"
+              sequence="20"/>
+</odoo>

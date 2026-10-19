@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="demo_doc_1" model="contact_document">
+            <field name="name">Trade License 2024 - 2025</field>
+            <field name="document_type_id" ref="doc_type_trade_license"/>
+            <field name="partner_id" ref="base.res_partner_1"/>
+            <field name="document_number">TL-99482-XYZ</field>
+            <field name="issue_date" eval="(DateTime.today() - relativedelta(months=11)).strftime('%Y-%m-%d')"/>
+            <field name="expiry_date" eval="(DateTime.today() + relativedelta(days=15)).strftime('%Y-%m-%d')"/>
+            <field name="notes">&lt;p&gt;Annual trade license renewal pending payment confirmation.&lt;/p&gt;</field>
+        </record>
+
+        <record id="demo_doc_2" model="contact_document">
+            <field name="name">ISO 9001:2015 Quality Certificate</field>
+            <field name="document_type_id" ref="doc_type_iso"/>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field name="document_number">ISO-CERT-88392</field>
+            <field name="issue_date" eval="(DateTime.today() - relativedelta(months=30)).strftime('%Y-%m-%d')"/>
+            <field name="expiry_date" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+            <field name="notes">&lt;p&gt;Audit completed. Renewal certificate is currently being processed.&lt;/p&gt;</field>
+        </record>
+
+        <record id="demo_doc_3" model="contact_document">
+            <field name="name">Executive Director Passport</field>
+            <field name="document_type_id" ref="doc_type_passport"/>
+            <field name="partner_id" ref="base.res_partner_3"/>
+            <field name="document_number">A29483921</field>
+            <field name="issue_date" eval="(DateTime.today() - relativedelta(years=5)).strftime('%Y-%m-%d')"/>
+            <field name="expiry_date" eval="(DateTime.today() + relativedelta(months=18)).strftime('%Y-%m-%d')"/>
+            <field name="notes">&lt;p&gt;Valid long-term international passport.&lt;/p&gt;</field>
+        </record>
+
+        <record id="demo_doc_4" model="contact_document">
+            <field name="name">General Liability Insurance Policy</field>
+            <field name="document_type_id" ref="doc_type_insurance"/>
+            <field name="partner_id" ref="base.res_partner_4"/>
+            <field name="document_number">POL-INS-773829</field>
+            <field name="issue_date" eval="(DateTime.today() - relativedelta(months=10)).strftime('%Y-%m-%d')"/>
+            <field name="expiry_date" eval="(DateTime.today() + relativedelta(days=45)).strftime('%Y-%m-%d')"/>
+            <field name="notes">&lt;p&gt;Covers professional liability up to $2,000,000.&lt;/p&gt;</field>
+        </record>
+
+        <record id="demo_doc_5" model="contact_document">
+            <field name="name">Commercial Trade License</field>
+            <field name="document_type_id" ref="doc_type_trade_license"/>
+            <field name="partner_id" ref="base.res_partner_12"/>
+            <field name="document_number">TL-GLOBAL-883</field>
+            <field name="issue_date" eval="(DateTime.today() - relativedelta(months=11)).strftime('%Y-%m-%d')"/>
+            <field name="expiry_date" eval="(DateTime.today() + relativedelta(days=10)).strftime('%Y-%m-%d')"/>
+            <field name="notes">&lt;p&gt;Urgent renewal required for vendor onboarding.&lt;/p&gt;</field>
+        </record>
+    </data>
+</odoo>

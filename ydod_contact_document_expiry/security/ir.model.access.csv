@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_contact_document_type,access_contact_document_type,model_contact_document_type,base.group_user,1,1,1,1
+access_contact_document,access_contact_document,model_contact_document,base.group_user,1,1,1,1
+access_contact_document_notify_wizard,access_contact_document_notify_wizard,model_contact_document_notify_wizard,base.group_user,1,1,1,1
