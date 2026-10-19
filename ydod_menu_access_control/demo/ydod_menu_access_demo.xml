@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_menu_access_user_settings" model="ydod.menu.access">
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="menu_id" ref="base.menu_administration"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="demo_menu_access_user_technical" model="ydod.menu.access">
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="menu_id" ref="base.menu_custom"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="demo_menu_access_user_email" model="ydod.menu.access">
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="menu_id" ref="base.menu_email"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="cascade" eval="True"/>
+    </record>
+    <record id="demo_menu_access_user_mail_servers" model="ydod.menu.access">
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="menu_id" ref="base.menu_mail_servers"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="cascade" eval="True"/>
+    </record>
+    <record id="demo_menu_access_user_companies" model="ydod.menu.access">
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="menu_id" ref="base.menu_action_res_company_form"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="demo_menu_access_group_translations" model="ydod.menu.access">
+        <field name="group_id" ref="base.group_partner_manager"/>
+        <field name="menu_id" ref="base.menu_translation"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="demo_menu_access_group_security" model="ydod.menu.access">
+        <field name="group_id" ref="base.group_allow_export"/>
+        <field name="menu_id" ref="base.menu_security"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="demo_menu_access_group_parameters" model="ydod.menu.access">
+        <field name="group_id" ref="base.group_multi_company"/>
+        <field name="menu_id" ref="base.menu_ir_property"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>

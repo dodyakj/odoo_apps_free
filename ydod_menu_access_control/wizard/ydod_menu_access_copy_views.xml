@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_menu_access_copy_form" model="ir.ui.view">
+        <field name="name">ydod.menu.access.copy.form</field>
+        <field name="model">ydod.menu.access.copy</field>
+        <field name="arch" type="xml">
+            <form string="Copy Hidden Menus">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="source_user_id" options="{'no_create': True}"/>
+                            <field name="source_menu_access_count"/>
+                        </group>
+                        <group>
+                            <field name="overwrite"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="target_user_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                    <div class="text-muted">
+                        Each hidden menu of the source user is added to every selected user, in the same company.
+                        Menus already hidden for a target user are skipped unless you replace existing restrictions.
+                    </div>
+                </sheet>
+                <footer>
+                    <button name="action_copy" string="Copy" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ydod_menu_access_copy" model="ir.actions.act_window">
+        <field name="name">Copy Hidden Menus</field>
+        <field name="res_model">ydod.menu.access.copy</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="base.model_res_users"/>
+        <field name="binding_view_types">form</field>
+        <field name="groups_id" eval="[Command.link(ref('group_menu_access_manager')), Command.link(ref('base.group_system'))]"/>
+    </record>
+</odoo>

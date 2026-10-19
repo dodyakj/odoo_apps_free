@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_ydod_menu_access"
+              name="Menu Restrictions"
+              parent="base.menu_users"
+              action="action_ydod_menu_access"
+              sequence="4"
+              groups="ydod_menu_access_control.group_menu_access_manager,base.group_system"/>
+</odoo>
