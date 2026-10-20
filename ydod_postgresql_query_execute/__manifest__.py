@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'yDoD PostgreSQL Query Execute: SQL Console with Notes, Examples, History & PDF Export',
+    'name': 'PostgreSQL Query Execute: SQL Console with Notes, Examples, History & PDF Export',
     'version': '17.0.1.0.0',
     'summary': ('SQL console for administrators: run PostgreSQL queries from the Odoo backend, document '
      'them with notes, keep a run history and print results to PDF.'),
