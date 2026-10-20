@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_ydod_sql_query_form" model="ir.ui.view">
+        <field name="name">ydod.sql.query.form</field>
+        <field name="model">ydod.sql.query</field>
+        <field name="arch" type="xml">
+            <form string="SQL Query">
+                <header>
+                    <button name="action_execute" type="object" string="Execute" class="btn-primary" icon="fa-play"/>
+                    <button name="action_print_pdf" type="object" string="Print PDF" icon="fa-file-pdf-o"
+                            attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_history" type="object" class="oe_stat_button" icon="fa-history">
+                            <field name="history_count" widget="statinfo" string="History"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. Duplicate partners by email"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="allow_write"/>
+                            <field name="max_rows"/>
+                            <field name="orientation"/>
+                        </group>
+                        <group>
+                            <field name="statement_type"/>
+                            <field name="is_example" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="SQL" name="sql">
+                            <field name="sql_text" nolabel="1" placeholder="SELECT ..." class="font-monospace"/>
+                        </page>
+                        <page string="Note" name="note">
+                            <field name="note" nolabel="1"
+                                   placeholder="What does this query do? Why does it exist? What could it break?"/>
+                        </page>
+                        <page string="Result" name="result">
+                            <div class="alert alert-danger" role="alert"
+                                 attrs="{'invisible': [('error_message', '=', False)]}">
+                                <strong>PostgreSQL error</strong>
+                                <field name="error_message" nolabel="1" class="mb-0 font-monospace"/>
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="last_run_date"/>
+                                    <field name="last_run_user_id"/>
+                                </group>
+                                <group>
+                                    <field name="row_count"/>
+                                    <field name="duration_ms"/>
+                                </group>
+                            </group>
+                            <field name="result_html" nolabel="1"/>
+                        </page>
+                        <page string="History" name="history">
+                            <field name="history_ids" readonly="1">
+                                <tree>
+                                    <field name="run_date"/>
+                                    <field name="user_id"/>
+                                    <field name="is_write"/>
+                                    <field name="state" widget="badge" decoration-success="state == 'done'"
+                                           decoration-danger="state == 'error'"/>
+                                    <field name="row_count"/>
+                                    <field name="duration_ms"/>
+                                    <field name="error_message" optional="hide"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ydod_sql_query_list" model="ir.ui.view">
+        <field name="name">ydod.sql.query.tree</field>
+        <field name="model">ydod.sql.query</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="statement_type"/>
+                <field name="allow_write"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-danger="state == 'error'"/>
+                <field name="last_run_date"/>
+                <field name="last_run_user_id"/>
+                <field name="row_count"/>
+                <field name="duration_ms"/>
+                <field name="orientation" optional="hide"/>
+                <field name="is_example" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ydod_sql_query_search" model="ir.ui.view">
+        <field name="name">ydod.sql.query.search</field>
+        <field name="model">ydod.sql.query</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Query"
+                       filter_domain="['|', '|', ('name', 'ilike', self), ('sql_text', 'ilike', self), ('note', 'ilike', self)]"/>
+                <field name="last_run_user_id"/>
+                <filter name="filter_examples" string="Examples" domain="[('is_example', '=', True)]"/>
+                <filter name="filter_my_queries" string="My Queries" domain="[('create_uid', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_read" string="Read Statements" domain="[('statement_type', '=', 'read')]"/>
+                <filter name="filter_write" string="Write Statements" domain="[('statement_type', '=', 'write')]"/>
+                <filter name="filter_allow_write" string="Allow Data Modification" domain="[('allow_write', '=', True)]"/>
+                <separator/>
+                <filter name="filter_failed" string="Last Run Failed" domain="[('state', '=', 'error')]"/>
+                <filter name="filter_never_run" string="Never Run" domain="[('state', '=', 'draft')]"/>
+                <group expand="0" string="Group By">
+                    <filter name="group_statement_type" string="Statement Type" context="{'group_by': 'statement_type'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_orientation" string="PDF Orientation" context="{'group_by': 'orientation'}"/>
+                    <filter name="group_last_run_user" string="Last Run By" context="{'group_by': 'last_run_user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ydod_sql_query" model="ir.actions.act_window">
+        <field name="name">SQL Queries</field>
+        <field name="res_model">ydod.sql.query</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first SQL query</p>
+            <p>Write a PostgreSQL statement, document it in the Note tab and click Execute.
+               Duplicate one of the examples to get started quickly.</p>
+        </field>
+    </record>
+
+</odoo>
