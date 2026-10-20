@@ -1,0 +1,18 @@
+<odoo>
+    <menuitem id="menu_mail_quick_reply_root"
+              name="Quick Replies"
+              parent="mail.menu_root_discuss"
+              sequence="50"/>
+
+    <menuitem id="menu_mail_quick_reply"
+              name="All Replies"
+              parent="menu_mail_quick_reply_root"
+              action="action_mail_quick_reply"
+              sequence="10"/>
+
+    <menuitem id="menu_mail_quick_reply_category"
+              name="Categories"
+              parent="menu_mail_quick_reply_root"
+              action="action_mail_quick_reply_category"
+              sequence="20"/>
+</odoo>

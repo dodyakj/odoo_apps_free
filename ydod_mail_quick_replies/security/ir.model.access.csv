@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mail_quick_reply_category_user,mail.quick.reply.category user,model_mail_quick_reply_category,base.group_user,1,1,1,1
+access_mail_quick_reply_category_system,mail.quick.reply.category system,model_mail_quick_reply_category,base.group_system,1,1,1,1
+access_mail_quick_reply_user,mail.quick.reply user,model_mail_quick_reply,base.group_user,1,1,1,1
+access_mail_quick_reply_system,mail.quick.reply system,model_mail_quick_reply,base.group_system,1,1,1,1
