@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_ydod_sql_root" name="SQL Console" parent="base.menu_custom"
+              groups="base.group_system" sequence="200"/>
+    <menuitem id="menu_ydod_sql_query" name="Queries" parent="menu_ydod_sql_root"
+              action="action_ydod_sql_query" groups="base.group_system" sequence="10"/>
+    <menuitem id="menu_ydod_sql_query_history" name="History" parent="menu_ydod_sql_root"
+              action="action_ydod_sql_query_history" groups="base.group_system" sequence="20"/>
+
+</odoo>

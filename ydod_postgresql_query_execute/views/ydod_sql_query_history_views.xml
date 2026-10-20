@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_ydod_sql_query_history_list" model="ir.ui.view">
+        <field name="name">ydod.sql.query.history.list</field>
+        <field name="model">ydod.sql.query.history</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0">
+                <field name="run_date"/>
+                <field name="name"/>
+                <field name="query_id" optional="hide"/>
+                <field name="user_id"/>
+                <field name="is_write"/>
+                <field name="state" widget="badge" decoration-success="state == 'done'"
+                       decoration-danger="state == 'error'"/>
+                <field name="row_count"/>
+                <field name="duration_ms"/>
+                <field name="sql_text" optional="hide"/>
+                <field name="error_message" optional="hide"/>
+                <button name="action_load_into_editor" type="object" string="Load into editor" icon="fa-pencil"
+                        title="Load into editor"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ydod_sql_query_history_form" model="ir.ui.view">
+        <field name="name">ydod.sql.query.history.form</field>
+        <field name="model">ydod.sql.query.history</field>
+        <field name="arch" type="xml">
+            <form string="SQL Run" create="0" edit="0">
+                <header>
+                    <button name="action_load_into_editor" type="object" string="Load into editor"
+                            class="btn-primary" icon="fa-pencil"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="query_id" readonly="1"/>
+                            <field name="user_id" readonly="1"/>
+                            <field name="run_date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="is_write" readonly="1"/>
+                            <field name="row_count" readonly="1"/>
+                            <field name="duration_ms" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="SQL">
+                        <field name="sql_text" nolabel="1" colspan="2" readonly="1" class="font-monospace"/>
+                    </group>
+                    <group string="Error" invisible="not error_message">
+                        <field name="error_message" nolabel="1" colspan="2" readonly="1" class="font-monospace"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ydod_sql_query_history_search" model="ir.ui.view">
+        <field name="name">ydod.sql.query.history.search</field>
+        <field name="model">ydod.sql.query.history</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Query"
+                       filter_domain="['|', ('name', 'ilike', self), ('sql_text', 'ilike', self)]"/>
+                <field name="user_id"/>
+                <field name="query_id"/>
+                <filter name="filter_my_runs" string="My Runs" domain="[('user_id', '=', uid)]"/>
+                <filter name="filter_errors" string="Errors" domain="[('state', '=', 'error')]"/>
+                <filter name="filter_write" string="Write Statements" domain="[('is_write', '=', True)]"/>
+                <separator/>
+                <filter name="filter_today" string="Today"
+                        domain="[('run_date', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter name="filter_last_7_days" string="Last 7 Days"
+                        domain="[('run_date', '&gt;=', (context_today() - relativedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <group>
+                    <filter name="group_user" string="User" context="{'group_by': 'user_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_query" string="Query" context="{'group_by': 'query_id'}"/>
+                    <filter name="group_run_date" string="Run Date" context="{'group_by': 'run_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ydod_sql_query_history" model="ir.actions.act_window">
+        <field name="name">SQL Query History</field>
+        <field name="res_model">ydod.sql.query.history</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No query has been executed yet</p>
+            <p>Every click on Execute is logged here with its user, duration, rows and error message.</p>
+        </field>
+    </record>
+
+</odoo>
