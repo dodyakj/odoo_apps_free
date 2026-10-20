@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ydod_sql_query_system,ydod.sql.query system,model_ydod_sql_query,base.group_system,1,1,1,1
+access_ydod_sql_query_history_system,ydod.sql.query.history system,model_ydod_sql_query_history,base.group_system,1,0,1,1

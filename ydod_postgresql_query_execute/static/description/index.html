@@ -1,0 +1,358 @@
+<section class="container py-5" style="background-color: #1f2d3d; color: #ffffff;">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h1 class="display-5 fw-bold mb-3"><i class="fa fa-database me-2"></i>yDoD PostgreSQL Query Execute</h1>
+            <p class="lead mb-4">A documented, logged and safe SQL console inside Odoo: run PostgreSQL statements from the backend, read the note before executing, keep every run in history and print any result to PDF.</p>
+            <div class="mb-3">
+                <span class="badge rounded-pill me-2 mb-2 px-3 py-2" style="background-color: #00a09d; color: #ffffff;"><i class="fa fa-terminal me-1"></i> SQL console with results table</span>
+                <span class="badge rounded-pill me-2 mb-2 px-3 py-2" style="background-color: #00a09d; color: #ffffff;"><i class="fa fa-sticky-note me-1"></i> Notes on every query</span>
+                <span class="badge rounded-pill me-2 mb-2 px-3 py-2" style="background-color: #00a09d; color: #ffffff;"><i class="fa fa-history me-1"></i> Full execution history</span>
+                <span class="badge rounded-pill me-2 mb-2 px-3 py-2" style="background-color: #00a09d; color: #ffffff;"><i class="fa fa-file-pdf-o me-1"></i> PDF export portrait &amp; landscape</span>
+            </div>
+            <p class="mb-0"><i class="fa fa-check-circle me-1"></i> Odoo 18.0 Community &amp; Enterprise &mdash; depends only on base and web &mdash; no external Python library</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <img src="icon.png" alt="yDoD PostgreSQL Query Execute icon" class="img-fluid" style="max-width: 180px;"/>
+        </div>
+    </div>
+</section>
+<!-- oaa:showcase:start -->
+<section style="padding:56px 16px;background-color:#2E7D3214">
+  <div style="max-width:1100px;margin:0 auto;text-align:center">
+    <span style="display:inline-block;padding:6px 16px;border-radius:999px;background-color:#2E7D32;color:#fff;font-weight:700;font-size:13px;letter-spacing:.08em">SEE IT IN ACTION</span>
+    <h2 style="font-size:32px;font-weight:800;color:#1f2937;margin:16px 0 28px">yDoD PostgreSQL Query Execute: SQL Console with Notes, Examples, History &amp; PDF Export at work</h2>
+    <div style="max-width:1000px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 22px 60px rgba(15,23,42,.22)">
+      <img src="demo.gif" alt="yDoD PostgreSQL Query Execute: SQL Console with Notes, Examples, History &amp; PDF Export animated demo" style="width:100%;display:block"/>
+    </div>
+    <div class="row" style="margin-top:32px">
+      <div class="col-12" style="padding:12px">
+        <div style="height:100%;background-color:#fff;border:1px solid #eef0f4;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,.10)">
+          <img src="screenshot_1.png" alt="SQL Queries" style="width:100%;display:block"/>
+          <div style="padding:14px 18px;font-size:15px;color:#334155;text-align:left"><span style="display:inline-block;width:26px;height:26px;line-height:26px;border-radius:13px;background-color:#2E7D32;color:#fff;text-align:center;font-weight:700;font-size:13px;margin-right:10px">1</span>SQL Queries</div>
+        </div>
+      </div>
+      <div class="col-md-6" style="padding:12px">
+        <div style="height:100%;background-color:#fff;border:1px solid #eef0f4;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,.10)">
+          <img src="screenshot_2.png" alt="SQL Queries &#183; detail" style="width:100%;display:block"/>
+          <div style="padding:14px 18px;font-size:15px;color:#334155;text-align:left"><span style="display:inline-block;width:26px;height:26px;line-height:26px;border-radius:13px;background-color:#2E7D32;color:#fff;text-align:center;font-weight:700;font-size:13px;margin-right:10px">2</span>SQL Queries &#183; detail</div>
+        </div>
+      </div>
+      <div class="col-md-6" style="padding:12px">
+        <div style="height:100%;background-color:#fff;border:1px solid #eef0f4;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,.10)">
+          <img src="screenshot_3.png" alt="SQL Query History" style="width:100%;display:block"/>
+          <div style="padding:14px 18px;font-size:15px;color:#334155;text-align:left"><span style="display:inline-block;width:26px;height:26px;line-height:26px;border-radius:13px;background-color:#2E7D32;color:#fff;text-align:center;font-weight:700;font-size:13px;margin-right:10px">3</span>SQL Query History</div>
+        </div>
+      </div>
+      <div class="col-md-6" style="padding:12px">
+        <div style="height:100%;background-color:#fff;border:1px solid #eef0f4;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(15,23,42,.10)">
+          <img src="screenshot_4.png" alt="SQL Query History &#183; detail" style="width:100%;display:block"/>
+          <div style="padding:14px 18px;font-size:15px;color:#334155;text-align:left"><span style="display:inline-block;width:26px;height:26px;line-height:26px;border-radius:13px;background-color:#2E7D32;color:#fff;text-align:center;font-weight:700;font-size:13px;margin-right:10px">4</span>SQL Query History &#183; detail</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- oaa:showcase:end -->
+
+
+<section class="container py-5">
+    <h2 class="fw-bold mb-3" style="color: #1f2d3d;">Overview</h2>
+    <p>Fixing data, auditing a database or answering a support ticket often needs one SQL statement. Without this module that means opening psql, sharing server credentials or asking a hosting provider. <strong>yDoD PostgreSQL Query Execute</strong> adds a SQL console under <em>Settings &rarr; Technical &rarr; SQL Console</em>: an administrator types a statement, clicks <strong>Execute</strong> and sees the result as a table with column names, row count and execution time. SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER and DROP are all supported.</p>
+    <p>Every saved query carries a <strong>Note</strong> explaining what it does, why it exists and what it could break, so the next person understands it before running it. Write statements require an explicit <strong>Allow data modification</strong> tick and run inside a savepoint, PostgreSQL errors are shown in the form instead of breaking the session, every run is logged in <strong>History</strong>, and any result table prints to PDF.</p>
+    <p class="mb-0"><strong>Built for</strong> Odoo system administrators, technical consultants, support engineers and developers who need to inspect or fix data directly in PostgreSQL from the Odoo backend without shell or psql access.</p>
+</section>
+
+<section class="container py-5" style="background-color: #f5f7fa;">
+    <h2 class="fw-bold mb-4" style="color: #1f2d3d;">Key Highlights</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="h-100 p-4 rounded" style="background-color: #ffffff;">
+                <i class="fa fa-terminal fa-2x mb-3" style="color: #00a09d;"></i>
+                <h5 class="fw-bold">SQL console</h5>
+                <p class="mb-0">Write any PostgreSQL statement and see the result table, rows returned or affected and duration in milliseconds.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="h-100 p-4 rounded" style="background-color: #ffffff;">
+                <i class="fa fa-sticky-note fa-2x mb-3" style="color: #00a09d;"></i>
+                <h5 class="fw-bold">Documentation note</h5>
+                <p class="mb-0">A rich-text Note tab on each query records what it does, why it was written and its dangers.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="h-100 p-4 rounded" style="background-color: #ffffff;">
+                <i class="fa fa-book fa-2x mb-3" style="color: #00a09d;"></i>
+                <h5 class="fw-bold">Example library</h5>
+                <p class="mb-0">Eight ready-to-use queries for common support tasks are installed, editable and easy to duplicate.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="h-100 p-4 rounded" style="background-color: #ffffff;">
+                <i class="fa fa-history fa-2x mb-3" style="color: #00a09d;"></i>
+                <h5 class="fw-bold">Execution history</h5>
+                <p class="mb-0">Every run is logged with SQL, user, date, duration, rows and error, and can be loaded back into a new query.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="h-100 p-4 rounded" style="background-color: #ffffff;">
+                <i class="fa fa-file-pdf-o fa-2x mb-3" style="color: #00a09d;"></i>
+                <h5 class="fw-bold">PDF export</h5>
+                <p class="mb-0">Print the result table with query name, note, SQL and run date, in portrait or landscape per query.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="h-100 p-4 rounded" style="background-color: #ffffff;">
+                <i class="fa fa-shield fa-2x mb-3" style="color: #00a09d;"></i>
+                <h5 class="fw-bold">Safety guards</h5>
+                <p class="mb-0">Savepoint isolation, an explicit Allow data modification tick, a Max rows cap and refusal of transaction control statements.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="h-100 p-4 rounded" style="background-color: #ffffff;">
+                <i class="fa fa-lock fa-2x mb-3" style="color: #00a09d;"></i>
+                <h5 class="fw-bold">Administrators only</h5>
+                <p class="mb-0">Menus and models are limited to the Settings / Administration group; ordinary users never see the console.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="h-100 p-4 rounded" style="background-color: #ffffff;">
+                <i class="fa fa-code fa-2x mb-3" style="color: #00a09d;"></i>
+                <h5 class="fw-bold">Clean LGPL-3 code</h5>
+                <p class="mb-0">Original code under yDoD branding, plain ORM and report APIs, no external services, credentials or Python packages.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
+    <h2 class="fw-bold mb-4" style="color: #1f2d3d;">Features in Detail</h2>
+
+    <div class="mb-4 p-4 rounded" style="background-color: #f5f7fa;">
+        <h4 class="fw-bold"><i class="fa fa-terminal me-2" style="color: #00a09d;"></i>SQL console form</h4>
+        <p>Open <em>Settings &rarr; Technical &rarr; SQL Console &rarr; Queries</em> and create a query: a <strong>Name</strong>, the statement in the <strong>SQL</strong> tab, <strong>Max rows</strong> (default 200, configurable through the system parameter <code>ydod_postgresql_query_execute.default_max_rows</code>) and the PDF <strong>Orientation</strong>. The <strong>Statement Type</strong> field is computed automatically: Read for SELECT, EXPLAIN, SHOW, TABLE, VALUES and read-only WITH queries, Write for everything else.</p>
+        <ul class="mb-0">
+            <li>Click <strong>Execute</strong>: the form is saved, the statement runs and the status bar switches to <strong>Success</strong> or <strong>Error</strong>.</li>
+            <li>The <strong>Result</strong> tab shows column headers, the rows (capped at Max rows with a &ldquo;Showing X of Y rows&rdquo; notice), rows returned or affected, duration, run date and user.</li>
+            <li>INSERT, UPDATE, DELETE, CREATE, ALTER and DROP report the number of affected rows; several statements separated by semicolons run as one batch and the result of the last one is shown.</li>
+        </ul>
+    </div>
+
+    <div class="mb-4 p-4 rounded" style="background-color: #f5f7fa;">
+        <h4 class="fw-bold"><i class="fa fa-sticky-note me-2" style="color: #00a09d;"></i>Documentation note</h4>
+        <p class="mb-0">The <strong>Note</strong> tab is a rich-text field placed next to the SQL so it is read before execution. Use it to record what the query does, why it was written and what it could break. The note is printed on the PDF and copied when a past run is loaded into a new query, so the context travels with the statement.</p>
+    </div>
+
+    <div class="mb-4 p-4 rounded" style="background-color: #f5f7fa;">
+        <h4 class="fw-bold"><i class="fa fa-book me-2" style="color: #00a09d;"></i>Example library</h4>
+        <p>Installation ships eight documented queries flagged as <strong>Example</strong> (filter <strong>Examples</strong> in the list). They are regular records: edit them, run them or use <em>Action &rarr; Duplicate</em> to start your own version. Edits survive module upgrades.</p>
+        <ul class="mb-0">
+            <li>Installed modules and versions, Largest tables, Overdue cron jobs, Users and last login.</li>
+            <li>Duplicate partners by email, Duplicate partners by VAT.</li>
+            <li>Unposted journal entries (needs Invoicing) and Stock quants below zero (needs Inventory); on a database without these apps the error message demonstrates failure reporting.</li>
+        </ul>
+    </div>
+
+    <div class="mb-4 p-4 rounded" style="background-color: #f5f7fa;">
+        <h4 class="fw-bold"><i class="fa fa-history me-2" style="color: #00a09d;"></i>Execution history</h4>
+        <p>Every click on Execute, successful or not, creates a line under <em>SQL Console &rarr; History</em> with the query name, the SQL exactly as executed, user, run date, duration, rows, statement type, status and error message. History lines are immutable: even administrators have no update right, and they stay when the query is deleted.</p>
+        <ul class="mb-0">
+            <li>The <strong>History</strong> smart button on a query opens its own runs; the History tab shows them inline.</li>
+            <li><strong>Load into editor</strong> copies a past statement and the original note into a new query, with Allow data modification unticked.</li>
+            <li>Filters My Runs, Errors, Write Statements, Today and Last 7 Days; group by User, Status, Query or Run Date.</li>
+        </ul>
+    </div>
+
+    <div class="mb-4 p-4 rounded" style="background-color: #f5f7fa;">
+        <h4 class="fw-bold"><i class="fa fa-file-pdf-o me-2" style="color: #00a09d;"></i>PDF export of results</h4>
+        <p class="mb-0">After a run, <strong>Print PDF</strong> renders the last result with the company layout: query name, run date, user, duration, row count, the note, the SQL and the result table. The paper orientation follows the <strong>Orientation</strong> field of the query: A4 portrait uses the standard Odoo paper format, A4 landscape uses a dedicated format with narrow margins for wide tables. The file is named &ldquo;SQL - query name&rdquo;.</p>
+    </div>
+
+    <div class="mb-4 p-4 rounded" style="background-color: #f5f7fa;">
+        <h4 class="fw-bold"><i class="fa fa-shield me-2" style="color: #00a09d;"></i>Safety guards</h4>
+        <ul class="mb-0">
+            <li>Write statements are refused with a clear message until <strong>Allow data modification</strong> is ticked; nothing is executed or logged in that case.</li>
+            <li>Statements run inside a savepoint: read statements are always rolled back (a SELECT calling a function that writes changes nothing), write statements are released into the current transaction.</li>
+            <li>A PostgreSQL error appears in a red alert in the Result tab and the transaction stays valid, so you fix the SQL and run again.</li>
+            <li>BEGIN, COMMIT, ROLLBACK, SAVEPOINT and similar transaction control statements cannot be saved; Max rows is limited to 1&ndash;5000.</li>
+        </ul>
+    </div>
+
+    <div class="mb-0 p-4 rounded" style="background-color: #f5f7fa;">
+        <h4 class="fw-bold"><i class="fa fa-lock me-2" style="color: #00a09d;"></i>Access control</h4>
+        <p class="mb-0">Both models and all menus are restricted to the <strong>Administration / Settings</strong> group (base.group_system). Statements run with the connected administrator's own database cursor, never with elevated rights. Internal users get an access error if they try to open the models by URL.</p>
+    </div>
+</section>
+
+<section class="container py-5" style="background-color: #f5f7fa;">
+    <h2 class="fw-bold mb-4" style="color: #1f2d3d;">How to Use</h2>
+    <ol class="mb-0">
+        <li class="mb-2"><strong>Install</strong> the module from Apps. It only needs base and web, which every database already has.</li>
+        <li class="mb-2"><strong>Grant access:</strong> the user must belong to <em>Administration &rarr; Settings</em>. Activate developer mode to see the Technical menu.</li>
+        <li class="mb-2"><strong>Optional setting:</strong> in <em>Settings &rarr; Technical &rarr; System Parameters</em>, create <code>ydod_postgresql_query_execute.default_max_rows</code> to change the default Max rows (200) for new queries.</li>
+        <li class="mb-2"><strong>Open</strong> <em>Settings &rarr; Technical &rarr; SQL Console &rarr; Queries</em>; the Examples filter shows the shipped library.</li>
+        <li class="mb-2"><strong>Create or duplicate</strong> a query: fill Name, the SQL tab and the Note tab; set Max rows and Orientation.</li>
+        <li class="mb-2"><strong>Tick Allow data modification</strong> only when the statement must write data, then click <strong>Execute</strong>.</li>
+        <li class="mb-2"><strong>Read the Result tab:</strong> the table, rows, duration and, if any, the red PostgreSQL error.</li>
+        <li class="mb-2"><strong>Print PDF</strong> to download the result table, or open <strong>History</strong> to audit runs and use <strong>Load into editor</strong>.</li>
+    </ol>
+</section>
+
+<section class="container py-5">
+    <h2 class="fw-bold mb-4" style="color: #1f2d3d;">Frequently Asked Questions</h2>
+    <div class="mb-3">
+        <h5 class="fw-bold">Which users can see the SQL Console?</h5>
+        <p>Only members of the Administration / Settings group. The menus sit under Settings &rarr; Technical, so developer mode must be active. No other group gets access rights, so the console cannot be opened by regular employees.</p>
+    </div>
+    <div class="mb-3">
+        <h5 class="fw-bold">Can a wrong statement break my database?</h5>
+        <p>Read statements are always rolled back and a failed statement is rolled back to its savepoint, so typos are harmless. Write statements with Allow data modification ticked do change data, exactly as they would in psql, and are committed with the request. Read the note, test on a staging database and keep backups for destructive statements.</p>
+    </div>
+    <div class="mb-3">
+        <h5 class="fw-bold">Does it work in multi-company databases?</h5>
+        <p>Yes. Queries and history have no company field because the PostgreSQL database is shared by all companies by design; your SQL decides which company's rows it touches.</p>
+    </div>
+    <div class="mb-3">
+        <h5 class="fw-bold">Are large results a problem?</h5>
+        <p>Only Max rows (1 to 5000, default 200) are kept and displayed; the total row count still comes from PostgreSQL. Add LIMIT or raise Max rows on the query when you need more.</p>
+    </div>
+    <div class="mb-3">
+        <h5 class="fw-bold">What happens to history lines when a query is deleted?</h5>
+        <p>They are kept with an empty Query reference, so the audit trail stays complete. History lines cannot be edited by anyone; administrators can delete them.</p>
+    </div>
+    <div class="mb-0">
+        <h5 class="fw-bold">What happens on uninstall?</h5>
+        <p>The queries, the example library, the history and the two report actions are removed. Tables or data changed by your own statements are of course untouched. No external service is involved.</p>
+    </div>
+</section>
+
+<section class="container py-5" style="background-color: #1f2d3d; color: #ffffff;">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="fw-bold mb-3"><i class="fa fa-life-ring me-2"></i>Support &amp; Customization</h2>
+            <p>Questions, bug reports or feature requests are welcome. Need additional example libraries, scheduled exports or a custom result layout? yDoD builds tailored extensions on top of this module.</p>
+            <p class="mb-1"><i class="fa fa-envelope me-2"></i>Email: <a href="mailto:dodyakj@gmail.com" style="color: #ffffff;">dodyakj@gmail.com</a></p>
+            <p class="mb-0"><i class="fa fa-globe me-2"></i>Website: <a href="https://profile.dodyakj.online" style="color: #ffffff;">https://profile.dodyakj.online</a></p>
+        </div>
+        <div class="col-md-4 text-center">
+            <p class="h4 fw-bold mb-1">yDoD</p>
+            <p class="mb-0">Dody Ahmad Kusuma Jaya</p>
+            <p class="mb-0 small">Odoo modules under LGPL-3</p>
+        </div>
+    </div>
+</section>
+
+<!-- oaa:more-apps:start -->
+<section style="padding:48px 16px 16px;background-color:#f8fafc">
+  <div style="max-width:1140px;margin:0 auto;padding:0 0 40px">
+    <h2 style="font-size:30px;font-weight:800;color:#141a26;margin:0 0 6px">Related <span style="color:#7c3aed">Modules</span></h2>
+    <p style="font-size:15px;color:#64748b;margin:0 0 16px">Work even better together with yDoD apps for Odoo 18.0.</p>
+    <div class="row">
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/18.0/ydod_tender_management" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #37474F;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/18.0/ydod_tender_management/banner.png" alt="Advance Tender &amp; Vendor Bid Management" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Advance Tender &amp; Vendor Bid Management</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Manage competitive tender lifecycles, vendor bid submissions, pre-qualification, side-by-side bid evaluation, and one-click...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#ede9fe;color:#5b21b6">$149</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#37474F">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/18.0/ydod_api_access_control" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #C62828;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/18.0/ydod_api_access_control/banner.png" alt="API Access Control &amp; Resource Permissions" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">API Access Control &amp; Resource Permissions</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Manage granular model-level CRUD permissions, record rules, and dedicated service accounts for external API integrations and...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#ede9fe;color:#5b21b6">$89</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#C62828">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/18.0/ydod_clinic_hospital_management" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #B3541E;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/18.0/ydod_clinic_hospital_management/banner.png" alt="Clinic &amp; Hospital Management System (HMS)" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Clinic &amp; Hospital Management System (HMS)</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">End-to-end clinic and hospital management: patient records, doctor directory, appointment booking, clinical consultations,...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#ede9fe;color:#5b21b6">$49</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#B3541E">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1140px;margin:0 auto;padding:0 0 40px">
+    <h2 style="font-size:30px;font-weight:800;color:#141a26;margin:0 0 6px">Most <span style="color:#7c3aed">Downloaded</span></h2>
+    <p style="font-size:15px;color:#64748b;margin:0 0 16px">The apps Odoo users install the most. &middot; <a href="https://apps.odoo.com/apps/modules/browse?author=Dody%20Ahmad%20Kusuma%20Jaya" target="_blank" rel="noopener" style="font-weight:700;color:#1f2937">All apps by Dody Ahmad Kusuma Jaya &rarr;</a></p>
+    <div class="row">
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/19.0/ydod_web_responsive" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #2E7D32;border-radius:0 0 14px 14px;overflow:hidden">
+          <div style="height:170px;padding:15px;text-align:center;background-color:#2E7D321f;border-bottom:1px solid #eef0f4"><img src="https://apps.odoocdn.com/apps/module_image?image_id=31070343" alt="yDoD Web Responsive" style="max-height:140px;max-width:100%"/></div>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">yDoD Web Responsive</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Responsive web design for yDoD with dark mode support and customizable theme.</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#2E7D32">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/19.0/ydod_indonesian_public_holiday" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #2E7D32;border-radius:0 0 14px 14px;overflow:hidden">
+          <div style="height:170px;padding:15px;text-align:center;background-color:#2E7D321f;border-bottom:1px solid #eef0f4"><img src="https://apps.odoocdn.com/apps/module_image?image_id=31070336" alt="Indonesian Public Holiday" style="max-height:140px;max-width:100%"/></div>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Indonesian Public Holiday</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Import Indonesian public holidays into Odoo Time Off (Odoo 19)</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#2E7D32">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/18.0/ydod_database_backup_manager" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #017E84;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/18.0/ydod_database_backup_manager/banner.png" alt="Automatic Database Backup to Local, Remote &amp; Cloud Mount Storage" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Automatic Database Backup to Local, Remote &amp; Cloud Mount Storage</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Schedule automated Odoo database backups with retention cleanup, remote FTP transfer, local and cloud-mounted storage sync,...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#017E84">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/18.0/ydod_sale_commission" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #37474F;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/18.0/ydod_sale_commission/banner.png" alt="Sales Commission Management" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Sales Commission Management</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Automatically calculate salesperson/team commissions on confirmed sale orders with configurable plans and a payout report.</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#37474F">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/19.0/ydod_web_customizer" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #37474F;border-radius:0 0 14px 14px;overflow:hidden">
+          <div style="height:170px;padding:15px;text-align:center;background-color:#37474F1f;border-bottom:1px solid #eef0f4"><img src="https://apps.odoocdn.com/apps/module_image?image_id=31070342" alt="yDoD Web Customizer" style="max-height:140px;max-width:100%"/></div>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">yDoD Web Customizer</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Customize web appearance with custom background image, color, and favicon.</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#37474F">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/18.0/ydod_account_recurring_invoice" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #5E35B1;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/18.0/ydod_account_recurring_invoice/banner.png" alt="Recurring Invoices &amp; Subscriptions for Community" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Recurring Invoices &amp; Subscriptions for Community</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Automate recurring customer invoices and vendor bills on flexible schedules (weekly, monthly, quarterly, annual) with...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#5E35B1">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- oaa:more-apps:end -->
