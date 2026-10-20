@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'yDoD Web Responsive: Mobile & Tablet Backend UI',
+    'name': 'Web Responsive: Mobile & Tablet Backend UI',
     'version': '16.0.1.0.0',
     'summary': ('Transforms Odoo Community backend into a fluid, touch-friendly responsive interface with '
      'an app drawer, mobile navbar, collapsible chatter, and auto-scroll tables.'),
