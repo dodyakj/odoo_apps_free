@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'yDoD Accounting Community',
+    'name': 'Accounting Community',
     'version': '16.0.1.1.0',
     'summary': ('Full-featured Accounting suite for Odoo 16 Community: Balance Sheet, Profit & Loss, '
      'Trial Balance, General Ledger, Aged Balances, Cash Flow, Fixed Asset Depreciation, '
