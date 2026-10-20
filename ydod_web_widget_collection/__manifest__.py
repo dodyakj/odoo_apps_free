@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'yDoD Widget Collection: Labeled Toggle, HTML Print Preview & Many2many List',
+    'name': 'Widget Collection: Labeled Toggle, HTML Print Preview & Many2many List',
     'version': '19.0.1.0.0',
     'summary': ('Three drop-in OWL field widgets for any form or list view: boolean toggle with custom '
      'on/off labels, HTML print preview with Save as PDF, and a clickable many2many / one2many '
