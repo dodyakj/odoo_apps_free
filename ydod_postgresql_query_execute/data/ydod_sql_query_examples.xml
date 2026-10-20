@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="example_installed_modules" model="ydod.sql.query">
+        <field name="name">Installed modules and versions</field>
+        <field name="is_example" eval="True"/>
+        <field name="orientation">portrait</field>
+        <field name="sql_text">SELECT name, latest_version, state, write_date
+FROM ir_module_module
+WHERE state = 'installed'
+ORDER BY name</field>
+        <field name="note" type="html">
+            <p><strong>What it does:</strong> lists every installed module with its version and last update date.</p>
+            <p><strong>Why:</strong> a module inventory is the first thing to attach to a support ticket or to compare two databases.</p>
+            <p><strong>Dangers:</strong> none, read-only.</p>
+        </field>
+    </record>
+
+    <record id="example_largest_tables" model="ydod.sql.query">
+        <field name="name">Largest tables</field>
+        <field name="is_example" eval="True"/>
+        <field name="orientation">landscape</field>
+        <field name="sql_text">SELECT relname, pg_size_pretty(pg_total_relation_size(relid)) AS total_size, n_live_tup AS live_rows
+FROM pg_stat_user_tables
+ORDER BY pg_total_relation_size(relid) DESC
+LIMIT 30</field>
+        <field name="note" type="html">
+            <p><strong>What it does:</strong> shows the 30 biggest tables with their total size (data and indexes) and live row count.</p>
+            <p><strong>Why:</strong> find bloat and oversized logs (mail messages, attachments, cron logs) before archiving or vacuuming.</p>
+            <p><strong>Dangers:</strong> none, read-only. Statistics come from PostgreSQL and may be slightly outdated.</p>
+        </field>
+    </record>
+
+    <record id="example_duplicate_partners_email" model="ydod.sql.query">
+        <field name="name">Duplicate partners by email</field>
+        <field name="is_example" eval="True"/>
+        <field name="orientation">landscape</field>
+        <field name="sql_text">SELECT lower(email) AS email, count(*) AS qty, string_agg(id::text, ', ') AS partner_ids
+FROM res_partner
+WHERE email IS NOT NULL
+GROUP BY 1
+HAVING count(*) &gt; 1
+ORDER BY 2 DESC</field>
+        <field name="note" type="html">
+            <p><strong>What it does:</strong> groups contacts sharing the same email address (case-insensitive) and lists their ids.</p>
+            <p><strong>Why:</strong> review candidates before using the standard contact merge tool.</p>
+            <p><strong>Dangers:</strong> none, read-only. Companies and their contacts legitimately share an email in some setups.</p>
+        </field>
+    </record>
+
+    <record id="example_duplicate_partners_vat" model="ydod.sql.query">
+        <field name="name">Duplicate partners by VAT</field>
+        <field name="is_example" eval="True"/>
+        <field name="orientation">landscape</field>
+        <field name="sql_text">SELECT vat, count(*) AS qty, string_agg(id::text, ', ') AS partner_ids
+FROM res_partner
+WHERE vat IS NOT NULL
+GROUP BY 1
+HAVING count(*) &gt; 1
+ORDER BY 2 DESC</field>
+        <field name="note" type="html">
+            <p><strong>What it does:</strong> groups partners sharing the same VAT number and lists their ids.</p>
+            <p><strong>Why:</strong> a company and its delivery or invoice addresses often carry the same VAT; real duplicates must be merged before accounting reports are trusted.</p>
+            <p><strong>Dangers:</strong> none, read-only.</p>
+        </field>
+    </record>
+
+    <record id="example_users_last_login" model="ydod.sql.query">
+        <field name="name">Users and last login</field>
+        <field name="is_example" eval="True"/>
+        <field name="orientation">landscape</field>
+        <field name="sql_text">SELECT u.id, u.login, p.name, u.active, u.share,
+       (SELECT max(l.create_date) FROM res_users_log l WHERE l.create_uid = u.id) AS last_login
+FROM res_users u
+JOIN res_partner p ON p.id = u.partner_id
+ORDER BY last_login DESC NULLS LAST</field>
+        <field name="note" type="html">
+            <p><strong>What it does:</strong> lists every user with login, name, active flag, portal flag and the date of the last login.</p>
+            <p><strong>Why:</strong> audit licences, find dormant accounts to archive and check who really uses the system.</p>
+            <p><strong>Dangers:</strong> none, read-only.</p>
+        </field>
+    </record>
+
+    <record id="example_unposted_journal_entries" model="ydod.sql.query">
+        <field name="name">Unposted journal entries</field>
+        <field name="is_example" eval="True"/>
+        <field name="orientation">portrait</field>
+        <field name="sql_text">SELECT id, name, ref, date, state, journal_id, amount_total
+FROM account_move
+WHERE state = 'draft'
+ORDER BY date</field>
+        <field name="note" type="html">
+            <p><strong>What it does:</strong> lists draft journal entries and invoices with their journal and total.</p>
+            <p><strong>Why:</strong> draft entries left behind distort reports and block period closing.</p>
+            <p><strong>Dangers:</strong> none, read-only. Requires the Invoicing app: on a database without it the error message demonstrates how failures are reported.</p>
+        </field>
+    </record>
+
+    <record id="example_stock_quants_negative" model="ydod.sql.query">
+        <field name="name">Stock quants below zero</field>
+        <field name="is_example" eval="True"/>
+        <field name="orientation">portrait</field>
+        <field name="sql_text">SELECT q.product_id, q.location_id, q.lot_id, q.quantity
+FROM stock_quant q
+WHERE q.quantity &lt; 0
+ORDER BY q.quantity</field>
+        <field name="note" type="html">
+            <p><strong>What it does:</strong> lists negative stock quants per product, location and lot.</p>
+            <p><strong>Why:</strong> negative stock must be investigated before inventory adjustments or valuation reports.</p>
+            <p><strong>Dangers:</strong> none, read-only. Requires the Inventory app.</p>
+        </field>
+    </record>
+
+    <record id="example_overdue_cron_jobs" model="ydod.sql.query">
+        <field name="name">Overdue cron jobs</field>
+        <field name="is_example" eval="True"/>
+        <field name="orientation">landscape</field>
+        <field name="sql_text">SELECT id, cron_name, active, nextcall, lastcall, interval_number, interval_type
+FROM ir_cron
+WHERE active AND nextcall &lt; now() - interval '1 hour'
+ORDER BY nextcall</field>
+        <field name="note" type="html">
+            <p><strong>What it does:</strong> lists active scheduled actions whose next call is more than one hour in the past.</p>
+            <p><strong>Why:</strong> stuck or long-running scheduler jobs are the usual cause of missing emails, stale reports and queued work.</p>
+            <p><strong>Dangers:</strong> none, read-only. Fix the cause before touching nextcall by hand.</p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="paperformat_ydod_sql_landscape" model="report.paperformat">
+        <field name="name">SQL Result A4 Landscape</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">30</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_report_sql_query_portrait" model="ir.actions.report">
+        <field name="name">SQL Query Result (Portrait)</field>
+        <field name="model">ydod.sql.query</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ydod_postgresql_query_execute.report_sql_query_result</field>
+        <field name="print_report_name">'SQL - %s' % object.name</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+
+    <record id="action_report_sql_query_landscape" model="ir.actions.report">
+        <field name="name">SQL Query Result (Landscape)</field>
+        <field name="model">ydod.sql.query</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ydod_postgresql_query_execute.report_sql_query_result</field>
+        <field name="print_report_name">'SQL - %s' % object.name</field>
+        <field name="paperformat_id" ref="paperformat_ydod_sql_landscape"/>
+    </record>
+
+    <template id="report_sql_query_result">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <t t-set="result" t-value="doc.result_json or {}"/>
+                    <div class="page">
+                        <h2 t-out="doc.name"/>
+                        <p class="small text-muted">
+                            Run on <span t-field="doc.last_run_date"/>
+                            by <span t-out="doc.last_run_user_id.name"/>
+                            in <span t-out="'%.2f' % doc.duration_ms"/> ms:
+                            <span t-out="doc.row_count"/> row(s)
+                            <t t-if="result.get('truncated')">(showing the first <t t-out="len(result.get('rows', []))"/>)</t>
+                            <t t-if="doc.state == 'error'">- failed: <span t-out="doc.error_message"/></t>
+                        </p>
+                        <div t-if="not is_html_empty(doc.note)" class="mb-3">
+                            <t t-out="doc.note"/>
+                        </div>
+                        <pre class="small" t-out="doc.sql_text"/>
+                        <table t-if="result.get('columns')" class="table table-sm" style="font-size: 9pt;">
+                            <thead>
+                                <tr>
+                                    <th t-foreach="result.get('columns', [])" t-as="column" t-out="column"/>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="result.get('rows', [])" t-as="row">
+                                    <td t-foreach="row" t-as="cell">
+                                        <t t-if="cell is not None" t-out="cell"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
