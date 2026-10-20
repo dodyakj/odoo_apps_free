@@ -1,0 +1,70 @@
+<odoo>
+    <record id="demo_category_support" model="mail.quick.reply.category">
+        <field name="name">Customer Support</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="demo_category_sales" model="mail.quick.reply.category">
+        <field name="name">Sales &amp; Pricing</field>
+        <field name="sequence">2</field>
+    </record>
+
+    <record id="demo_category_general" model="mail.quick.reply.category">
+        <field name="name">General</field>
+        <field name="sequence">3</field>
+    </record>
+
+    <record id="demo_reply_1" model="mail.quick.reply">
+        <field name="name">Standard Greeting</field>
+        <field name="shortcut">hello</field>
+        <field name="category_id" ref="demo_category_support"/>
+        <field name="body"><![CDATA[<p>Hello,</p><p>Thank you for reaching out to us. How can we assist you today?</p><p>Best regards,</p>]]></field>
+        <field name="user_id" eval="False"/>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="demo_reply_2" model="mail.quick.reply">
+        <field name="name">Closing - Solved</field>
+        <field name="shortcut">done</field>
+        <field name="category_id" ref="demo_category_support"/>
+        <field name="body"><![CDATA[<p>We are glad we could help you resolve this issue. We will now mark this ticket as closed.</p><p>Have a great day!</p>]]></field>
+        <field name="user_id" eval="False"/>
+        <field name="sequence">2</field>
+    </record>
+
+    <record id="demo_reply_3" model="mail.quick.reply">
+        <field name="name">Pricing Request</field>
+        <field name="shortcut">price</field>
+        <field name="category_id" ref="demo_category_sales"/>
+        <field name="body"><![CDATA[<p>Our current pricing plans are available on our website. For a custom quote, please provide your specific requirements.</p>]]></field>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="sequence">3</field>
+    </record>
+
+    <record id="demo_reply_4" model="mail.quick.reply">
+        <field name="name">Technical Delay</field>
+        <field name="shortcut">wait</field>
+        <field name="category_id" ref="demo_category_support"/>
+        <field name="body"><![CDATA[<p>Our technical team is currently investigating the issue. We appreciate your patience and will get back to you as soon as possible.</p>]]></field>
+        <field name="user_id" eval="False"/>
+        <field name="sequence">4</field>
+    </record>
+
+    <record id="demo_reply_5" model="mail.quick.reply">
+        <field name="name">Meeting Request</field>
+        <field name="shortcut">meet</field>
+        <field name="category_id" ref="demo_category_sales"/>
+        <field name="body"><![CDATA[<p>I would love to discuss this further. Are you available for a quick call tomorrow at 10:00 AM?</p>]]></field>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="sequence">5</field>
+    </record>
+
+    <record id="demo_reply_6" model="mail.quick.reply">
+        <field name="name">Thank You Note</field>
+        <field name="shortcut">thanks</field>
+        <field name="category_id" ref="demo_category_general"/>
+        <field name="body"><![CDATA[<p>Thank you for your feedback! We really appreciate your collaboration.</p>]]></field>
+        <field name="user_id" eval="False"/>
+        <field name="sequence">6</field>
+    </record>
+</odoo>

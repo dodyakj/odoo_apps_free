@@ -1,0 +1,158 @@
+<odoo>
+    <!-- Category Views -->
+    <record id="view_mail_quick_reply_category_list" model="ir.ui.view">
+        <field name="name">mail.quick.reply.category.list</field>
+        <field name="model">mail.quick.reply.category</field>
+        <field name="arch" type="xml">
+            <list string="Categories" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mail_quick_reply_category_form" model="ir.ui.view">
+        <field name="name">mail.quick.reply.category.form</field>
+        <field name="model">mail.quick.reply.category</field>
+        <field name="arch" type="xml">
+            <form string="Category">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Customer Support"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="sequence"/>
+                        <field name="active" widget="boolean_toggle"/>
+                    </group>
+                    <notebook>
+                        <page string="Replies" name="replies">
+                            <field name="reply_ids" readonly="1">
+                                <list>
+                                    <field name="shortcut"/>
+                                    <field name="name"/>
+                                    <field name="user_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mail_quick_reply_category_search" model="ir.ui.view">
+        <field name="name">mail.quick.reply.category.search</field>
+        <field name="model">mail.quick.reply.category</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <separator/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mail_quick_reply_category" model="ir.actions.act_window">
+        <field name="name">Reply Categories</field>
+        <field name="res_model">mail.quick.reply.category</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_mail_quick_reply_category_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a quick reply category!
+            </p>
+            <p>
+                Organize your canned responses into logical groups like Support, Sales, or General.
+            </p>
+        </field>
+    </record>
+
+    <!-- Quick Reply Views -->
+    <record id="view_mail_quick_reply_list" model="ir.ui.view">
+        <field name="name">mail.quick.reply.list</field>
+        <field name="model">mail.quick.reply</field>
+        <field name="arch" type="xml">
+            <list string="Quick Replies">
+                <field name="sequence" widget="handle"/>
+                <field name="shortcut"/>
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="user_id" optional="show"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mail_quick_reply_form" model="ir.ui.view">
+        <field name="name">mail.quick.reply.form</field>
+        <field name="model">mail.quick.reply</field>
+        <field name="arch" type="xml">
+            <form string="Quick Reply">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Standard Customer Greeting"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="shortcut" placeholder="e.g. hello"/>
+                            <field name="category_id" options="{'no_create_edit': True}"/>
+                        </group>
+                        <group>
+                            <field name="user_id" options="{'no_create': True}"/>
+                            <field name="sequence"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Content" name="content">
+                            <field name="body" placeholder="Type your canned response here..."/>
+                            <div class="mt-2 text-muted">
+                                <i class="fa fa-info-circle"/> Tip: Use rich text formatting for clear and professional communications.
+                            </div>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mail_quick_reply_search" model="ir.ui.view">
+        <field name="name">mail.quick.reply.search</field>
+        <field name="model">mail.quick.reply</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="shortcut"/>
+                <field name="category_id"/>
+                <filter string="My Replies" name="my_replies" domain="[('user_id', '=', uid)]"/>
+                <filter string="Global Replies" name="global_replies" domain="[('user_id', '=', False)]"/>
+                <separator/>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Category" name="group_by_category" context="{'group_by': 'category_id'}"/>
+                <filter string="Owner" name="group_by_user" context="{'group_by': 'user_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mail_quick_reply" model="ir.actions.act_window">
+        <field name="name">Quick Replies</field>
+        <field name="res_model">mail.quick.reply</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first quick reply!
+            </p>
+            <p>
+                Quick replies help you respond to repetitive requests faster by using pre-defined templates.
+            </p>
+        </field>
+    </record>
+</odoo>
