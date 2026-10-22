@@ -1,0 +1,270 @@
+<section style="background-color: #243447; color: #ffffff; padding: 48px 20px; text-align: center;">
+    <h1 style="font-size: 2.4rem; margin-bottom: 12px;">API False to NULL Converter</h1>
+    <p style="font-size: 1.15rem; max-width: 820px; margin: 0 auto 22px;">
+        Return JSON null for empty non-Boolean fields while preserving real Boolean values in Odoo API reads.
+    </p>
+    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+        <span class="badge" style="background-color: #2878a5; color: #ffffff; padding: 8px 14px;">Context or global toggle</span>
+        <span class="badge" style="background-color: #28734a; color: #ffffff; padding: 8px 14px;">Recursive relational data</span>
+        <span class="badge" style="background-color: #704d91; color: #ffffff; padding: 8px 14px;">Boolean-safe conversion</span>
+        <span class="badge" style="background-color: #9a6421; color: #ffffff; padding: 8px 14px;">Odoo 20.0 Community &amp; Enterprise</span>
+    </div>
+</section>
+<!-- oaa:showcase:start -->
+<section style="padding:56px 16px;background-color:#5E35B114">
+  <div style="max-width:1100px;margin:0 auto;text-align:center">
+    <span style="display:inline-block;padding:6px 16px;border-radius:999px;background-color:#5E35B1;color:#fff;font-weight:700;font-size:13px;letter-spacing:.08em">SEE IT IN ACTION</span>
+    <h2 style="font-size:32px;font-weight:800;color:#1f2937;margin:16px 0 28px">API False to NULL Converter at work</h2>
+    <div style="max-width:1000px;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 22px 60px rgba(15,23,42,.22)">
+      <img src="demo.gif" alt="API False to NULL Converter animated demo" style="width:100%;display:block"/>
+    </div>
+  </div>
+</section>
+<!-- oaa:showcase:end -->
+
+
+<section style="padding: 34px 20px; max-width: 1000px; margin: 0 auto;">
+    <h2 style="color: #243447;">Overview</h2>
+    <p style="line-height: 1.7; color: #394b59;">
+        Odoo represents empty Char, Text, Many2one, Date, Selection, and other non-Boolean fields as <code>false</code> in ORM read results. That value can violate the expected types in TypeScript, React, Vue, Flutter, Swift, Kotlin, and other API clients. This lightweight developer utility converts those empty values to Python <code>None</code>, serialized as JSON <code>null</code>, without changing actual Boolean fields.
+    </p>
+    <p style="line-height: 1.7; color: #394b59;">
+        Use it for mobile apps, single-page applications, and middleware calling Odoo JSON-RPC or REST controllers that use <code>read()</code> or <code>search_read()</code>. Conversion is opt-in per request or can be enabled globally. The module adds no business models, menus, or database schema.
+    </p>
+</section>
+
+<section style="padding: 34px 20px; max-width: 1000px; margin: 0 auto; background-color: #f4f6f8;">
+    <h2 style="color: #243447;">Key Highlights</h2>
+    <div class="row">
+        <div class="col-md-6 col-lg-4" style="padding: 10px;">
+            <div style="background-color: #ffffff; padding: 18px; height: 100%;">
+                <i class="fa fa-search" style="color: #2878a5;"></i>
+                <h3>Smart field typing</h3>
+                <p>Uses each model's field metadata to distinguish Boolean values from empty values of other types.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4" style="padding: 10px;">
+            <div style="background-color: #ffffff; padding: 18px; height: 100%;">
+                <i class="fa fa-toggle-on" style="color: #28734a;"></i>
+                <h3>Per-request control</h3>
+                <p>Pass <code>api_false_to_null</code> in request context and leave standard client requests unchanged.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4" style="padding: 10px;">
+            <div style="background-color: #ffffff; padding: 18px; height: 100%;">
+                <i class="fa fa-cogs" style="color: #704d91;"></i>
+                <h3>Optional global mode</h3>
+                <p>Administrators can activate conversion for all reads with one System Parameter.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4" style="padding: 10px;">
+            <div style="background-color: #ffffff; padding: 18px; height: 100%;">
+                <i class="fa fa-sitemap" style="color: #9a6421;"></i>
+                <h3>Nested relations</h3>
+                <p>Recursively handles nested dictionaries and lists using related models' field metadata.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4" style="padding: 10px;">
+            <div style="background-color: #ffffff; padding: 18px; height: 100%;">
+                <i class="fa fa-check-circle" style="color: #28734a;"></i>
+                <h3>Boolean values preserved</h3>
+                <p>True and False on Boolean fields remain Boolean values and are never rewritten as null.</p>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4" style="padding: 10px;">
+            <div style="background-color: #ffffff; padding: 18px; height: 100%;">
+                <i class="fa fa-plug" style="color: #2878a5;"></i>
+                <h3>Lightweight integration</h3>
+                <p>No external packages, custom models, or database schema changes are introduced.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section style="padding: 34px 20px; max-width: 1000px; margin: 0 auto;">
+    <h2 style="color: #243447;">Features in Detail</h2>
+    <div style="margin-top: 22px;">
+        <h3>Read and search_read responses</h3>
+        <p style="line-height: 1.7; color: #394b59;">
+            When enabled, results from <code>read()</code> and <code>search_read()</code> are processed after the ORM fetch. Empty non-Boolean values such as Char, Text, Many2one, Date, Datetime, Selection, and Binary become <code>None</code>. Fields with actual values are returned as-is.
+        </p>
+    </div>
+    <div style="margin-top: 22px;">
+        <h3>Context toggle for API requests</h3>
+        <p style="line-height: 1.7; color: #394b59;">
+            Set <code>context={'api_false_to_null': True}</code> on the API call to enable conversion for that request. Set it to <code>False</code> to explicitly disable conversion, including when global mode is enabled. Requests without this key retain normal Odoo values unless the global parameter is on.
+        </p>
+    </div>
+    <div style="margin-top: 22px;">
+        <h3>Global System Parameter</h3>
+        <p style="line-height: 1.7; color: #394b59;">
+            In <strong>Settings &gt; Technical &gt; System Parameters</strong>, set <code>ydod_api_false_to_null.enabled</code> to <code>True</code>. Odoo 20's typed configuration API reads this value as a Boolean. The explicit request context takes precedence over this global setting.
+        </p>
+    </div>
+    <div style="margin-top: 22px;">
+        <h3>Nested relational records</h3>
+        <p style="line-height: 1.7; color: #394b59;">
+            The conversion follows nested dictionaries and lists in relational read results, including Many2one records and One2many or Many2many collections. It checks each nested record against the related model's own field definitions, so Boolean values on child records are preserved too.
+        </p>
+    </div>
+</section>
+
+<section style="padding: 34px 20px; max-width: 1000px; margin: 0 auto; background-color: #f4f6f8;">
+    <h2 style="color: #243447;">How to Use</h2>
+    <ol style="line-height: 1.8; color: #394b59;">
+        <li>Install <strong>API False to NULL Converter</strong> from the Apps menu or your normal module deployment process.</li>
+        <li>No setup is needed for selective use; the converter is available immediately after installation.</li>
+        <li>For a specific JSON-RPC call, include <code>api_false_to_null: true</code> in the request context.</li>
+        <li>To enable it globally, open <strong>Settings &gt; Technical &gt; System Parameters</strong> as an administrator and set <code>ydod_api_false_to_null.enabled</code> to <code>True</code>.</li>
+        <li>Call <code>read()</code> or <code>search_read()</code> and check that empty non-Boolean values are <code>null</code> in JSON while Boolean values remain <code>true</code> or <code>false</code>.</li>
+        <li>For REST controllers, pass the context through the controller's existing ORM call; the module does not add a separate REST endpoint.</li>
+    </ol>
+</section>
+
+<section style="padding: 34px 20px; max-width: 1000px; margin: 0 auto;">
+    <h2 style="color: #243447;">FAQ</h2>
+    <div style="margin-top: 18px;">
+        <h3>Does this module need configuration?</h3>
+        <p>No. Use the request context immediately, or optionally turn on global mode with the System Parameter.</p>
+    </div>
+    <div style="margin-top: 18px;">
+        <h3>Who can change the global setting?</h3>
+        <p>System administrators with access to Technical Settings can manage the parameter. Per-request use needs no settings change.</p>
+    </div>
+    <div style="margin-top: 18px;">
+        <h3>Does it change the database or work across companies?</h3>
+        <p>It creates no business tables or company-specific records. The global parameter applies to the database; each conversion still uses the current request's model and context.</p>
+    </div>
+    <div style="margin-top: 18px;">
+        <h3>Will Boolean fields or normal web-client requests change?</h3>
+        <p>No. Boolean values are preserved. Without the context key and with global mode disabled, reads retain Odoo's standard values.</p>
+    </div>
+    <div style="margin-top: 18px;">
+        <h3>What happens when the module is uninstalled?</h3>
+        <p>The runtime conversion hooks stop loading with the module. The setting is an <code>ir.config_parameter</code> entry and can be removed from System Parameters if desired.</p>
+    </div>
+</section>
+
+<section style="padding: 34px 20px; background-color: #243447; color: #ffffff; text-align: center;">
+    <h2>Support &amp; Customization</h2>
+    <p>Published by <strong>Dody Ahmad Kusuma Jaya</strong> under the <strong>yDoD</strong> brand.</p>
+    <p><i class="fa fa-globe"></i> <a href="https://profile.dodyakj.online" style="color: #8ecdf0;">https://profile.dodyakj.online</a></p>
+    <p><i class="fa fa-envelope"></i> <a href="mailto:dodyakj@gmail.com" style="color: #8ecdf0;">dodyakj@gmail.com</a></p>
+    <p>For installation help, bug reports, or customization inquiries, contact support by email.</p>
+</section>
+
+<!-- oaa:more-apps:start -->
+<section style="padding:48px 16px 16px;background-color:#f8fafc">
+  <div style="max-width:1140px;margin:0 auto;padding:0 0 40px">
+    <h2 style="font-size:30px;font-weight:800;color:#141a26;margin:0 0 6px">Related <span style="color:#7c3aed">Modules</span></h2>
+    <p style="font-size:15px;color:#64748b;margin:0 0 16px">Work even better together with yDoD apps for Odoo 20.0.</p>
+    <div class="row">
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_api_access_control" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #C62828;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_api_access_control/banner.png" alt="API Access Control &amp; Resource Permissions" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">API Access Control &amp; Resource Permissions</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Manage granular model-level CRUD permissions, record rules, and dedicated service accounts for external API integrations and...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#ede9fe;color:#5b21b6">$89</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#C62828">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_api_log_file_access" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #B3541E;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_api_log_file_access/banner.png" alt="Server Log File Viewer &amp; Secure Log API" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Server Log File Viewer &amp; Secure Log API</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Lets administrators read, search and download the Odoo server log files from inside the backend, and gives monitoring tools a...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#ede9fe;color:#5b21b6">$149</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#B3541E">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_tender_management" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #37474F;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_tender_management/banner.png" alt="Advance Tender &amp; Vendor Bid Management" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Advance Tender &amp; Vendor Bid Management</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Manage competitive tender lifecycles, vendor bid submissions, pre-qualification, side-by-side bid evaluation, and one-click...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#ede9fe;color:#5b21b6">$149</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#37474F">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1140px;margin:0 auto;padding:0 0 40px">
+    <h2 style="font-size:30px;font-weight:800;color:#141a26;margin:0 0 6px">Most <span style="color:#7c3aed">Downloaded</span></h2>
+    <p style="font-size:15px;color:#64748b;margin:0 0 16px">The apps Odoo users install the most. &middot; <a href="https://apps.odoo.com/apps/modules/browse?author=Dody%20Ahmad%20Kusuma%20Jaya" target="_blank" rel="noopener" style="font-weight:700;color:#1f2937">All apps by Dody Ahmad Kusuma Jaya &rarr;</a></p>
+    <div class="row">
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/19.0/ydod_web_responsive" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #2E7D32;border-radius:0 0 14px 14px;overflow:hidden">
+          <div style="height:170px;padding:15px;text-align:center;background-color:#2E7D321f;border-bottom:1px solid #eef0f4"><img src="https://apps.odoocdn.com/apps/module_image?image_id=31070343" alt="yDoD Web Responsive" style="max-height:140px;max-width:100%"/></div>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">yDoD Web Responsive</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Responsive web design for yDoD with dark mode support and customizable theme.</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#2E7D32">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_database_backup_manager" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #017E84;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_database_backup_manager/banner.png" alt="Automatic Database Backup to Local, Remote &amp; Cloud Mount Storage" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Automatic Database Backup to Local, Remote &amp; Cloud Mount Storage</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Schedule automated Odoo database backups with retention cleanup, remote FTP transfer, local and cloud-mounted storage sync,...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#017E84">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/19.0/ydod_indonesian_public_holiday" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #2E7D32;border-radius:0 0 14px 14px;overflow:hidden">
+          <div style="height:170px;padding:15px;text-align:center;background-color:#2E7D321f;border-bottom:1px solid #eef0f4"><img src="https://apps.odoocdn.com/apps/module_image?image_id=31070336" alt="Indonesian Public Holiday" style="max-height:140px;max-width:100%"/></div>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Indonesian Public Holiday</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Import Indonesian public holidays into Odoo Time Off (Odoo 19)</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#2E7D32">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_menu_access_control" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #714B67;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_menu_access_control/banner.png" alt="Menu Access Control - User &amp; Group Wise" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Menu Access Control - User &amp; Group Wise</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Hide any menu or sub-menu for specific users or groups with a central restrictions screen, copy-to-users wizard, and...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#714B67">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_sale_commission" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #37474F;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_sale_commission/banner.png" alt="Sales Commission Management" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">Sales Commission Management</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Automatically calculate salesperson/team commissions on confirmed sale orders with configurable plans and a payout report.</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#37474F">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-6 col-lg-4" style="padding:12px">
+        <a href="https://apps.odoo.com/apps/modules/20.0/ydod_postgresql_query_execute" target="_blank" rel="noopener" style="display:block;height:100%;text-decoration:none;color:inherit;background-color:#ffffff;border:1px solid #e5e7eb;border-top:3px solid #2E7D32;border-radius:0 0 14px 14px;overflow:hidden">
+          <img src="https://apps.odoocdn.com/apps/assets/20.0/ydod_postgresql_query_execute/banner.png" alt="PostgreSQL Query Execute: SQL Console with Notes, Examples, History &amp; PDF Export" style="width:100%;display:block;border-bottom:1px solid #eef0f4"/>
+          <div style="padding:18px 20px 20px;text-align:left">
+            <h3 style="font-size:17px;font-weight:700;color:#1f2937;margin:0 0 8px;line-height:1.35">PostgreSQL Query Execute: SQL Console with Notes, Examples, History &amp; PDF Export</h3>
+            <p style="font-size:14px;line-height:1.6;color:#5b6472;margin:0 0 14px">Run SQL statements on your Odoo PostgreSQL database from the backend, without opening psql or handing out server access. An...</p>
+            <span style="display:inline-block;padding:3px 12px;border-radius:999px;font-size:13px;font-weight:700;background-color:#dcfce7;color:#166534">Free</span>
+            <span style="float:right;font-size:14px;font-weight:700;color:#2E7D32">View app &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- oaa:more-apps:end -->
