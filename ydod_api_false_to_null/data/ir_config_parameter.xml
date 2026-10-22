@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="ydod_api_false_to_null_enabled" model="ir.config_parameter">
+            <field name="key">ydod_api_false_to_null.enabled</field>
+            <field name="value">False</field>
+        </record>
+    </data>
+</odoo>
