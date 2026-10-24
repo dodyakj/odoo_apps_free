@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_hr_announcement_manager" model="res.groups">
+        <field name="name">HR Announcement Manager</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="hr.group_hr_manager" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('group_hr_announcement_manager'))]"/>
+    </record>
+
+    <data noupdate="1">
+        <!-- Multi-Company Rules -->
+        <record id="hr_announcement_comp_rule" model="ir.rule">
+            <field name="name">HR Announcement: Multi-Company</field>
+            <field name="model_id" ref="model_hr_announcement"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+        </record>
+
+        <record id="hr_announcement_read_comp_rule" model="ir.rule">
+            <field name="name">HR Announcement Read: Multi-Company</field>
+            <field name="model_id" ref="model_hr_announcement_read"/>
+            <field name="global" eval="True"/>
+            <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+        </record>
+
+        <!-- Access Rules for Standard Employees (Published Only) -->
+        <record id="hr_announcement_rule_user" model="ir.rule">
+            <field name="name">HR Announcement: Employee Published Only</field>
+            <field name="model_id" ref="model_hr_announcement"/>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+            <field name="domain_force">[('state', '=', 'published')]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Access Rules for Announcement Managers (All States) -->
+        <record id="hr_announcement_rule_manager" model="ir.rule">
+            <field name="name">HR Announcement: Manager Full Access</field>
+            <field name="model_id" ref="model_hr_announcement"/>
+            <field name="groups" eval="[(4, ref('group_hr_announcement_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>
