@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_hr_announcement_user,hr.announcement user,hr.announcement,base.group_user,r,"[('state', '=', 'published'), ('company_id', 'in', company_ids + [False])]"
+access_hr_announcement_manager,hr.announcement manager,hr.announcement,ydod_hr_announcement.group_hr_announcement_manager,crud,"[('company_id', 'in', company_ids + [False])]"
+access_hr_announcement_read_user,hr.announcement.read user,hr.announcement.read,base.group_user,cr,"[('company_id', 'in', company_ids + [False])]"
+access_hr_announcement_read_manager,hr.announcement.read manager,hr.announcement.read,ydod_hr_announcement.group_hr_announcement_manager,crud,"[('company_id', 'in', company_ids + [False])]"
