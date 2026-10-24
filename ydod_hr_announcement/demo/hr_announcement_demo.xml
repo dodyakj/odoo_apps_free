@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="announcement_general" model="hr.announcement">
+        <field name="name">Annual All-Hands Meeting &amp; Strategy Roadmap</field>
+        <field name="announcement_type">general</field>
+        <field name="target">all</field>
+        <field name="state">published</field>
+        <field name="publish_date">2026-10-01 09:00:00</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="body"><![CDATA[<p>Dear Team,</p><p>We are delighted to invite all team members to our upcoming Annual All-Hands Meeting. We will celebrate our shared achievements, review Q3 metrics, and discuss key initiatives for the coming year.</p><p>Date: Friday, November 14, 2026.<br/>Venue: Main Auditorium &amp; Virtual Livestream.</p>]]></field>
+    </record>
+
+    <record id="announcement_security_warning" model="hr.announcement">
+        <field name="name">Information Security Protocol: Mandatory Password Rotation</field>
+        <field name="announcement_type">warning</field>
+        <field name="target">department</field>
+        <field name="department_ids" eval="[(4, ref('hr.dep_administration'))]"/>
+        <field name="state">published</field>
+        <field name="publish_date">2026-10-15 14:00:00</field>
+        <field name="expiry_date">2026-12-31</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="body"><![CDATA[<p><strong>Urgent Notice:</strong> In compliance with corporate cybersecurity policies, all employees must update their enterprise account passwords before the end of this quarter.</p><ul><li>Minimum 12 characters</li><li>Include upper and lowercase letters, numbers, and symbols</li><li>Do not reuse your last 5 passwords</li></ul>]]></field>
+    </record>
+
+    <record id="announcement_sales_reward" model="hr.announcement">
+        <field name="name">Outstanding Performance Recognition: Employee of the Quarter</field>
+        <field name="announcement_type">reward</field>
+        <field name="target">employee</field>
+        <field name="employee_ids" eval="[(4, ref('hr.employee_admin')), (4, ref('hr.employee_al'))]"/>
+        <field name="state">draft</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="body"><![CDATA[<p>We are proud to recognize our team members for extraordinary dedication, client impact, and exemplary teamwork throughout the past quarter.</p><p>Congratulations on your well-deserved achievement!</p>]]></field>
+    </record>
+
+    <record id="announcement_new_cohort_greeting" model="hr.announcement">
+        <field name="name">Warm Welcome to Our New Team Members</field>
+        <field name="announcement_type">greeting</field>
+        <field name="target">all</field>
+        <field name="state">published</field>
+        <field name="publish_date">2026-10-20 08:00:00</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="body"><![CDATA[<p>Please give a warm welcome to the new colleagues joining our engineering, marketing, and support teams this month!</p><p>Be sure to say hello and introduce yourself when you see them around the office or in Discuss.</p>]]></field>
+    </record>
+
+    <record id="announcement_office_safety_expired" model="hr.announcement">
+        <field name="name">Quarterly Fire Drill &amp; Evacuation Simulation</field>
+        <field name="announcement_type">general</field>
+        <field name="target">all</field>
+        <field name="state">expired</field>
+        <field name="publish_date">2026-09-01 08:30:00</field>
+        <field name="expiry_date">2026-09-15</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="body"><![CDATA[<p>The annual mandatory safety and fire evacuation simulation was completed on September 15. Thank you to everyone for following the safety officer guidance and assembling promptly.</p>]]></field>
+    </record>
+
+    <!-- Read Receipts -->
+    <record id="announcement_read_admin_1" model="hr.announcement.read">
+        <field name="announcement_id" ref="announcement_general"/>
+        <field name="employee_id" ref="hr.employee_admin"/>
+        <field name="read_date">2026-10-01 10:15:00</field>
+    </record>
+
+    <record id="announcement_read_al_1" model="hr.announcement.read">
+        <field name="announcement_id" ref="announcement_general"/>
+        <field name="employee_id" ref="hr.employee_al"/>
+        <field name="read_date">2026-10-01 11:30:00</field>
+    </record>
+
+    <record id="announcement_read_admin_2" model="hr.announcement.read">
+        <field name="announcement_id" ref="announcement_security_warning"/>
+        <field name="employee_id" ref="hr.employee_admin"/>
+        <field name="read_date">2026-10-15 15:00:00</field>
+    </record>
+
+    <record id="announcement_read_admin_greeting" model="hr.announcement.read">
+        <field name="announcement_id" ref="announcement_new_cohort_greeting"/>
+        <field name="employee_id" ref="hr.employee_admin"/>
+        <field name="read_date">2026-10-20 09:10:00</field>
+    </record>
+
+    <record id="announcement_read_al_greeting" model="hr.announcement.read">
+        <field name="announcement_id" ref="announcement_new_cohort_greeting"/>
+        <field name="employee_id" ref="hr.employee_al"/>
+        <field name="read_date">2026-10-20 10:45:00</field>
+    </record>
+</odoo>
