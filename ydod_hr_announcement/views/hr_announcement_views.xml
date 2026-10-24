@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Kanban View -->
+    <record id="view_hr_announcement_kanban" model="ir.ui.view">
+        <field name="name">hr.announcement.kanban</field>
+        <field name="model">hr.announcement</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="announcement_type">
+                <field name="name"/>
+                <field name="announcement_type"/>
+                <field name="target"/>
+                <field name="state"/>
+                <field name="is_read"/>
+                <field name="publish_date"/>
+                <field name="read_count"/>
+                <field name="target_employee_count"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span t-if="record.announcement_type.raw_value == 'general'" class="badge text-bg-info">General</span>
+                            <span t-if="record.announcement_type.raw_value == 'warning'" class="badge text-bg-warning">Warning</span>
+                            <span t-if="record.announcement_type.raw_value == 'reward'" class="badge text-bg-success">Reward</span>
+                            <span t-if="record.announcement_type.raw_value == 'greeting'" class="badge text-bg-primary">Greeting</span>
+
+                            <span t-if="!record.is_read.raw_value and record.state.raw_value == 'published'" class="badge text-bg-danger">
+                                <i class="fa fa-envelope me-1"/>Unread
+                            </span>
+                            <span t-if="record.is_read.raw_value and record.state.raw_value == 'published'" class="badge text-bg-light border text-muted">
+                                <i class="fa fa-envelope-open-o me-1"/>Read
+                            </span>
+                            <span t-if="record.state.raw_value == 'draft'" class="badge text-bg-secondary">
+                                Draft
+                            </span>
+                            <span t-if="record.state.raw_value == 'expired'" class="badge text-bg-dark">
+                                Expired
+                            </span>
+                        </div>
+                        <a type="open" class="fw-bold fs-5 text-dark mb-1 d-block">
+                            <field name="name"/>
+                        </a>
+                        <div class="text-muted small mb-2" t-if="record.publish_date.raw_value">
+                            <i class="fa fa-calendar me-1"/>Published: <field name="publish_date" widget="date"/>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top text-muted small">
+                            <span>
+                                <i class="fa fa-bullseye me-1"/><field name="target"/>
+                            </span>
+                            <span groups="ydod_hr_announcement.group_hr_announcement_manager" title="Read vs Target Employees">
+                                <i class="fa fa-users me-1"/><field name="read_count"/> / <field name="target_employee_count"/>
+                            </span>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- List View -->
+    <record id="view_hr_announcement_list" model="ir.ui.view">
+        <field name="name">hr.announcement.list</field>
+        <field name="model">hr.announcement</field>
+        <field name="arch" type="xml">
+            <list decoration-info="is_read == False and state == 'published'" decoration-muted="state == 'expired'">
+                <field name="is_read" column_invisible="True"/>
+                <field name="name"/>
+                <field name="announcement_type" widget="badge" decoration-info="announcement_type == 'general'" decoration-warning="announcement_type == 'warning'" decoration-success="announcement_type == 'reward'" decoration-primary="announcement_type == 'greeting'"/>
+                <field name="target"/>
+                <field name="state" widget="badge" decoration-muted="state == 'draft'" decoration-success="state == 'published'" decoration-danger="state == 'expired'"/>
+                <field name="publish_date"/>
+                <field name="expiry_date"/>
+                <field name="read_count" string="Read Receipts"/>
+                <field name="target_employee_count" string="Target Total"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hr_announcement_form" model="ir.ui.view">
+        <field name="name">hr.announcement.form</field>
+        <field name="model">hr.announcement</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_publish" string="Publish" type="object" class="oe_highlight" invisible="state != 'draft'" groups="ydod_hr_announcement.group_hr_announcement_manager"/>
+                    <button name="action_mark_read" string="Mark as Read" type="object" class="btn-primary" invisible="is_read or state != 'published'"/>
+                    <button name="action_expire" string="Expire" type="object" invisible="state != 'published'" groups="ydod_hr_announcement.group_hr_announcement_manager"/>
+                    <button name="action_draft" string="Reset to Draft" type="object" invisible="state != 'expired'" groups="ydod_hr_announcement.group_hr_announcement_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,published,expired"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" groups="ydod_hr_announcement.group_hr_announcement_manager">
+                        <button class="oe_stat_button" icon="fa-eye" type="object" name="action_view_read_receipts">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value"><field name="read_count"/> / <field name="target_employee_count"/></span>
+                                <span class="o_stat_text">Read Awareness</span>
+                            </div>
+                        </button>
+                    </div>
+                    <field name="is_read" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name" string="Announcement Title"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Annual Company Gathering 2026" readonly="state != 'draft'"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="announcement_type" readonly="state != 'draft'"/>
+                            <field name="target" readonly="state != 'draft'"/>
+                            <field name="department_ids" widget="many2many_tags" invisible="target != 'department'" required="target == 'department'" readonly="state != 'draft'"/>
+                            <field name="employee_ids" widget="many2many_tags" invisible="target != 'employee'" required="target == 'employee'" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="publish_date" readonly="1" invisible="not publish_date"/>
+                            <field name="expiry_date" readonly="state != 'draft'"/>
+                            <field name="company_id" groups="base.group_multi_company" readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Announcement Details" name="body_page">
+                            <field name="body" placeholder="Write full announcement content here..." readonly="state != 'draft'"/>
+                        </page>
+                        <page string="Read Receipts" name="read_receipts" groups="ydod_hr_announcement.group_hr_announcement_manager">
+                            <field name="read_ids" readonly="1">
+                                <list create="0" delete="0" edit="0">
+                                    <field name="employee_id"/>
+                                    <field name="read_date"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Read Receipts List View -->
+    <record id="view_hr_announcement_read_list" model="ir.ui.view">
+        <field name="name">hr.announcement.read.list</field>
+        <field name="model">hr.announcement.read</field>
+        <field name="arch" type="xml">
+            <list string="Read Receipts" create="0" delete="0" edit="0">
+                <field name="announcement_id"/>
+                <field name="employee_id"/>
+                <field name="read_date"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_hr_announcement_search" model="ir.ui.view">
+        <field name="name">hr.announcement.search</field>
+        <field name="model">hr.announcement</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Announcement"/>
+                <field name="department_ids"/>
+                <field name="employee_ids"/>
+                <filter name="filter_unread" string="My Unread" domain="[('is_read', '=', False)]"/>
+                <separator/>
+                <filter name="filter_published" string="Published" domain="[('state', '=', 'published')]"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_expired" string="Expired" domain="[('state', '=', 'expired')]"/>
+                <group>
+                    <filter name="group_by_type" string="Type" context="{'group_by': 'announcement_type'}"/>
+                    <filter name="group_by_state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_target" string="Target" context="{'group_by': 'target'}"/>
+                    <filter name="group_by_company" string="Company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
