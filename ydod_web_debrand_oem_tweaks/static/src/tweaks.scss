@@ -1,0 +1,50 @@
+.o_ydod_env_ribbon {
+    position: fixed;
+    bottom: 26px;
+    left: -48px;
+    z-index: 1100;
+    width: 190px;
+    padding: 4px 0;
+    transform: rotate(45deg);
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0.9;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
+.o_ydod_dialog_drag .modal-content .modal-header,
+.o_ydod_chat_drag .o-mail-ChatWindow .o-mail-ChatWindow-header {
+    cursor: move;
+}
+
+.o_ydod_dialog_drag .modal-content {
+    min-width: 300px;
+    min-height: 200px;
+
+    &.o_ydod_resized .modal-body {
+        overflow: auto;
+    }
+}
+
+.o_ydod_dialog_drag .modal-content::after {
+    content: "";
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid rgba(0, 0, 0, 0.25);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.25);
+    cursor: nwse-resize;
+}
+
+.o_ydod_dragging {
+    user-select: none;
+}
