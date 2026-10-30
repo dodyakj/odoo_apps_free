@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_ydod_tweaks" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.ydod.tweaks</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='user_default_rights']/preceding-sibling::h2[1]" position="before">
+                    <h2 id="ydod_tweaks">White Label &amp; Tweaks</h2>
+                    <div class="row mt16 o_settings_container" id="ydod_tweaks_container">
+                        <!-- Branding -->
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_branding_setting">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Branding</span>
+                                <div class="text-muted">Name shown in the browser tab title instead of 'Odoo'.</div>
+                                <div class="content-group">
+                                    <div class="row mt8">
+                                        <label for="ydod_system_name" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_system_name" placeholder="e.g. Acme ERP" class="col-lg-8"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Login -->
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_login_setting">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Login Page Footer</span>
+                                <div class="text-muted">Keep, hide or replace the 'Powered by Odoo' link on the login page.</div>
+                                <div class="content-group">
+                                    <div class="row mt8">
+                                        <label for="ydod_login_footer_mode" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_login_footer_mode" class="col-lg-8"/>
+                                    </div>
+                                    <div class="row mt8" attrs="{'invisible': [('ydod_login_footer_mode', '!=', 'replace')]}">
+                                        <label for="ydod_login_footer_text" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_login_footer_text" placeholder="e.g. Powered by Acme IT" class="col-lg-8"
+                                               attrs="{'required': [('ydod_login_footer_mode', '=', 'replace')]}"/>
+                                    </div>
+                                    <div class="row mt8" attrs="{'invisible': [('ydod_login_footer_mode', '!=', 'replace')]}">
+                                        <label for="ydod_login_footer_url" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_login_footer_url" placeholder="https://www.example.com" class="col-lg-8"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- User Menu -->
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_menu_documentation_setting">
+                            <div class="o_setting_left_pane">
+                                <field name="ydod_menu_documentation_hide"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_menu_documentation_hide"/>
+                                <div class="text-muted">Hide the Documentation entry, or leave it visible and change its label or link.</div>
+                                <div class="content-group" attrs="{'invisible': [('ydod_menu_documentation_hide', '=', True)]}">
+                                    <div class="row mt8">
+                                        <label for="ydod_menu_documentation_label" string="Label" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_menu_documentation_label" placeholder="Documentation" class="col-lg-8"/>
+                                    </div>
+                                    <div class="row mt8">
+                                        <label for="ydod_menu_documentation_url" string="URL" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_menu_documentation_url" placeholder="https://docs.example.com" class="col-lg-8"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_menu_support_setting">
+                            <div class="o_setting_left_pane">
+                                <field name="ydod_menu_support_hide"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_menu_support_hide"/>
+                                <div class="text-muted">Hide the Support entry, or leave it visible and change its label or link.</div>
+                                <div class="content-group" attrs="{'invisible': [('ydod_menu_support_hide', '=', True)]}">
+                                    <div class="row mt8">
+                                        <label for="ydod_menu_support_label" string="Label" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_menu_support_label" placeholder="Support" class="col-lg-8"/>
+                                    </div>
+                                    <div class="row mt8">
+                                        <label for="ydod_menu_support_url" string="URL" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_menu_support_url" placeholder="https://helpdesk.example.com" class="col-lg-8"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_menu_shortcuts_setting">
+                            <div class="o_setting_left_pane">
+                                <field name="ydod_menu_shortcuts_hide"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_menu_shortcuts_hide"/>
+                                <div class="text-muted">Hide the Shortcuts entry, or leave it visible and change its label.</div>
+                                <div class="content-group" attrs="{'invisible': [('ydod_menu_shortcuts_hide', '=', True)]}">
+                                    <div class="row mt8">
+                                        <label for="ydod_menu_shortcuts_label" string="Label" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_menu_shortcuts_label" placeholder="Shortcuts" class="col-lg-8"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_menu_account_setting">
+                            <div class="o_setting_left_pane">
+                                <field name="ydod_menu_account_hide"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_menu_account_hide"/>
+                                <div class="text-muted">Hide the 'My Odoo.com account' entry, or redirect it to your own portal.</div>
+                                <div class="content-group" attrs="{'invisible': [('ydod_menu_account_hide', '=', True)]}">
+                                    <div class="row mt8">
+                                        <label for="ydod_menu_account_label" string="Label" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_menu_account_label" placeholder="My Odoo.com account" class="col-lg-8"/>
+                                    </div>
+                                    <div class="row mt8">
+                                        <label for="ydod_menu_account_url" string="URL" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_menu_account_url" placeholder="https://portal.example.com" class="col-lg-8"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_menu_about_setting">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">About Entry</span>
+                                <div class="text-muted">Optional About link added to the user menu. Leave the URL blank for no entry.</div>
+                                <div class="content-group">
+                                    <div class="row mt8">
+                                        <label for="ydod_menu_about_label" string="Label" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_menu_about_label" placeholder="About Acme ERP" class="col-lg-8"/>
+                                    </div>
+                                    <div class="row mt8">
+                                        <label for="ydod_menu_about_url" string="URL" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_menu_about_url" placeholder="https://www.example.com/about" class="col-lg-8"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_menu_debug_setting">
+                            <div class="o_setting_left_pane">
+                                <field name="ydod_menu_debug_toggle"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_menu_debug_toggle"/>
+                                <div class="text-muted">Adds 'Activate / Deactivate Developer Mode' to the user menu.</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_menu_lang_setting">
+                            <div class="o_setting_left_pane">
+                                <field name="ydod_menu_lang_switch"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_menu_lang_switch"/>
+                                <div class="text-muted">Adds a 'Language' entry listing the installed languages to the user menu.</div>
+                            </div>
+                        </div>
+                        <!-- Environment -->
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_ribbon_setting">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Environment Ribbon</span>
+                                <div class="text-muted">Corner ribbon such as TEST, DEMO or STAGING shown to every user. Leave the text blank to hide it.</div>
+                                <div class="content-group">
+                                    <div class="row mt8">
+                                        <label for="ydod_ribbon_text" string="Text" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_ribbon_text" placeholder="e.g. STAGING" class="col-lg-8"/>
+                                    </div>
+                                    <div class="row mt8">
+                                        <label for="ydod_ribbon_color" string="Colour" class="col-lg-4 o_light_label"/>
+                                        <field name="ydod_ribbon_color" widget="color" class="col-lg-8"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Debug -->
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_debug_guard_setting">
+                            <div class="o_setting_left_pane">
+                                <field name="ydod_debug_guard"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_debug_guard"/>
+                                <div class="text-muted">Only Settings administrators can enter debug or debug=assets mode; ?debug in the URL is ignored for everyone else.</div>
+                            </div>
+                        </div>
+                        <!-- UI -->
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_dialog_drag_setting">
+                            <div class="o_setting_left_pane">
+                                <field name="ydod_dialog_draggable"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_dialog_draggable"/>
+                                <div class="text-muted">Move backend dialogs by their header and resize them from the bottom corners.</div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_chat_drag_setting">
+                            <div class="o_setting_left_pane">
+                                <field name="ydod_chat_draggable"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_chat_draggable"/>
+                                <div class="text-muted">Move Discuss chat windows by their header and resize them from the bottom corners (minimum 300 x 200 px).</div>
+                            </div>
+                        </div>
+                    </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
