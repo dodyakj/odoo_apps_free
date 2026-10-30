@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Demo databases only: a branded, clearly marked DEMO environment. -->
+    <record id="demo_param_system_name" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_system_name</field>
+        <field name="value">Acme ERP</field>
+    </record>
+    <record id="demo_param_ribbon_text" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_ribbon_text</field>
+        <field name="value">DEMO</field>
+    </record>
+    <record id="demo_param_ribbon_color" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_ribbon_color</field>
+        <field name="value">#F0AD4E</field>
+    </record>
+    <record id="demo_param_login_mode" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_login_footer_mode</field>
+        <field name="value">replace</field>
+    </record>
+    <record id="demo_param_login_text" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_login_footer_text</field>
+        <field name="value">Powered by Acme IT Services</field>
+    </record>
+    <record id="demo_param_login_url" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_login_footer_url</field>
+        <field name="value">https://acme.example</field>
+    </record>
+    <record id="demo_param_support_label" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_menu_support_label</field>
+        <field name="value">Acme Helpdesk</field>
+    </record>
+    <record id="demo_param_support_url" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_menu_support_url</field>
+        <field name="value">https://acme.example/helpdesk</field>
+    </record>
+    <record id="demo_param_account_hide" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_menu_account_hide</field>
+        <field name="value">True</field>
+    </record>
+    <record id="demo_param_about_label" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_menu_about_label</field>
+        <field name="value">About Acme ERP</field>
+    </record>
+    <record id="demo_param_about_url" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_menu_about_url</field>
+        <field name="value">https://acme.example/about</field>
+    </record>
+    <record id="demo_param_debug_toggle" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_menu_debug_toggle</field>
+        <field name="value">True</field>
+    </record>
+    <record id="demo_param_lang_switch" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_menu_lang_switch</field>
+        <field name="value">True</field>
+    </record>
+    <record id="demo_param_dialog_drag" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_dialog_draggable</field>
+        <field name="value">True</field>
+    </record>
+    <record id="demo_param_chat_drag" model="ir.config_parameter">
+        <field name="key">ydod_web_debrand_oem_tweaks.ydod_chat_draggable</field>
+        <field name="value">True</field>
+    </record>
+</odoo>
