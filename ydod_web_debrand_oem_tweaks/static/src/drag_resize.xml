@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ydod_web_debrand_oem_tweaks.DragResize">
+        <div class="o_ydod_drag_resize d-none"/>
+    </t>
+</templates>

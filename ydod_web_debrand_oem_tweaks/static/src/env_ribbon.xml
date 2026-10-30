@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ydod_web_debrand_oem_tweaks.EnvRibbon">
+        <div t-if="text" class="o_ydod_env_ribbon" t-att-style="style" t-att-title="text">
+            <t t-out="text"/>
+        </div>
+    </t>
+</templates>
