@@ -8,8 +8,6 @@
     'description': ('\n'
      'Global All Search by yDoD\n'
      '=========================\n'
-     'Find any business record from one quick search popup instead of opening menu after '
-     'menu.\n'
      '\n'
      '* Administrators choose the searchable models (contacts, products, sales orders,\n'
      '  purchase orders, invoices, ...) and the fields that are matched and displayed,\n'
@@ -21,7 +19,7 @@
      'close.\n'
      '* Settings for minimum characters, typing delay, total and per-model result limits.\n'
      '* Secure: searches run as the current user, respecting access rights, record rules\n'
-     '  and multi-company.\n'),
+     '  and multi-company.'),
     'category': 'Productivity',
     'author': 'Dody Ahmad Kusuma Jaya',
     'maintainer': 'Dody Ahmad Kusuma Jaya',
