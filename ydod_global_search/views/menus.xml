@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_ydod_global_search_root" name="Global Search" parent="base.menu_administration"
+              sequence="60" groups="base.group_system"/>
+    <menuitem id="menu_ydod_global_search_model" name="Searchable Models" parent="menu_ydod_global_search_root"
+              action="action_ydod_global_search_model" sequence="10"/>
+</odoo>

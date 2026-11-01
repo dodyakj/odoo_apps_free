@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_config_partner" model="ydod.global.search.model">
+        <field name="name">Contacts</field>
+        <field name="sequence">10</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="field_ids" eval="[
+            Command.create({'sequence': 10, 'field_id': ref('base.field_res_partner__name'), 'weight': 20}),
+            Command.create({'sequence': 20, 'field_id': ref('base.field_res_partner__email'), 'weight': 10, 'use_display': True}),
+            Command.create({'sequence': 30, 'field_id': ref('base.field_res_partner__phone'), 'weight': 10, 'use_display': True}),
+            Command.create({'sequence': 40, 'field_id': ref('base.field_res_partner__ref'), 'weight': 10}),
+            Command.create({'sequence': 50, 'field_id': ref('base.field_res_partner__vat'), 'weight': 5}),
+            Command.create({'sequence': 60, 'field_id': ref('base.field_res_partner__parent_id'), 'path': 'name', 'weight': 5, 'use_display': True}),
+            Command.create({'sequence': 70, 'field_id': ref('base.field_res_partner__city'), 'use_search': False, 'use_display': True, 'weight': 0}),
+        ]"/>
+    </record>
+
+    <record id="demo_config_company" model="ydod.global.search.model">
+        <field name="name">Companies</field>
+        <field name="sequence">20</field>
+        <field name="model_id" ref="base.model_res_company"/>
+        <field name="limit">5</field>
+        <field name="field_ids" eval="[
+            Command.create({'sequence': 10, 'field_id': ref('base.field_res_company__name'), 'weight': 20}),
+            Command.create({'sequence': 20, 'field_id': ref('base.field_res_company__email'), 'weight': 10, 'use_display': True}),
+            Command.create({'sequence': 30, 'field_id': ref('base.field_res_company__phone'), 'use_search': False, 'use_display': True, 'weight': 0}),
+        ]"/>
+    </record>
+
+    <record id="demo_config_user" model="ydod.global.search.model">
+        <field name="name">Users</field>
+        <field name="sequence">30</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="extra_domain">[('share', '=', False)]</field>
+        <field name="field_ids" eval="[
+            Command.create({'sequence': 10, 'field_id': ref('base.field_res_users__login'), 'weight': 15, 'use_display': True}),
+            Command.create({'sequence': 20, 'field_id': ref('base.field_res_users__partner_id'), 'path': 'name', 'weight': 20}),
+        ]"/>
+    </record>
+
+    <record id="demo_config_country" model="ydod.global.search.model">
+        <field name="name">Countries</field>
+        <field name="sequence">40</field>
+        <field name="model_id" ref="base.model_res_country"/>
+        <field name="limit">5</field>
+        <field name="field_ids" eval="[
+            Command.create({'sequence': 10, 'field_id': ref('base.field_res_country__name'), 'weight': 20}),
+            Command.create({'sequence': 20, 'field_id': ref('base.field_res_country__code'), 'weight': 15, 'use_display': True}),
+        ]"/>
+    </record>
+
+    <record id="demo_config_state" model="ydod.global.search.model">
+        <field name="name">States</field>
+        <field name="sequence">50</field>
+        <field name="model_id" ref="base.model_res_country_state"/>
+        <field name="limit">5</field>
+        <field name="field_ids" eval="[
+            Command.create({'sequence': 10, 'field_id': ref('base.field_res_country_state__name'), 'weight': 20}),
+            Command.create({'sequence': 20, 'field_id': ref('base.field_res_country_state__code'), 'weight': 10, 'use_display': True}),
+            Command.create({'sequence': 30, 'field_id': ref('base.field_res_country_state__country_id'), 'use_search': False, 'use_display': True, 'weight': 0}),
+        ]"/>
+    </record>
+
+    <record id="demo_config_currency" model="ydod.global.search.model">
+        <field name="name">Currencies</field>
+        <field name="sequence">60</field>
+        <field name="model_id" ref="base.model_res_currency"/>
+        <field name="active" eval="False"/>
+        <field name="field_ids" eval="[
+            Command.create({'sequence': 10, 'field_id': ref('base.field_res_currency__name'), 'weight': 20}),
+            Command.create({'sequence': 20, 'field_id': ref('base.field_res_currency__full_name'), 'weight': 10, 'use_display': True}),
+            Command.create({'sequence': 30, 'field_id': ref('base.field_res_currency__symbol'), 'use_search': False, 'use_display': True, 'weight': 0}),
+        ]"/>
+    </record>
+</odoo>

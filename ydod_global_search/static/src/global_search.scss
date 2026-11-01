@@ -1,0 +1,50 @@
+.o_ydod_gs_backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1055;
+    background-color: rgba(0, 0, 0, 0.35);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 10vh;
+}
+
+.o_ydod_gs_panel {
+    width: min(720px, 94vw);
+    max-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.o_ydod_gs_input {
+    font-size: 1.15rem;
+    padding: 0.9rem 0.25rem;
+}
+
+.o_ydod_gs_results {
+    overflow-y: auto;
+    flex: 1 1 auto;
+}
+
+.o_ydod_gs_row {
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+    }
+
+    &.o_ydod_gs_active {
+        background-color: rgba(1, 126, 132, 0.12);
+        box-shadow: inset 3px 0 0 #017e84;
+    }
+}
+
+.o_ydod_gs_float {
+    position: fixed;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
