@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_global_search_model_list" model="ir.ui.view">
+        <field name="name">ydod.global.search.model.list</field>
+        <field name="model">ydod.global.search.model</field>
+        <field name="arch" type="xml">
+            <tree string="Searchable Models">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="model_name" optional="hide"/>
+                <field name="field_count"/>
+                <field name="limit"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ydod_global_search_model_form" model="ir.ui.view">
+        <field name="name">ydod.global.search.model.form</field>
+        <field name="model">ydod.global.search.model</field>
+        <field name="arch" type="xml">
+            <form string="Searchable Model">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                            attrs="{'invisible': [('active', '=', True)]}"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Customers"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="model_id" options="{'no_create': True}"/>
+                            <field name="model_name" invisible="1"/>
+                            <field name="limit"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <group string="Extra Filter">
+                        <field name="extra_domain" widget="domain" options="{'model': 'model_name'}"
+                               attrs="{'invisible': [('model_name', '=', False)]}"/>
+                    </group>
+                    <notebook>
+                        <page string="Fields" name="fields">
+                            <field name="field_ids">
+                                <tree editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="field_id" options="{'no_create': True}"
+                                           domain="[('model_id', '=', parent.model_id), '|', ('store', '=', True), ('ttype', 'in', ['many2one', 'one2many', 'many2many'])]"/>
+                                    <field name="path" placeholder="e.g. name"/>
+                                    <field name="full_path"/>
+                                    <field name="field_type"/>
+                                    <field name="use_search"/>
+                                    <field name="use_display"/>
+                                    <field name="weight"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ydod_global_search_model_search" model="ir.ui.view">
+        <field name="name">ydod.global.search.model.search</field>
+        <field name="model">ydod.global.search.model</field>
+        <field name="arch" type="xml">
+            <search string="Searchable Models">
+                <field name="name"/>
+                <field name="model_id"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter string="Model" name="group_model" context="{'group_by': 'model_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ydod_global_search_model" model="ir.actions.act_window">
+        <field name="name">Searchable Models</field>
+        <field name="res_model">ydod.global.search.model</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add a model to the global search</p>
+            <p>Choose a model and the fields to match and display in the search popup (Ctrl+Shift+K).</p>
+        </field>
+    </record>
+</odoo>

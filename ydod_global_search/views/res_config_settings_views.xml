@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_ydod_global_search" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.ydod.global.search</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='general_settings']" position="inside">
+                <div id="ydod_global_search">
+                    <h2>Global Search</h2>
+                    <div class="row mt16 o_settings_container" name="ydod_global_search_container">
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_gs_enabled_setting">
+                            <div class="o_setting_left_pane">
+                                <field name="ydod_gs_enabled"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_gs_enabled" string="Global Search"/>
+                                <div class="text-muted">
+                                    Search popup, systray magnifier and keyboard shortcut for all users
+                                </div>
+                                <div class="mt8">
+                                    <button name="%(action_ydod_global_search_model)d" type="action"
+                                            string="Searchable Models" icon="fa-arrow-right" class="btn-link"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_gs_shortcut_setting"
+                             attrs="{'invisible': [('ydod_gs_enabled', '=', False)]}">
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_gs_shortcut"/>
+                                <div class="text-muted">
+                                    Modifiers and one key separated by +, e.g. ctrl+shift+k
+                                </div>
+                                <div class="mt8">
+                                    <field name="ydod_gs_shortcut" placeholder="ctrl+shift+k"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_gs_typing_setting"
+                             attrs="{'invisible': [('ydod_gs_enabled', '=', False)]}">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Typing</span>
+                                <div class="text-muted">
+                                    Minimum characters (1-10) and delay in milliseconds (0-2000) before searching
+                                </div>
+                                <div class="row mt8">
+                                    <label for="ydod_gs_min_chars" class="col-lg-6 o_light_label"/>
+                                    <field name="ydod_gs_min_chars" class="col-lg-3"/>
+                                </div>
+                                <div class="row">
+                                    <label for="ydod_gs_delay" class="col-lg-6 o_light_label"/>
+                                    <field name="ydod_gs_delay" class="col-lg-3"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_gs_limits_setting"
+                             attrs="{'invisible': [('ydod_gs_enabled', '=', False)]}">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Result Limits</span>
+                                <div class="text-muted">
+                                    Total results (1-200) and results per model (1-50)
+                                </div>
+                                <div class="row mt8">
+                                    <label for="ydod_gs_total_limit" class="col-lg-6 o_light_label"/>
+                                    <field name="ydod_gs_total_limit" class="col-lg-3"/>
+                                </div>
+                                <div class="row">
+                                    <label for="ydod_gs_model_limit" class="col-lg-6 o_light_label"/>
+                                    <field name="ydod_gs_model_limit" class="col-lg-3"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box" id="ydod_gs_float_setting"
+                             attrs="{'invisible': [('ydod_gs_enabled', '=', False)]}">
+                            <div class="o_setting_left_pane">
+                                <field name="ydod_gs_float_button"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="ydod_gs_float_button"/>
+                                <div class="text-muted">
+                                    Show a round search button on every backend page
+                                </div>
+                                <div class="mt8" attrs="{'invisible': [('ydod_gs_float_button', '=', False)]}">
+                                    <div class="row">
+                                        <label for="ydod_gs_float_size" class="col-lg-6 o_light_label"/>
+                                        <field name="ydod_gs_float_size" class="col-lg-3"/>
+                                    </div>
+                                    <div class="row">
+                                        <label for="ydod_gs_float_position" class="col-lg-6 o_light_label"/>
+                                        <field name="ydod_gs_float_position" class="col-lg-6"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
