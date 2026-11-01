@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ydod_web_backend_theme.AppBar">
+        <nav t-if="this.mode !== 'hidden'"
+             t-attf-class="ydod_appbar ydod_appbar_mode_{{ this.mode }} d-print-none"
+             t-att-style="'top: ' + this.state.top + 'px;'"
+             aria-label="Apps">
+            <button type="button" class="ydod_appbar_item ydod_appbar_apps_btn" title="All Apps"
+                    t-on-click="() => this.toggleApps()">
+                <span class="ydod_appbar_icon ydod_appbar_grid">
+                    <span/><span/><span/><span/><span/><span/><span/><span/><span/>
+                </span>
+                <span class="ydod_appbar_name">All Apps</span>
+            </button>
+            <t t-foreach="this.apps" t-as="app" t-key="app.id">
+                <button type="button" draggable="true"
+                        t-attf-class="ydod_appbar_item {{ app.id === this.state.currentAppId ? 'ydod_appbar_active' : '' }} {{ app.id === this.state.dragOverId ? 'ydod_appbar_dragover' : '' }}"
+                        t-att-title="app.name"
+                        t-att-data-menu-xmlid="app.xmlid"
+                        t-on-click="() => this.openApp(app)"
+                        t-on-dragstart="(ev) => this.onDragStart(ev, app)"
+                        t-on-dragover="(ev) => this.onDragOver(ev, app)"
+                        t-on-drop="(ev) => this.onDrop(ev, app)"
+                        t-on-dragend="() => this.onDragEnd()">
+                    <img class="ydod_appbar_icon" t-att-src="this.iconUrl(app)" alt="" draggable="false"/>
+                    <span class="ydod_appbar_name" t-out="app.name"/>
+                </button>
+            </t>
+        </nav>
+        <div t-if="this.state.appsOpen" class="ydod_apps_overlay d-print-none" t-att-style="this.overlayStyle">
+            <div class="ydod_apps_grid">
+                <t t-foreach="this.apps" t-as="app" t-key="app.id">
+                    <button type="button"
+                            t-attf-class="ydod_apps_tile {{ app.id === this.state.currentAppId ? 'ydod_appbar_active' : '' }}"
+                            t-att-data-menu-xmlid="app.xmlid"
+                            t-on-click="() => this.openApp(app)">
+                        <img t-att-src="this.iconUrl(app)" alt=""/>
+                        <span t-out="app.name"/>
+                    </button>
+                </t>
+            </div>
+        </div>
+    </t>
+</templates>

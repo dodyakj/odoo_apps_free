@@ -1,0 +1,20 @@
+[
+    {
+        "caption": "Full-window apps menu opened from the side app bar, over the company background colour",
+        "steps": [
+            {"wait": ".ydod_appbar"},
+            {"click": ".ydod_appbar_apps_btn"},
+            {"wait": ".ydod_apps_overlay .ydod_apps_tile"},
+            {"pause": 600}
+        ]
+    },
+    {
+        "caption": "Switching apps from the side bar: Settings is highlighted after one click",
+        "steps": [
+            {"wait": ".ydod_appbar [data-menu-xmlid='base.menu_administration']"},
+            {"click": ".ydod_appbar [data-menu-xmlid='base.menu_administration']"},
+            {"wait": ".ydod_appbar .ydod_appbar_active[data-menu-xmlid='base.menu_administration']"},
+            {"pause": 1200}
+        ]
+    }
+]

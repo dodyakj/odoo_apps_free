@@ -1,0 +1,148 @@
+$ydod-appbar-width: 200px;
+$ydod-appbar-width-icons: 56px;
+
+.ydod_appbar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: $ydod-appbar-bg;
+    color: $ydod-appbar-text;
+    width: $ydod-appbar-width;
+    padding: 6px 0;
+
+    &.ydod_appbar_mode_icons {
+        width: $ydod-appbar-width-icons;
+
+        .ydod_appbar_name {
+            display: none;
+        }
+    }
+}
+
+.ydod_appbar_item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 2px 6px;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: 6px;
+    background-color: transparent;
+    color: $ydod-appbar-text;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba($ydod-appbar-text, 0.12);
+    }
+
+    &.ydod_appbar_active {
+        background-color: $ydod-appbar-active;
+        color: #ffffff;
+    }
+
+    &.ydod_appbar_dragover {
+        box-shadow: inset 0 3px 0 $ydod-appbar-text;
+    }
+}
+
+.ydod_appbar_icon {
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    object-fit: contain;
+}
+
+.ydod_appbar_name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.875rem;
+}
+
+.ydod_appbar_apps_btn .ydod_appbar_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 5px);
+    align-content: center;
+    justify-content: center;
+    gap: 3px;
+
+    span {
+        width: 5px;
+        height: 5px;
+        border-radius: 1px;
+        background-color: $ydod-appbar-text;
+    }
+}
+
+body.ydod_appbar_expanded .o_action_manager {
+    margin-left: $ydod-appbar-width;
+}
+
+body.ydod_appbar_icons .o_action_manager {
+    margin-left: $ydod-appbar-width-icons;
+}
+
+.ydod_apps_overlay {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1050;
+    overflow-y: auto;
+    background-size: cover;
+    background-position: center;
+    padding: 48px 24px;
+}
+
+.ydod_apps_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 120px);
+    justify-content: center;
+    gap: 24px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.ydod_apps_tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 4px;
+    border: 0;
+    border-radius: 12px;
+    background-color: transparent;
+    color: #ffffff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+
+    &:hover,
+    &.ydod_appbar_active {
+        background-color: rgba(255, 255, 255, 0.18);
+    }
+
+    img {
+        width: 64px;
+        height: 64px;
+        border-radius: 14px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .ydod_appbar {
+        display: none;
+    }
+
+    body.ydod_appbar_expanded .o_action_manager,
+    body.ydod_appbar_icons .o_action_manager {
+        margin-left: 0;
+    }
+}

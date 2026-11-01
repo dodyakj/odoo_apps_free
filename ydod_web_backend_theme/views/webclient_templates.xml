@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="layout" inherit_id="web.layout" name="yDoD Backend Theme Favicon">
+        <xpath expr="//head" position="before">
+            <t t-set="x_icon" t-value="x_icon or '/ydod_web_backend_theme/favicon'"/>
+        </xpath>
+        <xpath expr="//head" position="inside">
+            <link t-if="x_icon == '/ydod_web_backend_theme/favicon'" rel="icon" t-att-href="x_icon"/>
+        </xpath>
+    </template>
+</odoo>

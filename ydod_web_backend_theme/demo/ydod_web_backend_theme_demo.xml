@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- No new models: the demo only gives the main company an apps menu
+         colour and keeps the admin app bar expanded for screenshots. -->
+    <record id="base.main_company" model="res.company">
+        <field name="ydod_background_color">#2C3E50</field>
+    </record>
+
+    <record id="base.user_admin" model="res.users">
+        <field name="ydod_app_bar_mode">expanded</field>
+    </record>
+</odoo>

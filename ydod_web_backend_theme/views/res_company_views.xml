@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_form" model="ir.ui.view">
+        <field name="name">res.company.form.inherit.ydod.backend.theme</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='general_info']" position="after">
+                <page string="Backend Theme" name="ydod_backend_theme">
+                    <group>
+                        <group string="Apps Menu">
+                            <field name="ydod_background_image" widget="image" options="{'size': [240, 135]}"/>
+                            <field name="ydod_background_color" widget="color"/>
+                        </group>
+                        <group string="Browser Tab">
+                            <field name="ydod_favicon" widget="image" options="{'size': [32, 32]}"/>
+                            <field name="ydod_favicon_mimetype" invisible="not ydod_favicon"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

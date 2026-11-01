@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.ydod.backend.theme</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='companies_setting_container']" position="after">
+                <block title="Backend Theme" name="ydod_backend_theme_setting_container" groups="base.group_system">
+                    <setting id="ydod_theme_colors" string="Brand Colours"
+                             help="Odoo palette overrides, applied to the whole database after a reload. Leave a colour empty to keep the Odoo default.">
+                        <div class="row mt-2">
+                            <label for="ydod_color_brand" class="col-5 o_light_label"/>
+                            <field name="ydod_color_brand" widget="color" class="col-7"/>
+                            <label for="ydod_color_primary" class="col-5 o_light_label"/>
+                            <field name="ydod_color_primary" widget="color" class="col-7"/>
+                            <label for="ydod_color_success" class="col-5 o_light_label"/>
+                            <field name="ydod_color_success" widget="color" class="col-7"/>
+                            <label for="ydod_color_info" class="col-5 o_light_label"/>
+                            <field name="ydod_color_info" widget="color" class="col-7"/>
+                            <label for="ydod_color_warning" class="col-5 o_light_label"/>
+                            <field name="ydod_color_warning" widget="color" class="col-7"/>
+                            <label for="ydod_color_danger" class="col-5 o_light_label"/>
+                            <field name="ydod_color_danger" widget="color" class="col-7"/>
+                        </div>
+                    </setting>
+                    <setting id="ydod_theme_appbar" string="App Bar Colours"
+                             help="Palette of the side app bar shown on every backend page.">
+                        <div class="row mt-2">
+                            <label for="ydod_appbar_bg" class="col-5 o_light_label"/>
+                            <field name="ydod_appbar_bg" widget="color" class="col-7"/>
+                            <label for="ydod_appbar_text" class="col-5 o_light_label"/>
+                            <field name="ydod_appbar_text" widget="color" class="col-7"/>
+                            <label for="ydod_appbar_active" class="col-5 o_light_label"/>
+                            <field name="ydod_appbar_active" widget="color" class="col-7"/>
+                        </div>
+                        <button name="action_ydod_reset_theme" type="object" string="Reset to Defaults"
+                                class="btn-link mt-2 ps-0"
+                                confirm="Remove every custom colour and restore the standard Odoo palette?"/>
+                    </setting>
+                    <setting id="ydod_theme_background" string="Apps Menu Background"
+                             help="Shown behind the full-window apps menu of the current company.">
+                        <div class="mt-2">
+                            <field name="ydod_background_image" widget="image" class="w-50" options="{'size': [180, 100]}"/>
+                        </div>
+                        <div class="row mt-2">
+                            <label for="ydod_background_color" string="Fallback Colour" class="col-5 o_light_label"/>
+                            <field name="ydod_background_color" widget="color" class="col-7"/>
+                        </div>
+                    </setting>
+                    <setting id="ydod_theme_favicon" string="Favicon"
+                             help="Browser tab icon of the current company (.ico, .png or .svg).">
+                        <field name="ydod_favicon" widget="image" class="mt-2" options="{'size': [32, 32]}"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

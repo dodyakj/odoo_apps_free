@@ -1,0 +1,9 @@
+// yDoD Backend Theme - default palette.
+// Prepended to web._assets_primary_variables. Settings > General Settings >
+// Backend Theme replaces this file with a generated attachment that sets
+// $o-brand-odoo, $o-brand-primary, $o-success, $o-info, $o-warning and
+// $o-danger before these defaults; empty colours keep the Odoo values.
+
+$ydod-appbar-bg: #2b2d3a !default;
+$ydod-appbar-text: #e9ecef !default;
+$ydod-appbar-active: #714b67 !default;
