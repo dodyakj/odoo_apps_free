@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ydod_gs_model_user,ydod.global.search.model user,model_ydod_global_search_model,base.group_user,1,0,0,0
+access_ydod_gs_model_admin,ydod.global.search.model admin,model_ydod_global_search_model,base.group_system,1,1,1,1
+access_ydod_gs_field_user,ydod.global.search.field user,model_ydod_global_search_field,base.group_user,1,0,0,0
+access_ydod_gs_field_admin,ydod.global.search.field admin,model_ydod_global_search_field,base.group_system,1,1,1,1
