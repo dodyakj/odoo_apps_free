@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_ydod_global_search" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.ydod.global.search</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='general_settings']" position="inside">
+                <block title="Global Search" name="ydod_global_search_container">
+                    <setting id="ydod_gs_enabled_setting" string="Global Search"
+                             help="Search popup, systray magnifier and keyboard shortcut for all users">
+                        <field name="ydod_gs_enabled"/>
+                        <div class="mt8">
+                            <button name="%(action_ydod_global_search_model)d" type="action"
+                                    string="Searchable Models" icon="oi-arrow-right" class="btn-link"/>
+                        </div>
+                    </setting>
+                    <setting id="ydod_gs_shortcut_setting" string="Keyboard Shortcut"
+                             help="Modifiers and one key separated by +, e.g. ctrl+shift+k" invisible="not ydod_gs_enabled">
+                        <field name="ydod_gs_shortcut" placeholder="ctrl+shift+k"/>
+                    </setting>
+                    <setting id="ydod_gs_typing_setting" string="Typing"
+                             help="Minimum characters (1-10) and delay in milliseconds (0-2000) before searching"
+                             invisible="not ydod_gs_enabled">
+                        <div class="row mt8">
+                            <label for="ydod_gs_min_chars" class="col-lg-6 o_light_label"/>
+                            <field name="ydod_gs_min_chars" class="col-lg-3"/>
+                        </div>
+                        <div class="row">
+                            <label for="ydod_gs_delay" class="col-lg-6 o_light_label"/>
+                            <field name="ydod_gs_delay" class="col-lg-3"/>
+                        </div>
+                    </setting>
+                    <setting id="ydod_gs_limits_setting" string="Result Limits"
+                             help="Total results (1-200) and results per model (1-50)" invisible="not ydod_gs_enabled">
+                        <div class="row mt8">
+                            <label for="ydod_gs_total_limit" class="col-lg-6 o_light_label"/>
+                            <field name="ydod_gs_total_limit" class="col-lg-3"/>
+                        </div>
+                        <div class="row">
+                            <label for="ydod_gs_model_limit" class="col-lg-6 o_light_label"/>
+                            <field name="ydod_gs_model_limit" class="col-lg-3"/>
+                        </div>
+                    </setting>
+                    <setting id="ydod_gs_float_setting" string="Floating Button"
+                             help="Show a round search button on every backend page" invisible="not ydod_gs_enabled">
+                        <field name="ydod_gs_float_button"/>
+                        <div class="mt8" invisible="not ydod_gs_float_button">
+                            <div class="row">
+                                <label for="ydod_gs_float_size" class="col-lg-6 o_light_label"/>
+                                <field name="ydod_gs_float_size" class="col-lg-3"/>
+                            </div>
+                            <div class="row">
+                                <label for="ydod_gs_float_position" class="col-lg-6 o_light_label"/>
+                                <field name="ydod_gs_float_position" class="col-lg-6"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
