@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ydod_global_search.GlobalSearchDialog">
+        <div class="o_ydod_gs_backdrop" t-on-click="(ev) => this.onBackdropClick(ev)">
+            <div class="o_ydod_gs_panel bg-view rounded shadow-lg" t-ref="this.panelRef">
+                <div class="o_ydod_gs_header d-flex align-items-center border-bottom px-3">
+                    <i class="fa fa-search text-muted me-2"/>
+                    <input type="text" class="o_ydod_gs_input form-control border-0 shadow-none"
+                           placeholder="Search contacts, products, orders, invoices..."
+                           t-ref="this.inputRef"
+                           t-att-value="this.state.term"
+                           t-on-input="(ev) => this.onInput(ev)"
+                           t-on-keydown="(ev) => this.onKeydown(ev)"/>
+                    <i t-if="this.state.loading" class="fa fa-circle-o-notch fa-spin text-muted ms-2"/>
+                    <button type="button" class="btn btn-link text-muted ms-1" title="Close (Esc)"
+                            t-on-click="() => this.close()">
+                        <i class="fa fa-times"/>
+                    </button>
+                </div>
+                <div class="o_ydod_gs_results">
+                    <t t-foreach="this.state.groups" t-as="group" t-key="group.config_id">
+                        <div class="o_ydod_gs_group_header d-flex justify-content-between align-items-center px-3 py-1 bg-light">
+                            <span class="fw-bold text-uppercase small" t-out="group.name"/>
+                            <a href="#" class="small" t-on-click.prevent="() => this.openList(group)">View all</a>
+                        </div>
+                        <t t-foreach="group.records" t-as="record" t-key="record.id">
+                            <div class="o_ydod_gs_row px-3 py-2 border-bottom"
+                                 t-att-class="{'o_ydod_gs_active': record.idx === this.state.activeIndex}"
+                                 t-on-click="() => this.openRecord(group, record)">
+                                <div class="fw-semibold text-truncate" t-out="record.name"/>
+                                <div t-if="record.values.length" class="small text-muted text-truncate">
+                                    <t t-foreach="record.values" t-as="val" t-key="val_index">
+                                        <span class="me-3"><span t-out="val.label"/>: <span t-out="val.value"/></span>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                    <div t-if="this.state.searched and !this.state.loading and !this.state.groups.length"
+                         class="text-center text-muted p-4">
+                        No records found for "<t t-out="this.state.term"/>".
+                    </div>
+                    <div t-if="!this.state.term" class="text-center text-muted p-4 small">
+                        Type at least <t t-out="this.config.min_chars"/> characters to search.
+                    </div>
+                </div>
+                <div class="o_ydod_gs_footer border-top px-3 py-1 small text-muted">
+                    <kbd>&#8593;</kbd> <kbd>&#8595;</kbd> navigate
+                    <kbd class="ms-2">Enter</kbd> open
+                    <kbd class="ms-2">Ctrl+Enter</kbd> list view
+                    <kbd class="ms-2">Esc</kbd> close
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_ydod_gs_model_user,ydod.global.search.model user,ydod.global.search.model,base.group_user,r,
+access_ydod_gs_model_admin,ydod.global.search.model admin,ydod.global.search.model,base.group_system,crud,
+access_ydod_gs_field_user,ydod.global.search.field user,ydod.global.search.field,base.group_user,r,
+access_ydod_gs_field_admin,ydod.global.search.field admin,ydod.global.search.field,base.group_system,crud,

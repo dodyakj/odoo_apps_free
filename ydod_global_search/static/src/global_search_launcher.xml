@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ydod_global_search.GlobalSearchSystray">
+        <div t-if="this.enabled" class="o_ydod_gs_systray o-dropdown d-flex align-items-center">
+            <button type="button" class="btn btn-link o-dropdown--narrow px-2" title="Global Search"
+                    aria-label="Global Search" t-on-click="() => this.open()">
+                <i class="fa fa-search fa-lg"/>
+            </button>
+        </div>
+    </t>
+
+    <t t-name="ydod_global_search.GlobalSearchLauncher">
+        <button t-if="this.showFloat" type="button" class="o_ydod_gs_float btn btn-primary rounded-circle shadow"
+                title="Global Search" aria-label="Global Search"
+                t-att-style="this.floatStyle" t-on-click="() => this.open()">
+            <i class="fa fa-search"/>
+        </button>
+    </t>
+</templates>
