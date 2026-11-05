@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ydod_budget_line_view_list" model="ir.ui.view">
+        <field name="name">ydod.budget.line.list</field>
+        <field name="model">ydod.budget.line</field>
+        <field name="arch" type="xml">
+            <list string="Budget Lines" sample="1"
+                  decoration-danger="is_over_budget"
+                  decoration-success="achievement_percent &gt;= 100 and planned_amount &gt; 0">
+                <field name="budget_id"/>
+                <field name="analytic_account_id"/>
+                <field name="position_name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="planned_amount" sum="Total Planned"/>
+                <field name="theoretical_amount" sum="Total Theoretical"/>
+                <field name="actual_amount" sum="Total Actual"/>
+                <field name="achievement_percent" widget="progressbar"/>
+                <field name="is_over_budget" column_invisible="True"/>
+                <field name="state" widget="badge" optional="show"
+                       decoration-info="state == 'draft'" decoration-warning="state == 'confirm'"
+                       decoration-success="state in ('validate', 'done')" decoration-muted="state == 'cancel'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="ydod_budget_line_view_form" model="ir.ui.view">
+        <field name="name">ydod.budget.line.form</field>
+        <field name="model">ydod.budget.line</field>
+        <field name="arch" type="xml">
+            <form string="Budget Line">
+                <header>
+                    <button name="action_open_entries" string="View Entries" type="object"
+                            class="btn-secondary" icon="fa-search" invisible="not id"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate,done"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Over Budget" bg_color="text-bg-danger" invisible="not is_over_budget"/>
+                    <div class="oe_title">
+                        <label for="position_name"/>
+                        <h1><field name="position_name" placeholder="e.g. Marketing Expenses" readonly="state != 'draft'"/></h1>
+                    </div>
+                    <group>
+                        <group string="Budget">
+                            <field name="budget_id" domain="[('state', '=', 'draft')]" readonly="state != 'draft'"/>
+                            <field name="analytic_account_id" readonly="state != 'draft'"/>
+                            <field name="general_account_ids" widget="many2many_tags" readonly="state != 'draft'"
+                                   placeholder="All accounts"/>
+                            <field name="company_id"/>
+                            <field name="currency_id" invisible="True"/>
+                        </group>
+                        <group string="Period">
+                            <field name="date_from" readonly="state != 'draft'"/>
+                            <field name="date_to" readonly="state != 'draft'"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                    <group string="Planned vs Actual">
+                        <group>
+                            <field name="planned_amount" readonly="state != 'draft'"/>
+                            <field name="theoretical_amount"/>
+                            <field name="actual_amount"/>
+                        </group>
+                        <group>
+                            <field name="achievement_percent" widget="progressbar"/>
+                            <field name="is_over_budget"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="ydod_budget_line_view_search" model="ir.ui.view">
+        <field name="name">ydod.budget.line.search</field>
+        <field name="model">ydod.budget.line</field>
+        <field name="arch" type="xml">
+            <search string="Budget Lines">
+                <field name="position_name"/>
+                <field name="budget_id"/>
+                <field name="analytic_account_id"/>
+                <field name="general_account_ids"/>
+                <filter string="Current" name="current"
+                        domain="[('date_from', '&lt;=', context_today().strftime('%Y-%m-%d')), ('date_to', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Over Budget" name="over_budget" domain="[('is_over_budget', '=', True)]"/>
+                <separator/>
+                <filter string="Expenses" name="expenses" domain="[('planned_amount', '&lt;', 0)]"/>
+                <filter string="Revenue" name="revenue" domain="[('planned_amount', '&gt;', 0)]"/>
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Validated" name="validated" domain="[('state', '=', 'validate')]"/>
+                <group>
+                    <filter string="Budget" name="group_budget" context="{'group_by': 'budget_id'}"/>
+                    <filter string="Analytic Account" name="group_analytic" context="{'group_by': 'analytic_account_id'}"/>
+                    <filter string="Position" name="group_position" context="{'group_by': 'position_name'}"/>
+                    <filter string="Company" name="group_company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
+                    <filter string="Month" name="group_month" context="{'group_by': 'date_from:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="ydod_budget_line_view_pivot" model="ir.ui.view">
+        <field name="name">ydod.budget.line.pivot</field>
+        <field name="model">ydod.budget.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Budget Analysis" sample="1">
+                <field name="analytic_account_id" type="row"/>
+                <field name="date_from" interval="quarter" type="col"/>
+                <field name="planned_amount" type="measure"/>
+                <field name="theoretical_amount" type="measure"/>
+                <field name="actual_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="ydod_budget_line_view_graph" model="ir.ui.view">
+        <field name="name">ydod.budget.line.graph</field>
+        <field name="model">ydod.budget.line</field>
+        <field name="arch" type="xml">
+            <graph string="Budget Analysis" type="bar" stacked="0" sample="1">
+                <field name="analytic_account_id"/>
+                <field name="actual_amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_ydod_budget_line" model="ir.actions.act_window">
+        <field name="name">Budget Lines</field>
+        <field name="res_model">ydod.budget.line</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+        <field name="search_view_id" ref="ydod_budget_line_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No budget lines yet</p>
+            <p>Budget lines plan an amount per analytic account and group of general accounts over a period.</p>
+        </field>
+    </record>
+
+    <record id="action_ydod_budget_analysis" model="ir.actions.act_window">
+        <field name="name">Budget Analysis</field>
+        <field name="res_model">ydod.budget.line</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="search_view_id" ref="ydod_budget_line_view_search"/>
+        <field name="context">{'search_default_current': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">No budget data for this period</p>
+            <p>Compare planned, theoretical and actual amounts of your budget lines.</p>
+        </field>
+    </record>
+</odoo>

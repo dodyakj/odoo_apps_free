@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_ydod_budget"
+              name="Budgets"
+              parent="account.menu_finance_entries"
+              action="action_ydod_budget"
+              groups="ydod_account_budget.group_budget_user"
+              sequence="30"/>
+    <menuitem id="menu_ydod_budget_line"
+              name="Budget Lines"
+              parent="account.menu_finance_entries"
+              action="action_ydod_budget_line"
+              groups="ydod_account_budget.group_budget_user"
+              sequence="31"/>
+    <menuitem id="menu_ydod_budget_analysis"
+              name="Budget Analysis"
+              parent="account.menu_finance_reports"
+              action="action_ydod_budget_analysis"
+              groups="ydod_account_budget.group_budget_user"
+              sequence="10"/>
+</odoo>

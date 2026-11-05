@@ -1,0 +1,7 @@
+id,name,model_id,group_id/id,operation,domain
+access_ydod_budget_user_read,ydod.budget user read,ydod.budget,ydod_account_budget.group_budget_user,r,"[('company_id', 'in', company_ids)]"
+access_ydod_budget_user_draft,ydod.budget user draft,ydod.budget,ydod_account_budget.group_budget_user,cru,"[('state', '=', 'draft'), ('company_id', 'in', company_ids)]"
+access_ydod_budget_manager,ydod.budget manager,ydod.budget,ydod_account_budget.group_budget_manager,crud,"[('company_id', 'in', company_ids)]"
+access_ydod_budget_line_user_read,ydod.budget.line user read,ydod.budget.line,ydod_account_budget.group_budget_user,r,"[('company_id', 'in', company_ids)]"
+access_ydod_budget_line_user_draft,ydod.budget.line user draft,ydod.budget.line,ydod_account_budget.group_budget_user,cru,"[('state', '=', 'draft'), ('company_id', 'in', company_ids)]"
+access_ydod_budget_line_manager,ydod.budget.line manager,ydod.budget.line,ydod_account_budget.group_budget_manager,crud,"[('company_id', 'in', company_ids)]"

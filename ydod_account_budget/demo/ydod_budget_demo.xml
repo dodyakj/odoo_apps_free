@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Analytic accounts (cost centres / projects) -->
+    <record id="demo_analytic_sales" model="account.analytic.account">
+        <field name="name">Sales Department</field>
+        <field name="code">SALES</field>
+        <field name="plan_id" ref="analytic.analytic_plan_projects"/>
+    </record>
+    <record id="demo_analytic_marketing" model="account.analytic.account">
+        <field name="name">Marketing Department</field>
+        <field name="code">MKT</field>
+        <field name="plan_id" ref="analytic.analytic_plan_projects"/>
+    </record>
+    <record id="demo_analytic_phoenix" model="account.analytic.account">
+        <field name="name">Project Phoenix</field>
+        <field name="code">PHX</field>
+        <field name="plan_id" ref="analytic.analytic_plan_projects"/>
+    </record>
+
+    <!-- General ledger accounts used as budget positions -->
+    <record id="demo_account_marketing" model="account.account">
+        <field name="name">Marketing and Advertising</field>
+        <field name="code">699101</field>
+        <field name="account_type">expense</field>
+    </record>
+    <record id="demo_account_rent" model="account.account">
+        <field name="name">Office Rent</field>
+        <field name="code">699102</field>
+        <field name="account_type">expense</field>
+    </record>
+    <record id="demo_account_consulting" model="account.account">
+        <field name="name">Consulting Services Revenue</field>
+        <field name="code">799101</field>
+        <field name="account_type">income</field>
+    </record>
+
+    <!-- Budgets -->
+    <record id="demo_budget_current" model="ydod.budget">
+        <field name="name" eval="'FY%s Operating Budget' % DateTime.today().year"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_from" eval="DateTime.today().strftime('%Y-01-01')"/>
+        <field name="date_to" eval="DateTime.today().strftime('%Y-12-31')"/>
+        <field name="state">validate</field>
+        <field name="note"><![CDATA[<p>Approved by the board. Marketing spend is reviewed monthly.</p>]]></field>
+    </record>
+    <record id="demo_budget_next" model="ydod.budget">
+        <field name="name" eval="'FY%s Operating Budget (Next Period)' % DateTime.today().year"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_from" eval="(DateTime.today() + relativedelta(years=1)).strftime('%Y-01-01')"/>
+        <field name="date_to" eval="(DateTime.today() + relativedelta(years=1)).strftime('%Y-12-31')"/>
+    </record>
+    <record id="demo_budget_previous" model="ydod.budget">
+        <field name="name" eval="'FY%s Operating Budget' % (DateTime.today().year - 1)"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="date_from" eval="(DateTime.today() - relativedelta(years=1)).strftime('%Y-01-01')"/>
+        <field name="date_to" eval="(DateTime.today() - relativedelta(years=1)).strftime('%Y-12-31')"/>
+        <field name="state">done</field>
+    </record>
+    <record id="demo_budget_phoenix" model="ydod.budget">
+        <field name="name">Project Phoenix - Second Half</field>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="date_from" eval="DateTime.today().strftime('%Y-07-01')"/>
+        <field name="date_to" eval="DateTime.today().strftime('%Y-12-31')"/>
+        <field name="state">confirm</field>
+    </record>
+    <record id="demo_budget_hiring" model="ydod.budget">
+        <field name="name">Marketing Hiring Plan</field>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="date_from" eval="DateTime.today().strftime('%Y-01-01')"/>
+        <field name="date_to" eval="DateTime.today().strftime('%Y-03-31')"/>
+        <field name="state">cancel</field>
+    </record>
+
+    <!-- Posted-like analytic items (no journal item) feeding the actual amounts -->
+    <record id="demo_item_mkt_1" model="account.analytic.line">
+        <field name="name">Online advertising campaign</field>
+        <field name="account_id" ref="demo_analytic_sales"/>
+        <field name="general_account_id" ref="demo_account_marketing"/>
+        <field name="amount">-8000</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-02-10')"/>
+    </record>
+    <record id="demo_item_mkt_2" model="account.analytic.line">
+        <field name="name">Trade fair booth</field>
+        <field name="account_id" ref="demo_analytic_sales"/>
+        <field name="general_account_id" ref="demo_account_marketing"/>
+        <field name="amount">-7500</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-05-12')"/>
+    </record>
+    <record id="demo_item_mkt_3" model="account.analytic.line">
+        <field name="name">Product launch event</field>
+        <field name="account_id" ref="demo_analytic_sales"/>
+        <field name="general_account_id" ref="demo_account_marketing"/>
+        <field name="amount">-7000</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-09-15')"/>
+    </record>
+    <record id="demo_item_rent_1" model="account.analytic.line">
+        <field name="name">Office rent Q1</field>
+        <field name="account_id" ref="demo_analytic_sales"/>
+        <field name="general_account_id" ref="demo_account_rent"/>
+        <field name="amount">-9000</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-01-05')"/>
+    </record>
+    <record id="demo_item_rent_2" model="account.analytic.line">
+        <field name="name">Office rent Q2</field>
+        <field name="account_id" ref="demo_analytic_sales"/>
+        <field name="general_account_id" ref="demo_account_rent"/>
+        <field name="amount">-9000</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-04-05')"/>
+    </record>
+    <record id="demo_item_rent_3" model="account.analytic.line">
+        <field name="name">Office rent Q3</field>
+        <field name="account_id" ref="demo_analytic_sales"/>
+        <field name="general_account_id" ref="demo_account_rent"/>
+        <field name="amount">-9000</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-07-05')"/>
+    </record>
+    <record id="demo_item_consulting_1" model="account.analytic.line">
+        <field name="name">Consulting - Azure Interior</field>
+        <field name="account_id" ref="demo_analytic_sales"/>
+        <field name="general_account_id" ref="demo_account_consulting"/>
+        <field name="amount">18000</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-03-20')"/>
+    </record>
+    <record id="demo_item_consulting_2" model="account.analytic.line">
+        <field name="name">Consulting - Deco Addict</field>
+        <field name="account_id" ref="demo_analytic_sales"/>
+        <field name="general_account_id" ref="demo_account_consulting"/>
+        <field name="amount">20000</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-06-18')"/>
+    </record>
+    <record id="demo_item_consulting_3" model="account.analytic.line">
+        <field name="name">Consulting - Gemini Furniture</field>
+        <field name="account_id" ref="demo_analytic_sales"/>
+        <field name="general_account_id" ref="demo_account_consulting"/>
+        <field name="amount">16000</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-09-28')"/>
+    </record>
+    <record id="demo_item_phoenix_1" model="account.analytic.line">
+        <field name="name">Subcontractor development sprint</field>
+        <field name="account_id" ref="demo_analytic_phoenix"/>
+        <field name="amount">-4200</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-08-05')"/>
+    </record>
+    <record id="demo_item_phoenix_2" model="account.analytic.line">
+        <field name="name">Cloud hosting and licences</field>
+        <field name="account_id" ref="demo_analytic_phoenix"/>
+        <field name="amount">-6100</field>
+        <field name="date" eval="DateTime.today().strftime('%Y-10-02')"/>
+    </record>
+
+    <!-- Budget lines: current year (validated) -->
+    <record id="demo_line_current_marketing" model="ydod.budget.line">
+        <field name="budget_id" ref="demo_budget_current"/>
+        <field name="analytic_account_id" ref="demo_analytic_sales"/>
+        <field name="position_name">Marketing Expenses</field>
+        <field name="general_account_ids" eval="[(6, 0, [ref('demo_account_marketing')])]"/>
+        <field name="planned_amount">-24000</field>
+    </record>
+    <record id="demo_line_current_rent" model="ydod.budget.line">
+        <field name="budget_id" ref="demo_budget_current"/>
+        <field name="analytic_account_id" ref="demo_analytic_sales"/>
+        <field name="position_name">Office Rent</field>
+        <field name="general_account_ids" eval="[(6, 0, [ref('demo_account_rent')])]"/>
+        <field name="planned_amount">-36000</field>
+    </record>
+    <record id="demo_line_current_consulting" model="ydod.budget.line">
+        <field name="budget_id" ref="demo_budget_current"/>
+        <field name="analytic_account_id" ref="demo_analytic_sales"/>
+        <field name="position_name">Consulting Revenue</field>
+        <field name="general_account_ids" eval="[(6, 0, [ref('demo_account_consulting')])]"/>
+        <field name="planned_amount">60000</field>
+    </record>
+
+    <!-- Budget lines: next year (draft, copy of the current year) -->
+    <record id="demo_line_next_marketing" model="ydod.budget.line">
+        <field name="budget_id" ref="demo_budget_next"/>
+        <field name="analytic_account_id" ref="demo_analytic_sales"/>
+        <field name="position_name">Marketing Expenses</field>
+        <field name="general_account_ids" eval="[(6, 0, [ref('demo_account_marketing')])]"/>
+        <field name="planned_amount">-24000</field>
+    </record>
+    <record id="demo_line_next_rent" model="ydod.budget.line">
+        <field name="budget_id" ref="demo_budget_next"/>
+        <field name="analytic_account_id" ref="demo_analytic_sales"/>
+        <field name="position_name">Office Rent</field>
+        <field name="general_account_ids" eval="[(6, 0, [ref('demo_account_rent')])]"/>
+        <field name="planned_amount">-36000</field>
+    </record>
+    <record id="demo_line_next_consulting" model="ydod.budget.line">
+        <field name="budget_id" ref="demo_budget_next"/>
+        <field name="analytic_account_id" ref="demo_analytic_sales"/>
+        <field name="position_name">Consulting Revenue</field>
+        <field name="general_account_ids" eval="[(6, 0, [ref('demo_account_consulting')])]"/>
+        <field name="planned_amount">60000</field>
+    </record>
+
+    <!-- Budget lines: previous year (done) -->
+    <record id="demo_line_previous_marketing" model="ydod.budget.line">
+        <field name="budget_id" ref="demo_budget_previous"/>
+        <field name="analytic_account_id" ref="demo_analytic_sales"/>
+        <field name="position_name">Marketing Expenses</field>
+        <field name="general_account_ids" eval="[(6, 0, [ref('demo_account_marketing')])]"/>
+        <field name="planned_amount">-20000</field>
+    </record>
+    <record id="demo_line_previous_rent" model="ydod.budget.line">
+        <field name="budget_id" ref="demo_budget_previous"/>
+        <field name="analytic_account_id" ref="demo_analytic_sales"/>
+        <field name="position_name">Office Rent</field>
+        <field name="general_account_ids" eval="[(6, 0, [ref('demo_account_rent')])]"/>
+        <field name="planned_amount">-34000</field>
+    </record>
+
+    <!-- Budget lines: project and hiring plan -->
+    <record id="demo_line_phoenix_costs" model="ydod.budget.line">
+        <field name="budget_id" ref="demo_budget_phoenix"/>
+        <field name="analytic_account_id" ref="demo_analytic_phoenix"/>
+        <field name="position_name">Project Costs</field>
+        <field name="planned_amount">-15000</field>
+    </record>
+    <record id="demo_line_hiring_recruitment" model="ydod.budget.line">
+        <field name="budget_id" ref="demo_budget_hiring"/>
+        <field name="analytic_account_id" ref="demo_analytic_marketing"/>
+        <field name="position_name">Recruitment Fees</field>
+        <field name="planned_amount">-5000</field>
+    </record>
+</odoo>
