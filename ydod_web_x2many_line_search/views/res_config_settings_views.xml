@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.x2many.line.search</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='general_settings']" position="inside">
+                <block title="X2Many Lists" id="ydod_x2many_line_search">
+                    <setting id="x2many_line_search_setting"
+                             help="Show an instant search box with highlight and match counter above every one2many / many2many list in form views. Reload the browser to apply.">
+                        <field name="x2many_line_search_enabled"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
