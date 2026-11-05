@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="config_x2many_line_search_enabled" model="ir.config_parameter">
+        <field name="key">ydod_web_x2many_line_search.enabled</field>
+        <field name="value">True</field>
+    </record>
+</odoo>
