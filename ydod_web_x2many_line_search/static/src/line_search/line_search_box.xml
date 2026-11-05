@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ydod_web_x2many_line_search.LineSearchBox">
+        <div class="o_x2m_line_search d-flex align-items-center gap-2" t-ref="this.rootRef">
+            <div class="o_x2m_line_search_group">
+                <!-- Odoo 20 icon font: <i class="oi" data-icon="..."/> -->
+                <i t-attf-class="oi o_x2m_line_search_icon {{ this.props.lineSearch.loading ? 'o_x2m_line_search_spin' : '' }}"
+                   t-att-data-icon="this.props.lineSearch.loading ? 'progress_activity' : 'search'"
+                   role="img"
+                   aria-hidden="true"/>
+                <input type="search"
+                       class="o_x2m_line_search_input"
+                       placeholder="Search lines..."
+                       aria-label="Search lines"
+                       title="Search lines (Alt+F)"
+                       autocomplete="off"
+                       spellcheck="false"
+                       t-ref="this.inputRef"
+                       t-att-value="this.props.lineSearch.query"
+                       t-on-input="(ev) => this.onInput(ev)"
+                       t-on-keydown="(ev) => this.onKeydown(ev)"/>
+                <button t-if="this.props.lineSearch.query"
+                        type="button"
+                        class="o_x2m_line_search_clear"
+                        title="Clear search"
+                        aria-label="Clear search"
+                        t-on-click="() => this.props.onClear()">
+                    <i class="oi" data-icon="close" role="img" aria-hidden="true"/>
+                </button>
+            </div>
+            <span t-if="this.props.lineSearch.filtering"
+                  class="o_x2m_line_search_counter badge text-bg-light border"
+                  title="Matching lines / total lines">
+                <t t-out="this.props.lineSearch.matched"/> / <t t-out="this.props.lineSearch.total"/>
+            </span>
+        </div>
+    </t>
+</templates>
