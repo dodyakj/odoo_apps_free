@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!--
+        Wrapper template instead of an xpath on web.X2ManyField: the inner
+        structure of that template changes between releases, so the search box
+        is rendered before the untouched standard template.
+    -->
+    <t t-name="ydod_web_x2many_line_search.X2ManyField">
+        <t t-if="this.lineSearch and this.lineSearch.active">
+            <t t-component="this.lineSearchBoxComponent"
+               lineSearch="this.lineSearch"
+               onInput="(query) => this.onLineSearchInput(query)"
+               onClear="() => this.onLineSearchClear()"
+               setContainer="(getter) => this.lineSearchSetContainer(getter)"/>
+        </t>
+        <t t-call="web.X2ManyField"/>
+    </t>
+</templates>

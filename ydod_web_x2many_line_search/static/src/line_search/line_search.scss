@@ -1,0 +1,151 @@
+::highlight(o_line_search) {
+    background-color: #ffd54f;
+    color: #212529;
+}
+
+tr.o_data_row.o_x2m_line_search_hidden {
+    display: none !important;
+}
+
+@keyframes o_x2m_line_search_spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// the field widget holding the box: box on top, list below, both full width
+.o_x2m_line_search_host {
+    display: flex !important;
+    flex-direction: column;
+    align-items: stretch;
+
+    > .o_x2m_line_search {
+        order: -1;
+    }
+}
+
+.o_x2m_line_search {
+    flex-wrap: wrap;
+    flex: 0 0 auto;
+    width: 100%;
+    margin: 0 0 8px;
+    padding: 4px 0;
+    // stays on top of the list and its control panel, and visible while
+    // scrolling through long lists
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background-color: var(--o-view-background-color, #ffffff);
+
+    // self-contained compact box: the form view styles of field inputs and
+    // the Bootstrap input-group layout must not hide the icon or the text
+    .o_x2m_line_search_group {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex: 0 1 260px;
+        width: 260px;
+        min-width: 180px;
+        max-width: 100%;
+        height: 26px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background-color: #ffffff;
+        overflow: hidden;
+
+        &:focus-within {
+            border-color: #714b67;
+            box-shadow: 0 0 0 2px rgba(113, 75, 103, 0.2);
+        }
+    }
+
+    .o_x2m_line_search_icon {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 100%;
+        color: #6c757d;
+        font-size: 13px;
+        line-height: 1;
+        pointer-events: none;
+
+        &.o_x2m_line_search_spin {
+            animation: o_x2m_line_search_spin 1s linear infinite;
+        }
+    }
+
+    .o_x2m_line_search_group input.o_x2m_line_search_input,
+    .o_x2m_line_search_group input.o_x2m_line_search_input:focus {
+        flex: 1 1 auto;
+        display: block;
+        width: 100% !important;
+        min-width: 120px;
+        height: 100% !important;
+        min-height: 0 !important;
+        margin: 0;
+        padding: 0 6px 0 0 !important;
+        border: 0 !important;
+        border-radius: 0;
+        outline: none;
+        box-shadow: none !important;
+        background-color: transparent !important;
+        color: #212529 !important;
+        -webkit-text-fill-color: #212529 !important;
+        caret-color: #212529;
+        font-size: 13px !important;
+        line-height: 24px !important;
+        text-indent: 0 !important;
+        letter-spacing: normal;
+        visibility: visible !important;
+        opacity: 1 !important;
+        overflow: visible;
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    .o_x2m_line_search_input::-webkit-search-cancel-button,
+    .o_x2m_line_search_input::-webkit-search-decoration {
+        -webkit-appearance: none;
+        appearance: none;
+        display: none;
+    }
+
+    .o_x2m_line_search_input::placeholder {
+        color: #6c757d;
+        -webkit-text-fill-color: #6c757d;
+        opacity: 1;
+    }
+
+    .o_x2m_line_search_clear {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background-color: transparent;
+        color: #6c757d;
+        font-size: 12px;
+        line-height: 1;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #f1f3f5;
+            color: #212529;
+        }
+    }
+
+    .o_x2m_line_search_counter {
+        font-size: 11px;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+    }
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="ydod_web_x2many_line_search.LineSearchBox">
+        <div class="o_x2m_line_search d-flex align-items-center gap-2" t-ref="root">
+            <div class="o_x2m_line_search_group">
+                <i t-attf-class="fa o_x2m_line_search_icon {{ lineSearch.loading ? 'fa-circle-o-notch o_x2m_line_search_spin' : 'fa-search' }}"
+                   role="img"
+                   aria-hidden="true"/>
+                <input type="search"
+                       class="o_x2m_line_search_input"
+                       placeholder="Search lines..."
+                       aria-label="Search lines"
+                       title="Search lines (Alt+F)"
+                       autocomplete="off"
+                       spellcheck="false"
+                       t-ref="input"
+                       t-att-value="lineSearch.query"
+                       t-on-input="onInput"
+                       t-on-keydown="onKeydown"/>
+                <button t-if="lineSearch.query"
+                        type="button"
+                        class="o_x2m_line_search_clear"
+                        title="Clear search"
+                        aria-label="Clear search"
+                        t-on-click="() => this.props.onClear()">
+                    <i class="fa fa-times" role="img" aria-hidden="true"/>
+                </button>
+            </div>
+            <span t-if="lineSearch.filtering"
+                  class="o_x2m_line_search_counter badge text-bg-light border"
+                  title="Matching lines / total lines">
+                <t t-out="lineSearch.matched"/> / <t t-out="lineSearch.total"/>
+            </span>
+        </div>
+    </t>
+</templates>
