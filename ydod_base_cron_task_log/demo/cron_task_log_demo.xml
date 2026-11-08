@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_log_vacuum_success" model="cron.task.log">
+        <field name="cron_id" ref="base.autovacuum_job"/>
+        <field name="date_start" eval="(DateTime.now() - relativedelta(days=1, minutes=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="date_end" eval="(DateTime.now() - relativedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="status">success</field>
+        <field name="record_count">1284</field>
+        <field name="message">Removed 1284 expired transient records</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_log_vacuum_success_today" model="cron.task.log">
+        <field name="cron_id" ref="base.autovacuum_job"/>
+        <field name="date_start" eval="(DateTime.now() - relativedelta(hours=1, seconds=95)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="date_end" eval="(DateTime.now() - relativedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="status">success</field>
+        <field name="record_count">312</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_log_mail_failed" model="cron.task.log">
+        <field name="cron_id" ref="mail.ir_cron_mail_scheduler_action"/>
+        <field name="date_start" eval="(DateTime.now() - relativedelta(hours=3, seconds=4)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="date_end" eval="(DateTime.now() - relativedelta(hours=3)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="status">failed</field>
+        <field name="error_summary">ConnectionRefusedError: [Errno 111] Connection refused</field>
+        <field name="traceback">Traceback (most recent call last):
+  File "/usr/lib/python3/dist-packages/odoo/addons/base/models/ir_cron.py", line 705, in _callback
+    self.env['ir.actions.server'].browse(server_action_id).run()
+  File "/usr/lib/python3/dist-packages/odoo/addons/mail/models/mail_mail.py", line 512, in process_email_queue
+    res = mails.send(auto_commit=auto_commit)
+  File "/usr/lib/python3/dist-packages/odoo/addons/base/models/ir_mail_server.py", line 380, in connect
+    connection = SMTP_SSL(host, port, timeout=SMTP_TIMEOUT)
+ConnectionRefusedError: [Errno 111] Connection refused</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_log_mail_rerun" model="cron.task.log">
+        <field name="cron_id" ref="mail.ir_cron_mail_scheduler_action"/>
+        <field name="date_start" eval="(DateTime.now() - relativedelta(hours=2, seconds=7)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="date_end" eval="(DateTime.now() - relativedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="status">success</field>
+        <field name="trigger_type">manual</field>
+        <field name="record_count">27</field>
+        <field name="message">27 queued emails sent</field>
+        <field name="rerun_of_id" ref="demo_log_mail_failed"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_log_notification_skipped" model="cron.task.log">
+        <field name="cron_id" ref="mail.ir_cron_delete_notification"/>
+        <field name="date_start" eval="(DateTime.now() - relativedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="date_end" eval="(DateTime.now() - relativedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="status">skipped</field>
+        <field name="message">Nothing to delete</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_log_users_timeout" model="cron.task.log">
+        <field name="cron_id" ref="base.ir_cron_res_users_deletion"/>
+        <field name="date_start" eval="(DateTime.now() - relativedelta(hours=5)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="status">timeout</field>
+        <field name="error_summary">No result after 60 minutes: the worker was probably killed (limit_time_real) or the server restarted.</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <record id="demo_log_users_success" model="cron.task.log">
+        <field name="cron_id" ref="base.ir_cron_res_users_deletion"/>
+        <field name="date_start" eval="(DateTime.now() - relativedelta(days=3, seconds=12)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="date_end" eval="(DateTime.now() - relativedelta(days=3)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="status">success</field>
+        <field name="record_count">4</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+</odoo>
