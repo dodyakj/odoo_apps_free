@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="param_success_retention_days" model="ir.config_parameter">
+            <field name="key">ydod_base_cron_task_log.success_retention_days</field>
+            <field name="value">30</field>
+        </record>
+        <record id="param_failed_retention_days" model="ir.config_parameter">
+            <field name="key">ydod_base_cron_task_log.failed_retention_days</field>
+            <field name="value">90</field>
+        </record>
+        <record id="param_timeout_minutes" model="ir.config_parameter">
+            <field name="key">ydod_base_cron_task_log.timeout_minutes</field>
+            <field name="value">60</field>
+        </record>
+    </data>
+
+    <record id="ir_cron_cron_task_log_timeouts" model="ir.cron">
+        <field name="name">Cron Task Log: Detect timeouts</field>
+        <field name="model_id" ref="model_cron_task_log"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_mark_timeouts()</field>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <field name="log_enabled" eval="False"/>
+        <field name="priority">6</field>
+    </record>
+
+    <record id="ir_cron_cron_task_log_purge" model="ir.cron">
+        <field name="name">Cron Task Log: Purge old logs</field>
+        <field name="model_id" ref="model_cron_task_log"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_purge_logs()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="priority">8</field>
+    </record>
+</odoo>

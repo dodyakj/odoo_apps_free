@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_view_form_inherit_cron_task_log" model="ir.ui.view">
+        <field name="name">ir.cron.form.cron.task.log</field>
+        <field name="model">ir.cron</field>
+        <field name="inherit_id" ref="base.ir_cron_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_cron_logs" type="object" class="oe_stat_button" icon="fa-history">
+                    <field name="log_count" widget="statinfo" string="Logs"/>
+                </button>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="after">
+                <div class="alert alert-danger" role="alert"
+                     invisible="not last_log_date or last_log_status not in ('failed', 'timeout')">
+                    <i class="fa fa-exclamation-triangle me-1" title="Failed"/>
+                    Last run: <field name="last_log_status" readonly="1" class="fw-bold"/>
+                    on <field name="last_log_date" readonly="1" class="fw-bold"/>
+                </div>
+                <div class="alert alert-success" role="status"
+                     invisible="not last_log_date or last_log_status in ('failed', 'timeout')">
+                    <i class="fa fa-check-circle me-1" title="Success"/>
+                    Last run: <field name="last_log_status" readonly="1" class="fw-bold"/>
+                    on <field name="last_log_date" readonly="1" class="fw-bold"/>
+                </div>
+            </xpath>
+            <xpath expr="//sheet" position="inside">
+                <group string="Run Log" name="cron_task_log">
+                    <group>
+                        <field name="log_enabled" widget="boolean_toggle"/>
+                        <field name="log_alert_channel_id" invisible="not log_enabled"/>
+                    </group>
+                    <group>
+                        <field name="log_retention_success_days" invisible="not log_enabled"/>
+                        <field name="log_retention_failed_days" invisible="not log_enabled"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="ir_cron_view_kanban_cron_task_log" model="ir.ui.view">
+        <field name="name">ir.cron.kanban.cron.task.log</field>
+        <field name="model">ir.cron</field>
+        <field name="arch" type="xml">
+            <kanban highlight_color="log_color" create="0">
+                <field name="state"/>
+                <field name="active"/>
+                <t t-name="card">
+                    <div class="d-flex align-items-start">
+                        <field name="name" class="fw-bold fs-5 text-truncate flex-grow-1"/>
+                        <field name="last_log_status" widget="label_selection" class="ms-2"
+                               options="{'classes': {'success': 'success', 'skipped': 'info', 'running': 'warning', 'failed': 'danger', 'timeout': 'danger'}}"/>
+                    </div>
+                    <div class="text-muted small">
+                        <i class="fa fa-clock-o me-1" title="Last run"/>
+                        <t t-if="record.last_log_date.raw_value"><field name="last_log_date"/></t>
+                        <t t-else="">Never logged</t>
+                        <span t-if="!record.active.raw_value" class="badge text-bg-secondary ms-2">Archived</span>
+                    </div>
+                    <div class="row g-0 mt-2 text-center">
+                        <div class="col-4">
+                            <div class="fw-bold"><field name="success_rate_7d"/> %</div>
+                            <div class="small text-muted">Success 7d</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="fw-bold"><field name="avg_duration_7d"/> s</div>
+                            <div class="small text-muted">Avg duration</div>
+                        </div>
+                        <div class="col-4">
+                            <div t-att-class="record.failure_count_7d.raw_value ? 'fw-bold text-danger' : 'fw-bold'">
+                                <field name="failure_count_7d"/>
+                            </div>
+                            <div class="small text-muted">Failures 7d</div>
+                        </div>
+                    </div>
+                    <footer class="mt-2">
+                        <button name="action_view_cron_logs" type="object" class="btn btn-sm btn-secondary">
+                            <i class="fa fa-history me-1" title="Logs"/>Logs (<field name="log_count"/>)
+                        </button>
+                        <button name="method_direct_trigger" type="object" class="btn btn-sm btn-primary ms-auto"
+                                invisible="state != 'code'">
+                            <i class="fa fa-play me-1" title="Run Manually"/>Run Manually
+                        </button>
+                    </footer>
+                </t>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_cron_task_log_dashboard" model="ir.actions.act_window">
+        <field name="name">Cron Dashboard</field>
+        <field name="res_model">ir.cron</field>
+        <field name="path">cron-dashboard</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="view_id" ref="ir_cron_view_kanban_cron_task_log"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No scheduled action found</p>
+            <p>Each card shows the last run, the 7-day success rate and the average duration of a Scheduled Action.</p>
+        </field>
+    </record>
+</odoo>

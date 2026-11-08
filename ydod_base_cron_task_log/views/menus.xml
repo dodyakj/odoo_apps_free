@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_cron_task_log_dashboard" name="Cron Dashboard"
+              parent="base.menu_automation" action="action_cron_task_log_dashboard"
+              sequence="3" groups="base.group_system"/>
+    <menuitem id="menu_cron_task_log" name="Cron Task Logs"
+              parent="base.menu_automation" action="action_cron_task_log"
+              sequence="4" groups="base.group_system"/>
+</odoo>
