@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- same sequence as base.menu_ir_cron_act: listed right after Scheduled Actions -->
+    <menuitem id="menu_cron_task_log_dashboard" name="Cron Dashboard"
+              parent="base.menu_automation" action="action_cron_task_log_dashboard"
+              sequence="2" groups="base.group_system"/>
+    <menuitem id="menu_cron_task_log" name="Cron Task Logs"
+              parent="base.menu_automation" action="action_cron_task_log"
+              sequence="2" groups="base.group_system"/>
+</odoo>
