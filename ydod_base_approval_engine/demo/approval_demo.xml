@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Rules -->
+    <record id="demo_rule_us_customers" model="ydod.approval.rule">
+        <field name="name">Archive US Business Customers</field>
+        <field name="sequence">10</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="domain">[('is_company', '=', True), ('country_id.code', '=', 'US')]</field>
+        <field name="method_names">action_archive</field>
+        <field name="approver_user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+        <field name="note">Business customers in the United States may only be archived after a finance controller has checked open balances.</field>
+    </record>
+    <record id="demo_rule_company_restore" model="ydod.approval.rule">
+        <field name="name">Restore Archived Companies</field>
+        <field name="sequence">20</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="domain">[('is_company', '=', True)]</field>
+        <field name="method_names">action_unarchive</field>
+        <field name="approver_group_id" ref="ydod_base_approval_engine.group_approval_manager"/>
+    </record>
+    <record id="demo_rule_currency" model="ydod.approval.rule">
+        <field name="name">Currency Activation</field>
+        <field name="sequence">30</field>
+        <field name="model_id" ref="base.model_res_currency"/>
+        <field name="domain">[]</field>
+        <field name="method_names">action_unarchive</field>
+        <field name="approver_user_ids" eval="[Command.set([ref('base.user_admin'), ref('base.user_demo')])]"/>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="demo_rule_bank" model="ydod.approval.rule">
+        <field name="name">Bank Account Removal</field>
+        <field name="sequence">40</field>
+        <field name="model_id" ref="base.model_res_partner_bank"/>
+        <field name="domain">[]</field>
+        <field name="method_names">action_archive</field>
+        <field name="approver_user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+        <field name="active" eval="False"/>
+    </record>
+
+    <!-- Requests -->
+    <record id="demo_request_1" model="ydod.approval.request">
+        <field name="res_model">res.partner</field>
+        <field name="res_id" ref="base.res_partner_1"/>
+        <field name="res_name">Wood Corner</field>
+        <field name="rule_id" ref="demo_rule_us_customers"/>
+        <field name="requester_id" ref="base.user_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="approver_user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+    </record>
+    <record id="demo_request_2" model="ydod.approval.request">
+        <field name="res_model">res.partner</field>
+        <field name="res_id" ref="base.res_partner_3"/>
+        <field name="res_name">Gemini Furniture</field>
+        <field name="rule_id" ref="demo_rule_us_customers"/>
+        <field name="requester_id" ref="base.user_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="approver_user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+    </record>
+    <record id="demo_request_3" model="ydod.approval.request">
+        <field name="res_model">res.partner</field>
+        <field name="res_id" ref="base.res_partner_4"/>
+        <field name="res_name">Ready Mat</field>
+        <field name="rule_id" ref="demo_rule_us_customers"/>
+        <field name="requester_id" ref="base.user_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="approver_user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+        <field name="state">approved</field>
+        <field name="decided_by_id" ref="base.user_admin"/>
+        <field name="decision_date" eval="(DateTime.today() - relativedelta(days=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+    </record>
+    <record id="demo_request_4" model="ydod.approval.request">
+        <field name="res_model">res.partner</field>
+        <field name="res_id" ref="base.res_partner_12"/>
+        <field name="res_name">Azure Interior</field>
+        <field name="rule_id" ref="demo_rule_us_customers"/>
+        <field name="requester_id" ref="base.user_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="approver_user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+        <field name="state">rejected</field>
+        <field name="decided_by_id" ref="base.user_admin"/>
+        <field name="decision_date" eval="(DateTime.today() - relativedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="reject_reason">Two invoices are still unpaid. Archive the customer after the balance is settled.</field>
+    </record>
+    <record id="demo_request_5" model="ydod.approval.request">
+        <field name="res_model">res.partner</field>
+        <field name="res_id" ref="base.res_partner_10"/>
+        <field name="res_name">The Jackson Group</field>
+        <field name="rule_id" ref="demo_rule_company_restore"/>
+        <field name="requester_id" ref="base.user_admin"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="approver_group_id" ref="ydod_base_approval_engine.group_approval_manager"/>
+    </record>
+    <record id="demo_request_6" model="ydod.approval.request">
+        <field name="res_model">res.partner</field>
+        <field name="res_id" ref="base.res_partner_18"/>
+        <field name="res_name">Lumber Inc</field>
+        <field name="rule_id" ref="demo_rule_us_customers"/>
+        <field name="requester_id" ref="base.user_admin"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="approver_user_ids" eval="[Command.set([ref('base.user_admin')])]"/>
+        <field name="state">cancelled</field>
+        <field name="decided_by_id" ref="base.user_admin"/>
+        <field name="decision_date" eval="(DateTime.today() - relativedelta(days=3)).strftime('%Y-%m-%d %H:%M:%S')"/>
+    </record>
+</odoo>
