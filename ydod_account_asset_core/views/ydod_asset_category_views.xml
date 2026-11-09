@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ydod_asset_category_list" model="ir.ui.view">
+        <field name="name">ydod.asset.category.list</field>
+        <field name="model">ydod.asset.category</field>
+        <field name="arch" type="xml">
+            <tree string="Asset Categories">
+                <field name="name"/>
+                <field name="company_id" column_invisible="1"/>
+                <field name="account_asset_id"/>
+                <field name="account_depreciation_id"/>
+                <field name="account_expense_id"/>
+                <field name="journal_id"/>
+                <field name="method_number"/>
+                <field name="method_period"/>
+                <field name="auto_create" widget="boolean_toggle" readonly="1" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ydod_asset_category_form" model="ir.ui.view">
+        <field name="name">ydod.asset.category.form</field>
+        <field name="model">ydod.asset.category</field>
+        <field name="arch" type="xml">
+            <form string="Asset Category">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_assets" type="object" class="oe_stat_button" icon="fa-building">
+                            <field name="asset_count" widget="statinfo" string="Assets"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Vehicles"/></h1>
+                    </div>
+                    <group>
+                        <group string="Accounts" name="accounts">
+                            <field name="account_asset_id"/>
+                            <field name="account_depreciation_id"/>
+                            <field name="account_expense_id"/>
+                            <field name="journal_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Depreciation" name="depreciation">
+                            <label for="method_number"/>
+                            <div class="o_row">
+                                <field name="method_number"/>
+                                <field name="method_period"/>
+                            </div>
+                            <field name="prorata"/>
+                            <field name="auto_create"/>
+                            <field name="auto_confirm" invisible="not auto_create"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ydod_asset_category_search" model="ir.ui.view">
+        <field name="name">ydod.asset.category.search</field>
+        <field name="model">ydod.asset.category</field>
+        <field name="arch" type="xml">
+            <search string="Asset Categories">
+                <field name="name"/>
+                <field name="account_asset_id"/>
+                <filter string="Created from Bills" name="auto_create" domain="[('auto_create', '=', True)]"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter string="Period" name="group_period" context="{'group_by': 'method_period'}"/>
+                    <filter string="Company" name="group_company" context="{'group_by': 'company_id'}"
+                            groups="base.group_multi_company"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_ydod_asset_category" model="ir.actions.act_window">
+        <field name="name">Asset Categories</field>
+        <field name="res_model">ydod.asset.category</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first asset category</p>
+            <p>A category defines the accounts, journal and useful life used to depreciate its assets.</p>
+        </field>
+    </record>
+</odoo>
