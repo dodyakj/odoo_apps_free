@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_approval_rule_list" model="ir.ui.view">
+        <field name="name">ydod.approval.rule.list</field>
+        <field name="model">ydod.approval.rule</field>
+        <field name="arch" type="xml">
+            <list string="Approval Rules">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="method_names"/>
+                <field name="approver_user_ids" widget="many2many_avatar_user" optional="show"/>
+                <field name="approver_group_id" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_approval_rule_form" model="ir.ui.view">
+        <field name="name">ydod.approval.rule.form</field>
+        <field name="model">ydod.approval.rule</field>
+        <field name="arch" type="xml">
+            <form string="Approval Rule">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_pending" type="object" class="oe_stat_button" icon="schedule">
+                            <field name="request_pending_count" string="Pending" widget="statinfo"/>
+                        </button>
+                        <button name="action_view_decided" type="object" class="oe_stat_button" icon="task_alt">
+                            <field name="request_decided_count" string="Decided" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Large Sales Orders"/></h1>
+                    </div>
+                    <group>
+                        <group string="Documents">
+                            <field name="model_id" options="{'no_create': True}"/>
+                            <field name="model_name" invisible="1"/>
+                            <field name="method_names" placeholder="action_confirm,action_post"/>
+                            <field name="sequence"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Approvers">
+                            <field name="approver_user_ids" widget="many2many_avatar_user"/>
+                            <field name="approver_group_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="server_action_id" groups="base.group_no_one"/>
+                        </group>
+                    </group>
+                    <group string="Condition">
+                        <field name="domain" widget="domain" options="{'model': 'model_name'}" invisible="not model_name" nolabel="1" colspan="2"/>
+                    </group>
+                    <field name="note" placeholder="Internal notes about this rule..."/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_approval_rule_search" model="ir.ui.view">
+        <field name="name">ydod.approval.rule.search</field>
+        <field name="model">ydod.approval.rule</field>
+        <field name="arch" type="xml">
+            <search string="Approval Rules">
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="approver_user_ids"/>
+                <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="groupby_model" string="Model" context="{'group_by': 'model_id'}"/>
+                    <filter name="groupby_company" string="Company" context="{'group_by': 'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_approval_rule" model="ir.actions.act_window">
+        <field name="name">Approval Rules</field>
+        <field name="res_model">ydod.approval.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first approval rule</p>
+            <p>Pick a model, a condition and the confirm methods to guard, then choose who approves.</p>
+        </field>
+    </record>
+</odoo>

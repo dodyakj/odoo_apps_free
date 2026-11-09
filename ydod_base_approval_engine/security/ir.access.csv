@@ -1,0 +1,8 @@
+id,name,model_id,group_id/id,operation,domain
+access_rule_user,rule user,ydod.approval.rule,base.group_user,r,
+access_rule_manager,rule manager,ydod.approval.rule,ydod_base_approval_engine.group_approval_manager,crud,
+access_rule_company,rule multi-company,ydod.approval.rule,,crud,"[('company_id', 'in', company_ids + [False])]"
+access_request_user,request user,ydod.approval.request,base.group_user,r,"['|', '|', ('requester_id', '=', user.id), ('approver_user_ids', 'in', [user.id]), ('approver_group_id', 'in', user.all_group_ids.ids)]"
+access_request_manager,request manager,ydod.approval.request,ydod_base_approval_engine.group_approval_manager,crud,
+access_request_company,request multi-company,ydod.approval.request,,crud,"[('company_id', 'in', company_ids + [False])]"
+access_reject_wizard_user,reject wizard,ydod.approval.reject.wizard,base.group_user,crud,

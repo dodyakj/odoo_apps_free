@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_approval_request_list" model="ir.ui.view">
+        <field name="name">ydod.approval.request.list</field>
+        <field name="model">ydod.approval.request</field>
+        <field name="arch" type="xml">
+            <list string="Approval Requests" create="0"
+                  decoration-info="state == 'to_approve'" decoration-muted="state == 'cancelled'">
+                <header>
+                    <button name="action_approve" type="object" string="Approve" class="btn-primary"/>
+                    <button name="action_reject" type="object" string="Reject"/>
+                </header>
+                <field name="name"/>
+                <field name="res_name"/>
+                <field name="res_model" optional="show"/>
+                <field name="rule_id"/>
+                <field name="requester_id" widget="many2one_avatar_user"/>
+                <field name="approver_user_ids" widget="many2many_avatar_user" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="create_date" string="Requested On" optional="show"/>
+                <field name="decision_date" optional="show"/>
+                <field name="can_decide" column_invisible="1"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'to_approve'" decoration-success="state == 'approved'"
+                       decoration-danger="state == 'rejected'" decoration-muted="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_approval_request_form" model="ir.ui.view">
+        <field name="name">ydod.approval.request.form</field>
+        <field name="model">ydod.approval.request</field>
+        <field name="arch" type="xml">
+            <form string="Approval Request" create="0">
+                <header>
+                    <button name="action_approve" type="object" string="Approve" class="btn-primary"
+                            invisible="state != 'to_approve' or not can_decide" data-hotkey="v"/>
+                    <button name="action_reject" type="object" string="Reject"
+                            invisible="state != 'to_approve' or not can_decide" data-hotkey="z"/>
+                    <button name="action_cancel" type="object" string="Cancel Request"
+                            invisible="state != 'to_approve'"/>
+                    <button name="action_open_document" type="object" string="Open Document"/>
+                    <field name="state" widget="statusbar" statusbar_visible="to_approve,approved,rejected"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                        <h3><field name="res_name"/></h3>
+                    </div>
+                    <group>
+                        <group string="Document">
+                            <field name="res_model"/>
+                            <field name="res_id" invisible="1"/>
+                            <field name="rule_id"/>
+                            <field name="requester_id" widget="many2one_avatar_user"/>
+                            <field name="create_date" string="Requested On"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Decision">
+                            <field name="approver_user_ids" widget="many2many_avatar_user"/>
+                            <field name="approver_group_id"/>
+                            <field name="can_decide" invisible="1"/>
+                            <field name="decided_by_id" invisible="not decided_by_id"/>
+                            <field name="decision_date" invisible="not decision_date"/>
+                        </group>
+                    </group>
+                    <group string="Reject Reason" invisible="not reject_reason">
+                        <field name="reject_reason" nolabel="1" colspan="2"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_approval_request_kanban" model="ir.ui.view">
+        <field name="name">ydod.approval.request.kanban</field>
+        <field name="model">ydod.approval.request</field>
+        <field name="arch" type="xml">
+            <kanban create="0" default_group_by="state">
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <field name="name" class="fw-bold"/>
+                            <field name="state" widget="badge"
+                                   decoration-info="state == 'to_approve'" decoration-success="state == 'approved'"
+                                   decoration-danger="state == 'rejected'" decoration-muted="state == 'cancelled'"/>
+                        </div>
+                        <field name="res_name" class="fs-5"/>
+                        <field name="res_model" class="text-muted small"/>
+                        <footer>
+                            <field name="rule_id" class="text-muted small"/>
+                            <field name="requester_id" widget="many2one_avatar_user" class="ms-auto"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_approval_request_search" model="ir.ui.view">
+        <field name="name">ydod.approval.request.search</field>
+        <field name="model">ydod.approval.request</field>
+        <field name="arch" type="xml">
+            <search string="Approval Requests">
+                <field name="name"/>
+                <field name="res_name"/>
+                <field name="res_model"/>
+                <field name="rule_id"/>
+                <field name="requester_id"/>
+                <field name="approver_user_ids"/>
+                <filter name="filter_to_approve" string="To Approve" domain="[('state', '=', 'to_approve')]"/>
+                <filter name="filter_my_decision" string="Waiting My Decision"
+                        domain="[('state', '=', 'to_approve'), ('can_decide', '=', True)]"/>
+                <filter name="filter_my_requests" string="My Requests" domain="[('requester_id', '=', uid)]"/>
+                <separator/>
+                <filter name="filter_approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <filter name="filter_rejected" string="Rejected" domain="[('state', '=', 'rejected')]"/>
+                <filter name="filter_cancelled" string="Cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <separator/>
+                <filter name="filter_decision_date" string="Decision Date" date="decision_date"/>
+                <group>
+                    <filter name="groupby_model" string="Model" context="{'group_by': 'res_model'}"/>
+                    <filter name="groupby_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="groupby_requester" string="Requester" context="{'group_by': 'requester_id'}"/>
+                    <filter name="groupby_rule" string="Rule" context="{'group_by': 'rule_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_my_approvals" model="ir.actions.act_window">
+        <field name="name">My Approvals</field>
+        <field name="res_model">ydod.approval.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('state', '=', 'to_approve'), ('can_decide', '=', True)]</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing is waiting for your approval</p>
+            <p>Documents submitted with Action &gt; Request Approval appear here when you are one of their approvers.</p>
+        </field>
+    </record>
+
+    <record id="action_my_requests" model="ir.actions.act_window">
+        <field name="name">My Requests</field>
+        <field name="res_model">ydod.approval.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('requester_id', '=', uid)]</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">You have not requested any approval yet</p>
+            <p>Open a document guarded by an approval rule and use Action &gt; Request Approval.</p>
+        </field>
+    </record>
+
+    <record id="action_all_requests" model="ir.actions.act_window">
+        <field name="name">All Requests</field>
+        <field name="res_model">ydod.approval.request</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="context">{'create': False, 'search_default_filter_to_approve': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No approval request yet</p>
+            <p>Approval requests are created from the Action menu of the documents guarded by a rule.</p>
+        </field>
+    </record>
+</odoo>
