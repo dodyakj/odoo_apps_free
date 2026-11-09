@@ -1,0 +1,7 @@
+id,name,model_id,group_id/id,operation,domain
+access_ydod_asset_user,ydod.asset user,ydod.asset,account.group_account_user,r,
+access_ydod_asset_manager,ydod.asset manager,ydod.asset,account.group_account_manager,crud,
+access_ydod_asset_category_user,ydod.asset.category user,ydod.asset.category,account.group_account_user,r,
+access_ydod_asset_category_manager,ydod.asset.category manager,ydod.asset.category,account.group_account_manager,crud,
+ydod_asset_comp_rule,Assets multi-company,ydod.asset,,crud,"[('company_id', 'in', company_ids)]"
+ydod_asset_category_comp_rule,Asset categories multi-company,ydod.asset.category,,crud,"[('company_id', 'in', company_ids)]"
