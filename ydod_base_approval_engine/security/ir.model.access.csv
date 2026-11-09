@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rule_user,rule user,model_ydod_approval_rule,base.group_user,1,0,0,0
+access_rule_manager,rule manager,model_ydod_approval_rule,ydod_base_approval_engine.group_approval_manager,1,1,1,1
+access_request_user,request user,model_ydod_approval_request,base.group_user,1,0,0,0
+access_request_manager,request manager,model_ydod_approval_request,ydod_base_approval_engine.group_approval_manager,1,1,1,1
+access_reject_wizard_user,reject wizard,model_ydod_approval_reject_wizard,base.group_user,1,1,1,1
