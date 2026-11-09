@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_approval_root" name="Approvals" sequence="45"
+              web_icon="ydod_base_approval_engine,static/description/icon.png"
+              groups="base.group_user"/>
+    <menuitem id="menu_my_approvals" name="My Approvals" parent="menu_approval_root"
+              action="action_my_approvals" sequence="10"/>
+    <menuitem id="menu_my_requests" name="My Requests" parent="menu_approval_root"
+              action="action_my_requests" sequence="20"/>
+    <menuitem id="menu_all_requests" name="All Requests" parent="menu_approval_root"
+              action="action_all_requests" sequence="30"
+              groups="ydod_base_approval_engine.group_approval_manager"/>
+    <menuitem id="menu_approval_rules" name="Rules" parent="menu_approval_root"
+              action="action_approval_rule" sequence="40"
+              groups="ydod_base_approval_engine.group_approval_manager"/>
+
+    <menuitem id="menu_technical_approvals" name="Approvals" parent="base.menu_custom" sequence="90"
+              groups="ydod_base_approval_engine.group_approval_manager"/>
+    <menuitem id="menu_technical_approval_rules" name="Rules" parent="menu_technical_approvals"
+              action="action_approval_rule" sequence="10"/>
+</odoo>
