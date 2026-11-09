@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="ir_cron_post_depreciation" model="ir.cron">
+        <field name="name">Assets: Post Depreciation Entries</field>
+        <field name="model_id" ref="model_ydod_asset"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_post_depreciation()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="nextcall" eval="(DateTime.now().replace(hour=1, minute=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+    </record>
+</odoo>
