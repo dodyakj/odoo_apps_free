@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Categories, manual assets, a vendor bill creating assets, posted and disposed schedules -->
+    <function model="ydod.asset" name="_load_demo_data"/>
+</odoo>
