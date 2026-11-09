@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_ydod_asset_root" name="Assets" parent="account.menu_finance" sequence="5"
+              groups="account.group_account_user,account.group_account_manager">
+        <menuitem id="menu_ydod_asset" name="Assets" action="action_ydod_asset" sequence="10"/>
+        <menuitem id="menu_ydod_depreciation_entries" name="Depreciation Entries"
+                  action="action_ydod_depreciation_entries" sequence="20"/>
+        <menuitem id="menu_ydod_asset_register" name="Asset Register" action="action_ydod_asset_register"
+                  sequence="30"/>
+    </menuitem>
+    <menuitem id="menu_ydod_asset_category" name="Asset Categories" parent="account.menu_finance_configuration"
+              action="action_ydod_asset_category" sequence="15"
+              groups="account.group_account_user,account.group_account_manager"/>
+</odoo>

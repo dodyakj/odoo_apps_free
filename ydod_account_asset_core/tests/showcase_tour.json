@@ -1,0 +1,18 @@
+[
+    {
+        "caption": "Asset form with the straight-line depreciation schedule, smart buttons and chatter",
+        "steps": [
+            {"click": ".o_navbar_apps_menu button"},
+            {"click": ".o_app[data-menu-xmlid='account.menu_finance']"},
+            {"click": "[data-menu-xmlid='ydod_account_asset_core.menu_ydod_asset_root']"},
+            {"click": "[data-menu-xmlid='ydod_account_asset_core.menu_ydod_asset']"},
+            {"wait": ".o_list_renderer .o_data_row"},
+            {"fill": ".o_searchview_input", "text": "Laptop Dell"},
+            {"press": "Enter"},
+            {"pause": 800},
+            {"click": ".o_list_renderer .o_data_row td[name='name']"},
+            {"wait": ".o_form_view .o_notebook .o_data_row"},
+            {"pause": 600}
+        ]
+    }
+]
