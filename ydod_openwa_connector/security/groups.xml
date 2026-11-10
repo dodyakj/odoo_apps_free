@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_category_openwa" model="ir.module.category">
+        <field name="name">WhatsApp (OpenWA)</field>
+        <field name="parent_id" ref="base.module_category_productivity"/>
+        <field name="sequence">60</field>
+    </record>
+
+    <record id="group_openwa_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_openwa"/>
+        <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
+    </record>
+
+    <record id="group_openwa_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_openwa"/>
+        <field name="implied_ids" eval="[Command.link(ref('group_openwa_user'))]"/>
+    </record>
+
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[Command.link(ref('group_openwa_manager'))]"/>
+    </record>
+</odoo>

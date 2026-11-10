@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_openwa_root" name="WhatsApp" sequence="45"
+              web_icon="ydod_openwa_connector,static/description/icon.png"
+              groups="ydod_openwa_connector.group_openwa_user"/>
+    <menuitem id="menu_openwa_message" name="Messages" parent="menu_openwa_root"
+              action="action_openwa_message" sequence="10"/>
+    <menuitem id="menu_openwa_config" name="Configuration" parent="menu_openwa_root" sequence="90"
+              groups="ydod_openwa_connector.group_openwa_manager"/>
+    <menuitem id="menu_openwa_session" name="Sessions" parent="menu_openwa_config"
+              action="action_openwa_session" sequence="10"/>
+    <menuitem id="menu_openwa_settings" name="Settings" parent="menu_openwa_config"
+              action="action_openwa_settings" sequence="20" groups="base.group_system"/>
+</odoo>
