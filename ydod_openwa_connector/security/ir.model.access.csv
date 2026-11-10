@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_openwa_session_user,openwa.session user,model_openwa_session,group_openwa_user,1,0,0,0
+access_openwa_session_manager,openwa.session manager,model_openwa_session,group_openwa_manager,1,1,1,1
+access_openwa_message_user,openwa.message user,model_openwa_message,group_openwa_user,1,0,0,0
+access_openwa_message_manager,openwa.message manager,model_openwa_message,group_openwa_manager,1,1,1,1
+access_openwa_send_wizard_user,openwa.send.wizard user,model_openwa_send_wizard,group_openwa_user,1,1,1,1

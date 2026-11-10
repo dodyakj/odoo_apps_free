@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_openwa" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.openwa</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="WhatsApp" string="WhatsApp" name="ydod_openwa_connector"
+                     logo="/ydod_openwa_connector/static/description/icon.png" groups="base.group_system">
+                    <block title="OpenWA Connection" name="openwa_connection">
+                        <setting string="OpenWA Server" help="Base URL and X-API-Key of your self-hosted OpenWA server">
+                            <div class="content-group">
+                                <div class="row mt8">
+                                    <label for="openwa_base_url" class="col-lg-4 o_light_label"/>
+                                    <field name="openwa_base_url" placeholder="https://wa.example.com"/>
+                                </div>
+                                <div class="row">
+                                    <label for="openwa_api_key" class="col-lg-4 o_light_label"/>
+                                    <field name="openwa_api_key" password="True"/>
+                                </div>
+                                <div class="row">
+                                    <label for="openwa_timeout" class="col-lg-4 o_light_label"/>
+                                    <field name="openwa_timeout"/>
+                                </div>
+                                <button name="action_openwa_test_connection" type="object" string="Test Connection"
+                                        icon="fa-plug" class="btn-link mt8"/>
+                            </div>
+                        </setting>
+                        <setting string="Webhook Security" help="HMAC-SHA256 secret used to sign the webhook calls (X-OpenWA-Signature header)">
+                            <field name="openwa_webhook_secret" password="True"/>
+                        </setting>
+                        <setting string="Default Session" help="Session pre-selected in the Send WhatsApp dialog and used by send_message()">
+                            <field name="openwa_default_session_id" options="{'no_create': True}"/>
+                        </setting>
+                        <setting string="Country Code" help="Prefix replacing a leading 0 in phone numbers (62 for Indonesia)">
+                            <field name="openwa_country_code"/>
+                        </setting>
+                    </block>
+                    <block title="Inbox &amp; Safety" name="openwa_safety">
+                        <setting string="Fallback User" help="Receives incoming chats in Discuss when a session has no inbox users">
+                            <field name="openwa_fallback_user_id" options="{'no_create': True}"/>
+                        </setting>
+                        <setting help="Block sending to contacts who did not tick WhatsApp Opt-in, to reduce the risk of a ban">
+                            <field name="openwa_require_opt_in"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_openwa_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+        <field name="context">{'module': 'ydod_openwa_connector', 'bin_size': False}</field>
+    </record>
+</odoo>
