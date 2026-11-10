@@ -1,0 +1,6 @@
+id,name,model_id,group_id/id,operation,domain
+access_openwa_session_user,openwa.session user,openwa.session,ydod_openwa_connector.group_openwa_user,r,"[('company_id', 'in', company_ids)]"
+access_openwa_session_manager,openwa.session manager,openwa.session,ydod_openwa_connector.group_openwa_manager,crud,"[('company_id', 'in', company_ids)]"
+access_openwa_message_user,openwa.message user,openwa.message,ydod_openwa_connector.group_openwa_user,r,"[('user_id', '=', user.id)]"
+access_openwa_message_manager,openwa.message manager,openwa.message,ydod_openwa_connector.group_openwa_manager,crud,"[('company_id', 'in', company_ids)]"
+access_openwa_send_wizard_user,openwa.send.wizard user,openwa.send.wizard,ydod_openwa_connector.group_openwa_user,crud,

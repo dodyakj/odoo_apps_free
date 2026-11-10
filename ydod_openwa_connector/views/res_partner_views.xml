@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_openwa" model="ir.ui.view">
+        <field name="name">res.partner.form.openwa</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header groups="ydod_openwa_connector.group_openwa_user">
+                    <button name="%(ydod_openwa_connector.action_openwa_send_wizard)d" type="action"
+                            string="Send WhatsApp" icon="fa-whatsapp" class="btn-secondary" invisible="not phone"/>
+                </header>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_openwa_messages" type="object" class="oe_stat_button" icon="fa-whatsapp"
+                        groups="ydod_openwa_connector.group_openwa_user">
+                    <field name="openwa_message_count" widget="statinfo" string="Messages"/>
+                </button>
+            </xpath>
+            <xpath expr="(//sheet//field[@name='phone'])[1]/.." position="after">
+                <div class="d-flex align-items-baseline w-md-50" invisible="not phone">
+                    <i class="fa fa-fw me-1 fa-whatsapp text-success" title="WhatsApp"/>
+                    <field name="whatsapp_opt_in" nolabel="1"/>
+                    <label for="whatsapp_opt_in" string="Agreed to WhatsApp contact" class="fw-normal ms-1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

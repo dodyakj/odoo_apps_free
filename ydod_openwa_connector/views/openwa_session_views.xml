@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_openwa_session_form" model="ir.ui.view">
+        <field name="name">openwa.session.form</field>
+        <field name="model">openwa.session</field>
+        <field name="arch" type="xml">
+            <form string="WhatsApp Session">
+                <header>
+                    <button name="action_create_on_server" string="Create on Server" type="object" class="btn-primary"
+                            invisible="remote_id" groups="ydod_openwa_connector.group_openwa_manager"/>
+                    <button name="action_start" string="Start" type="object" class="btn-primary"
+                            invisible="not remote_id or status in ('connected', 'pairing')"
+                            groups="ydod_openwa_connector.group_openwa_manager"/>
+                    <button name="action_refresh" string="Refresh Status / QR" type="object"
+                            invisible="not remote_id" groups="ydod_openwa_connector.group_openwa_manager"/>
+                    <button name="action_stop" string="Stop" type="object"
+                            invisible="status not in ('connected', 'pairing')"
+                            groups="ydod_openwa_connector.group_openwa_manager"/>
+                    <field name="status" widget="statusbar" statusbar_visible="disconnected,pairing,connected"/>
+                </header>
+                <div class="alert alert-warning mb-0" role="alert">
+                    <i class="fa fa-exclamation-triangle me-1"/>
+                    <strong>Ban risk:</strong> OpenWA drives WhatsApp Web through an unofficial client
+                    (whatsapp-web.js / Baileys). WhatsApp may ban numbers that send bulk or unsolicited messages.
+                    Use a dedicated business number, only contact customers who opted in, and keep the pacing limits.
+                </div>
+                <div class="alert alert-danger mb-0" role="alert" invisible="not last_error">
+                    <field name="last_error"/>
+                </div>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_messages" type="object" class="oe_stat_button" icon="fa-whatsapp">
+                            <field name="wa_message_count" widget="statinfo" string="Messages"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Sales Jakarta"/></h1>
+                    </div>
+                    <group>
+                        <group string="Connection">
+                            <field name="remote_id"/>
+                            <field name="phone_number"/>
+                            <field name="last_status_at"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="webhook_url" groups="base.group_system" widget="CopyClipboardChar"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Safety &amp; Pacing">
+                            <field name="dedicated_number_confirmed"/>
+                            <field name="min_delay_seconds"/>
+                            <field name="hourly_cap"/>
+                            <field name="is_usable"/>
+                        </group>
+                    </group>
+                    <group string="Pairing QR Code" invisible="status != 'pairing'">
+                        <div colspan="2">
+                            <p class="text-muted">Open WhatsApp on the phone, go to Linked Devices and scan this code. Then click Refresh Status / QR.</p>
+                            <field name="qr_image" widget="image" nolabel="1" options="{'size': [280, 280]}"/>
+                        </div>
+                    </group>
+                    <group string="Discuss Inbox">
+                        <field name="user_ids" widget="many2many_tags_avatar"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_openwa_session_list" model="ir.ui.view">
+        <field name="name">openwa.session.list</field>
+        <field name="model">openwa.session</field>
+        <field name="arch" type="xml">
+            <list string="WhatsApp Sessions">
+                <field name="name"/>
+                <field name="phone_number"/>
+                <field name="remote_id" optional="hide"/>
+                <field name="status" widget="badge" decoration-success="status == 'connected'"
+                       decoration-danger="status == 'failed'" decoration-warning="status == 'pairing'"/>
+                <field name="dedicated_number_confirmed" optional="show"/>
+                <field name="hourly_cap" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_openwa_session_kanban" model="ir.ui.view">
+        <field name="name">openwa.session.kanban</field>
+        <field name="model">openwa.session</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <field name="name" class="fw-bold fs-5"/>
+                            <field name="status" widget="badge" decoration-success="status == 'connected'"
+                                   decoration-danger="status == 'failed'" decoration-warning="status == 'pairing'"/>
+                        </div>
+                        <field name="phone_number" class="text-muted"/>
+                        <div class="mt-2"><i class="fa fa-whatsapp me-1" title="Messages"/><field name="wa_message_count"/> messages</div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_openwa_session_search" model="ir.ui.view">
+        <field name="name">openwa.session.search</field>
+        <field name="model">openwa.session</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="phone_number"/>
+                <filter name="connected" string="Connected" domain="[('status', '=', 'connected')]"/>
+                <filter name="not_connected" string="Not Connected" domain="[('status', '!=', 'connected')]"/>
+                <separator/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_company" string="Company" context="{'group_by': 'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_openwa_session" model="ir.actions.act_window">
+        <field name="name">WhatsApp Sessions</field>
+        <field name="res_model">openwa.session</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first WhatsApp session</p>
+            <p>A session is one WhatsApp number paired with your OpenWA server by scanning a QR code.</p>
+        </field>
+    </record>
+</odoo>

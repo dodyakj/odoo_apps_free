@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_openwa_message_list" model="ir.ui.view">
+        <field name="name">openwa.message.list</field>
+        <field name="model">openwa.message</field>
+        <field name="arch" type="xml">
+            <list string="WhatsApp Messages" create="0" decoration-danger="status == 'failed'">
+                <field name="create_date" string="Date"/>
+                <field name="direction" widget="badge" decoration-info="direction == 'in'"/>
+                <field name="partner_id"/>
+                <field name="wa_number"/>
+                <field name="body"/>
+                <field name="session_id" optional="show"/>
+                <field name="user_id" optional="hide" widget="many2one_avatar_user"/>
+                <field name="status" widget="badge" decoration-success="status in ('delivered', 'read')"
+                       decoration-info="status in ('sent', 'received')" decoration-danger="status == 'failed'"/>
+                <field name="error" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_openwa_message_form" model="ir.ui.view">
+        <field name="name">openwa.message.form</field>
+        <field name="model">openwa.message</field>
+        <field name="arch" type="xml">
+            <form string="WhatsApp Message" create="0">
+                <header>
+                    <button name="action_open_related" type="object" string="Open Related Record"
+                            invisible="not res_model or not res_id"/>
+                    <field name="status" widget="statusbar" statusbar_visible="queued,sent,delivered,read"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="wa_number" readonly="1"/></h1>
+                        <field name="direction" widget="badge"/>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="1"/>
+                            <field name="user_id" readonly="1" widget="many2one_avatar_user"/>
+                            <field name="session_id" readonly="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="related_record_name" invisible="not related_record_name"/>
+                            <field name="res_model" invisible="1"/>
+                            <field name="res_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="openwa_message_id"/>
+                            <field name="create_date" string="Created on"/>
+                            <field name="sent_at"/>
+                            <field name="delivered_at"/>
+                            <field name="read_at"/>
+                        </group>
+                    </group>
+                    <group string="Content">
+                        <field name="body" readonly="1" nolabel="1" colspan="2"/>
+                        <field name="attachment_name" readonly="1" invisible="not attachment_name"/>
+                        <field name="attachment_id" readonly="1" invisible="not attachment_id"/>
+                    </group>
+                    <group string="Error" invisible="not error">
+                        <field name="error" nolabel="1" colspan="2" class="text-danger"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_openwa_message_search" model="ir.ui.view">
+        <field name="name">openwa.message.search</field>
+        <field name="model">openwa.message</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id"/>
+                <field name="wa_number"/>
+                <field name="body"/>
+                <field name="session_id"/>
+                <filter name="failed" string="Failed" domain="[('status', '=', 'failed')]"/>
+                <filter name="today" string="Today"
+                        domain="[('create_date', '>=', context_today().strftime('%Y-%m-%d 00:00:00'))]"/>
+                <separator/>
+                <filter name="incoming" string="Incoming" domain="[('direction', '=', 'in')]"/>
+                <filter name="outgoing" string="Outgoing" domain="[('direction', '=', 'out')]"/>
+                <separator/>
+                <filter name="my_messages" string="My Messages" domain="[('user_id', '=', uid)]"/>
+                <group>
+                    <filter name="group_status" string="Status" context="{'group_by': 'status'}"/>
+                    <filter name="group_session" string="Session" context="{'group_by': 'session_id'}"/>
+                    <filter name="group_partner" string="Contact" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_direction" string="Direction" context="{'group_by': 'direction'}"/>
+                    <filter name="group_date" string="Date" context="{'group_by': 'create_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_openwa_message" model="ir.actions.act_window">
+        <field name="name">WhatsApp Messages</field>
+        <field name="res_model">openwa.message</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_openwa_message_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No WhatsApp message yet</p>
+            <p>Send a message with the Send WhatsApp button of a contact. Replies arrive in Discuss and are logged here.</p>
+        </field>
+    </record>
+</odoo>
