@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mcp_model_list" model="ir.ui.view">
+        <field name="name">ydod.mcp.model.list</field>
+        <field name="model">ydod.mcp.model</field>
+        <field name="arch" type="xml">
+            <list string="Allowed Models">
+                <field name="sequence" widget="handle"/>
+                <field name="model_id"/>
+                <field name="model_name"/>
+                <field name="mode" widget="badge" decoration-info="mode == 'read'" decoration-warning="mode == 'readwrite'"/>
+                <field name="row_limit"/>
+                <field name="method_names" optional="show"/>
+                <field name="log_count" optional="show"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_mcp_model_form" model="ir.ui.view">
+        <field name="name">ydod.mcp.model.form</field>
+        <field name="model">ydod.mcp.model</field>
+        <field name="arch" type="xml">
+            <form string="Allowed Model">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_logs" type="object" class="oe_stat_button" icon="fa-list-alt">
+                            <field name="log_count" widget="statinfo" string="Tool Calls"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <label for="model_id"/>
+                        <h1><field name="model_id" options="{'no_create': True, 'no_open': True}" placeholder="e.g. Contact"/></h1>
+                    </div>
+                    <group>
+                        <group string="Exposure">
+                            <field name="model_name"/>
+                            <field name="mode" widget="radio"/>
+                            <field name="row_limit"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="Allowed Methods" invisible="mode != 'readwrite'">
+                            <field name="method_names" placeholder="action_confirm,action_cancel"/>
+                            <div class="text-muted" colspan="2">
+                                Public methods the AI may run with call_method. Private methods (leading underscore) and unlink are always refused.
+                            </div>
+                        </group>
+                    </group>
+                    <group string="Allowed Fields">
+                        <field name="field_ids" widget="many2many_tags" options="{'no_create': True}"
+                               placeholder="Empty = every readable non-binary field" readonly="not model_id"/>
+                    </group>
+                    <group string="Hint for the AI">
+                        <field name="description" nolabel="1" colspan="2" placeholder="e.g. Contacts and companies; use is_company to filter companies."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_mcp_model_search" model="ir.ui.view">
+        <field name="name">ydod.mcp.model.search</field>
+        <field name="model">ydod.mcp.model</field>
+        <field name="arch" type="xml">
+            <search string="Allowed Models">
+                <field name="model_id"/>
+                <field name="model_name"/>
+                <filter name="read_only" string="Read-only" domain="[('mode', '=', 'read')]"/>
+                <filter name="read_write" string="Read-write" domain="[('mode', '=', 'readwrite')]"/>
+                <separator/>
+                <filter name="inactive" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_mode" string="Mode" context="{'group_by': 'mode'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_mcp_model" model="ir.actions.act_window">
+        <field name="name">Allowed Models</field>
+        <field name="res_model">ydod.mcp.model</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Expose your first model to MCP clients</p>
+            <p>Add a model such as Contact (read-only) or Sales Order (read-write), choose its fields, methods and row limit.</p>
+        </field>
+    </record>
+</odoo>

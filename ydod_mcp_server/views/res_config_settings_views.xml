@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_mcp" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.ydod.mcp</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="MCP Server" string="MCP Server" name="ydod_mcp_server"
+                     logo="/ydod_mcp_server/static/description/icon.png" groups="base.group_system">
+                    <block title="MCP Server" name="ydod_mcp_server_general">
+                        <setting id="ydod_mcp_enabled_setting" string="Enable MCP Server"
+                                 help="Global kill switch: when off, every MCP request is refused with a clear error.">
+                            <field name="ydod_mcp_enabled"/>
+                            <div class="content-group mt-2">
+                                <button name="%(action_mcp_model)d" type="action" string="Allowed Models"
+                                        class="btn-link" icon="oi-arrow-right"/>
+                            </div>
+                        </setting>
+                        <setting id="ydod_mcp_limits_setting" string="Limits"
+                                 help="Default rows per call, calls per minute per API key (0 = unlimited) and log retention (0 = keep forever).">
+                            <div class="content-group">
+                                <div class="row mt-2">
+                                    <label for="ydod_mcp_default_limit" class="col-lg-6 o_light_label"/>
+                                    <field name="ydod_mcp_default_limit" class="col-lg-3"/>
+                                </div>
+                                <div class="row">
+                                    <label for="ydod_mcp_rate_limit" class="col-lg-6 o_light_label"/>
+                                    <field name="ydod_mcp_rate_limit" class="col-lg-3"/>
+                                </div>
+                                <div class="row">
+                                    <label for="ydod_mcp_log_retention_days" class="col-lg-6 o_light_label"/>
+                                    <field name="ydod_mcp_log_retention_days" class="col-lg-3"/>
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+                    <block title="Connect an MCP Client" name="ydod_mcp_server_client">
+                        <setting id="ydod_mcp_endpoint_setting" string="Endpoint URL"
+                                 help="Use this URL with an Odoo API key (Preferences &gt; Account Security) as Bearer token.">
+                            <field name="ydod_mcp_endpoint_url" widget="CopyClipboardChar"/>
+                        </setting>
+                        <setting id="ydod_mcp_snippet_setting" string="Client Configuration"
+                                 help="Paste into Claude Desktop, Cursor or run in a terminal for Claude Code.">
+                            <field name="ydod_mcp_client_snippet" widget="CopyClipboardText" class="font-monospace"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_mcp_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="context">{'module': 'ydod_mcp_server', 'bin_size': False}</field>
+    </record>
+</odoo>
