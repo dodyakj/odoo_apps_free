@@ -35,7 +35,7 @@
     'website': 'https://profile.dodyakj.online',
     'support': 'dodyakj@gmail.com',
     'license': 'OPL-1',
-    'price': 11.11,
+    'price': 149.0,
     'currency': 'USD',
     'depends': ['account'],
     'data': [   'security/account_security.xml',
