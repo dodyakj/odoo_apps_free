@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="param_mcp_enabled" model="ir.config_parameter">
+        <field name="key">ydod_mcp_server.enabled</field>
+        <field name="value">True</field>
+    </record>
+    <record id="param_mcp_default_limit" model="ir.config_parameter">
+        <field name="key">ydod_mcp_server.default_limit</field>
+        <field name="value">80</field>
+    </record>
+    <record id="param_mcp_rate_limit" model="ir.config_parameter">
+        <field name="key">ydod_mcp_server.rate_limit</field>
+        <field name="value">60</field>
+    </record>
+    <record id="param_mcp_log_retention_days" model="ir.config_parameter">
+        <field name="key">ydod_mcp_server.log_retention_days</field>
+        <field name="value">30</field>
+    </record>
+</odoo>
