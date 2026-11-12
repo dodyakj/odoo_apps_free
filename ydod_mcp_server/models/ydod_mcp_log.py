@@ -1,0 +1,55 @@
+from datetime import timedelta
+
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
+from odoo.tools.sql import create_index
+
+PURGE_BATCH = 10000
+
+
+class YdodMcpLog(models.Model):
+    _name = 'ydod.mcp.log'
+    _description = 'MCP Tool Call Log'
+    _order = 'date desc, id desc'
+    _rec_name = 'jsonrpc_method'
+
+    date = fields.Datetime(required=True, readonly=True, default=fields.Datetime.now, index=True)
+    user_id = fields.Many2one('res.users', string='User', readonly=True, index=True)
+    company_id = fields.Many2one('res.company', string='Company', readonly=True)
+    api_key_id = fields.Many2one('res.users.apikeys', string='API Key', readonly=True, ondelete='set null')
+    session_id = fields.Char(string='Session', readonly=True, index=True)
+    client_name = fields.Char(readonly=True)
+    client_version = fields.Char(readonly=True)
+    jsonrpc_method = fields.Char(string='JSON-RPC Method', readonly=True)
+    tool = fields.Char(readonly=True, index=True)
+    model_name = fields.Char(string='Model', readonly=True, index=True)
+    arguments = fields.Text(readonly=True)
+    duration_ms = fields.Integer(string='Duration (ms)', readonly=True, group_operator='avg')
+    result_summary = fields.Char(readonly=True)
+    status = fields.Selection(
+        [('success', 'Success'), ('error', 'Error'), ('denied', 'Denied'), ('rate_limited', 'Rate Limited')],
+        required=True, readonly=True, index=True, default='success')
+    error_message = fields.Text(readonly=True)
+
+    def init(self):
+        create_index(self.env.cr, 'ydod_mcp_log_key_date_idx', self._table, ['api_key_id', 'date'])
+        create_index(self.env.cr, 'ydod_mcp_log_session_method_idx', self._table, ['session_id', 'jsonrpc_method'])
+
+    def write(self, vals):
+        raise UserError(_('MCP tool call logs are immutable and cannot be modified.'))
+
+    @api.model
+    def _cron_purge(self):
+        try:
+            days = int(self.env['ir.config_parameter'].sudo().get_param('ydod_mcp_server.log_retention_days', 30))
+        except (TypeError, ValueError):
+            days = 30
+        if days <= 0:
+            return
+        limit_date = fields.Datetime.now() - timedelta(days=days)
+        logs = self.sudo().with_context(active_test=False)
+        while True:
+            batch = logs.search([('date', '<', limit_date)], limit=PURGE_BATCH)
+            if not batch:
+                break
+            batch.unlink()

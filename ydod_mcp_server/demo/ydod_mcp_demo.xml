@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="demo_mcp_model_partner" model="ydod.mcp.model">
+        <field name="sequence">1</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="mode">read</field>
+        <field name="row_limit">50</field>
+        <field name="field_ids" eval="[(6, 0, [
+            ref('base.field_res_partner__name'), ref('base.field_res_partner__email'),
+            ref('base.field_res_partner__phone'), ref('base.field_res_partner__is_company'),
+            ref('base.field_res_partner__country_id')])]"/>
+        <field name="description">Contacts and companies</field>
+    </record>
+    <record id="demo_mcp_model_partner_category" model="ydod.mcp.model">
+        <field name="sequence">2</field>
+        <field name="model_id" ref="base.model_res_partner_category"/>
+        <field name="mode">readwrite</field>
+        <field name="method_names">action_archive,action_unarchive</field>
+        <field name="row_limit">100</field>
+        <field name="description">Contact tags; the AI may create, rename and archive tags.</field>
+    </record>
+    <record id="demo_mcp_model_country" model="ydod.mcp.model">
+        <field name="sequence">3</field>
+        <field name="model_id" ref="base.model_res_country"/>
+        <field name="mode">read</field>
+        <field name="field_ids" eval="[(6, 0, [
+            ref('base.field_res_country__name'), ref('base.field_res_country__code')])]"/>
+        <field name="description">Countries with ISO code, used to resolve country_id on contacts.</field>
+    </record>
+    <record id="demo_mcp_model_currency" model="ydod.mcp.model">
+        <field name="sequence">4</field>
+        <field name="model_id" ref="base.model_res_currency"/>
+        <field name="mode">read</field>
+        <field name="row_limit">20</field>
+        <field name="description">Currencies and their symbols.</field>
+    </record>
+    <record id="demo_mcp_model_industry" model="ydod.mcp.model">
+        <field name="sequence">5</field>
+        <field name="model_id" ref="base.model_res_partner_industry"/>
+        <field name="mode">read</field>
+        <field name="description">Industries (disabled until the sales team needs it).</field>
+        <field name="active" eval="False"/>
+    </record>
+
+    <record id="demo_mcp_log_1" model="ydod.mcp.log">
+        <field name="date" eval="(DateTime.now() - relativedelta(hours=3)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="session_id">5f1c2a9e0b7d4c3fa1e2b3c4d5e6f701</field>
+        <field name="client_name">claude-ai</field>
+        <field name="client_version">0.1.0</field>
+        <field name="jsonrpc_method">initialize</field>
+        <field name="arguments">{"protocolVersion": "2025-06-18", "clientInfo": {"name": "claude-ai", "version": "0.1.0"}}</field>
+        <field name="duration_ms">4</field>
+        <field name="status">success</field>
+    </record>
+    <record id="demo_mcp_log_2" model="ydod.mcp.log">
+        <field name="date" eval="(DateTime.now() - relativedelta(hours=3, minutes=-1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="session_id">5f1c2a9e0b7d4c3fa1e2b3c4d5e6f701</field>
+        <field name="client_name">claude-ai</field>
+        <field name="client_version">0.1.0</field>
+        <field name="jsonrpc_method">tools/call</field>
+        <field name="tool">search_read</field>
+        <field name="model_name">res.partner</field>
+        <field name="arguments">{"model": "res.partner", "domain": [["is_company", "=", true]], "fields": ["name", "email", "country_id"], "limit": 20}</field>
+        <field name="duration_ms">38</field>
+        <field name="result_summary">12 records</field>
+        <field name="status">success</field>
+    </record>
+    <record id="demo_mcp_log_3" model="ydod.mcp.log">
+        <field name="date" eval="(DateTime.now() - relativedelta(hours=2)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="session_id">5f1c2a9e0b7d4c3fa1e2b3c4d5e6f701</field>
+        <field name="client_name">claude-ai</field>
+        <field name="client_version">0.1.0</field>
+        <field name="jsonrpc_method">tools/call</field>
+        <field name="tool">write</field>
+        <field name="model_name">res.partner</field>
+        <field name="arguments">{"model": "res.partner", "ids": [9], "values": {"phone": "+1 555 0100"}}</field>
+        <field name="duration_ms">3</field>
+        <field name="status">error</field>
+        <field name="error_message">Model 'res.partner' is read-only for MCP clients: create, write and call_method are refused.</field>
+    </record>
+    <record id="demo_mcp_log_4" model="ydod.mcp.log">
+        <field name="date" eval="(DateTime.now() - relativedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="session_id">a0b1c2d3e4f5061728394a5b6c7d8e9f</field>
+        <field name="client_name">cursor-vscode</field>
+        <field name="client_version">1.0.0</field>
+        <field name="jsonrpc_method">tools/call</field>
+        <field name="tool">create</field>
+        <field name="model_name">res.partner.category</field>
+        <field name="arguments">{"model": "res.partner.category", "values": {"name": "AI Leads"}}</field>
+        <field name="duration_ms">21</field>
+        <field name="result_summary">ids 12</field>
+        <field name="status">success</field>
+    </record>
+    <record id="demo_mcp_log_5" model="ydod.mcp.log">
+        <field name="date" eval="(DateTime.now() - relativedelta(minutes=40)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="session_id">a0b1c2d3e4f5061728394a5b6c7d8e9f</field>
+        <field name="client_name">cursor-vscode</field>
+        <field name="client_version">1.0.0</field>
+        <field name="jsonrpc_method">tools/call</field>
+        <field name="tool">call_method</field>
+        <field name="model_name">res.partner.category</field>
+        <field name="arguments">{"model": "res.partner.category", "method": "unlink", "ids": [12]}</field>
+        <field name="duration_ms">2</field>
+        <field name="status">denied</field>
+        <field name="error_message">Method 'unlink' is not allowed on res.partner.category. Allowed methods: action_archive, action_unarchive.</field>
+    </record>
+    <record id="demo_mcp_log_6" model="ydod.mcp.log">
+        <field name="date" eval="(DateTime.now() - relativedelta(minutes=10)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="session_id">a0b1c2d3e4f5061728394a5b6c7d8e9f</field>
+        <field name="client_name">cursor-vscode</field>
+        <field name="client_version">1.0.0</field>
+        <field name="jsonrpc_method">tools/call</field>
+        <field name="tool">list_models</field>
+        <field name="duration_ms">1</field>
+        <field name="status">rate_limited</field>
+        <field name="error_message">Rate limit exceeded: 60 calls per minute per API key.</field>
+    </record>
+    <record id="demo_mcp_log_7" model="ydod.mcp.log">
+        <field name="date" eval="(DateTime.now() - relativedelta(minutes=5)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        <field name="user_id" ref="base.user_admin"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="session_id">c9d8e7f6a5b4c3d2e1f0a9b8c7d6e5f4</field>
+        <field name="client_name">claude-code</field>
+        <field name="client_version">2.0.14</field>
+        <field name="jsonrpc_method">resources/read</field>
+        <field name="model_name">res.partner</field>
+        <field name="arguments">{"uri": "odoo://res.partner/9"}</field>
+        <field name="duration_ms">12</field>
+        <field name="result_summary">odoo://res.partner/9</field>
+        <field name="status">success</field>
+    </record>
+</odoo>
